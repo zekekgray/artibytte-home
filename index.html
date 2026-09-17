@@ -1,0 +1,2075 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ArtiByte — The systems behind serious businesses</title>
+<meta name="description" content="ArtiByte designs, builds, and stands behind specialized software systems — one foundation, many businesses.">
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,340;0,9..144,440;0,9..144,560;0,9..144,650;1,9..144,440;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --obsidian:#0b0c0f;
+  --graphite:#15171b;
+  --graphite2:#1c1f24;
+  --ivory:#f6f2ea;
+  --paper:#eee7d8;
+  --ink:#17150f;
+  --ink2:#55503f;
+  --bronze:#c78a4d;
+  --bronze-light:#e3b27f;
+  --bronze-deep:#8a5a2b;
+  --mist:#9298a3;
+  --mist2:#c7cbd1;
+  --line-dark:rgba(255,255,255,.09);
+  --line-dark2:rgba(255,255,255,.16);
+  --line-light:rgba(23,21,15,.13);
+  --line-light2:rgba(23,21,15,.24);
+  --serif:'Fraunces',Georgia,serif;
+  --sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation-duration:.001ms!important;transition-duration:.001ms!important}}
+body{
+  background:var(--obsidian);color:var(--mist2);font-family:var(--sans);
+  font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+::selection{background:var(--bronze);color:#0b0c0f}
+a{color:inherit;text-decoration:none}
+img,svg{display:block;max-width:100%}
+.wrap{max-width:1180px;margin:0 auto;padding:0 56px}
+@media(max-width:860px){.wrap{padding:0 26px}}
+
+/* ---------- grain ---------- */
+.grain{position:fixed;inset:0;pointer-events:none;z-index:999;opacity:.035;mix-blend-mode:overlay}
+
+/* ---------- nav ---------- */
+header{position:fixed;top:0;left:0;right:0;z-index:200;transition:background .3s,border-color .3s}
+header .bar{display:flex;align-items:center;justify-content:space-between;padding:22px 56px;border-bottom:1px solid transparent;transition:border-color .3s,background .3s}
+header.solid .bar{background:rgba(11,12,15,.78);backdrop-filter:blur(18px);border-color:var(--line-dark)}
+header.on-light .bar{color:var(--ink)}
+@media(max-width:860px){header .bar{padding:18px 26px}}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--serif);font-size:19px;letter-spacing:.2px;font-weight:560}
+.brand .mark{display:none}
+nav.links{display:flex;gap:36px;font-size:13.5px;color:var(--mist)}
+header.on-light nav.links{color:var(--ink2)}
+nav.links a{position:relative;padding:4px 0}
+nav.links a::after{content:"";position:absolute;left:0;right:0;bottom:-2px;height:1px;background:currentColor;transform:scaleX(0);transform-origin:right;transition:transform .25s}
+nav.links a:hover::after{transform:scaleX(1);transform-origin:left}
+.navcta{border:1px solid var(--line-dark2);border-radius:999px;padding:9px 18px;font-size:13px;font-weight:500;transition:.2s;color:#f0ede6}
+header.on-light .navcta{border-color:var(--line-light2);color:var(--ink)}
+.navcta:hover{border-color:var(--bronze);color:var(--bronze-light)}
+.navmob{display:none}
+@media(max-width:860px){nav.links{display:none}}
+
+/* ---------- hero ---------- */
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;position:relative;padding:150px 0 90px}
+.hero::before{
+  content:"";position:absolute;inset:0;z-index:-1;
+  background:
+    radial-gradient(1100px 620px at 82% -10%,rgba(199,138,77,.16),transparent 62%),
+    radial-gradient(800px 500px at 8% 110%,rgba(199,138,77,.09),transparent 60%);
+}
+.hero .kicker{font-family:var(--serif);font-style:italic;font-size:16px;color:var(--bronze-light);font-weight:440;margin-bottom:26px;opacity:0;animation:rise .8s .1s ease forwards}
+.hero h1{
+  font-family:var(--serif);font-weight:440;letter-spacing:-1.4px;
+  font-size:clamp(40px,6vw,84px);line-height:1.03;color:#f6f4ef;max-width:960px;
+  opacity:0;animation:rise .9s .22s ease forwards;
+}
+.hero h1 em{font-style:italic;color:var(--bronze-light);font-weight:440}
+.hero .lede{
+  margin-top:30px;font-size:19px;line-height:1.65;color:var(--mist2);max-width:520px;font-weight:400;
+  opacity:0;animation:rise .9s .36s ease forwards;
+}
+.hero .actions{display:flex;gap:16px;align-items:center;margin-top:44px;opacity:0;animation:rise .9s .48s ease forwards}
+.btn{display:inline-flex;align-items:center;gap:9px;background:var(--bronze);color:#100b06;border:none;border-radius:999px;padding:15px 28px;font-family:var(--sans);font-weight:600;font-size:14.5px;cursor:pointer;transition:.2s;letter-spacing:.1px}
+.btn:hover{background:var(--bronze-light);transform:translateY(-1px)}
+.btn.ghost{background:transparent;color:#f0ede6;border:1px solid var(--line-dark2);padding:14px 26px}
+.btn.ghost:hover{border-color:var(--bronze);color:var(--bronze-light)}
+@keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+
+.hero .scrollcue{position:absolute;bottom:38px;left:56px;display:flex;align-items:center;gap:10px;font-size:12px;color:var(--mist);opacity:0;animation:rise .9s .7s ease forwards}
+@media(max-width:860px){.hero .scrollcue{left:26px}}
+.scrollcue i{width:26px;height:1px;background:var(--mist);display:block}
+
+/* ---------- section shell ---------- */
+section{position:relative}
+.light{background:var(--ivory);color:var(--ink)}
+.light .mist2{color:var(--ink2)}
+.pad{padding:132px 0}
+@media(max-width:860px){.pad{padding:84px 0}}
+.head{max-width:600px;margin-bottom:64px}
+.head h2{font-family:var(--serif);font-weight:440;letter-spacing:-1px;font-size:clamp(30px,3.6vw,44px);line-height:1.14}
+.light .head h2{color:var(--ink)}
+:not(.light) .head h2{color:#f6f4ef}
+.head p{margin-top:18px;font-size:17px;line-height:1.65;color:var(--mist2)}
+.light .head p{color:var(--ink2)}
+.rule{height:1px;background:var(--line-dark);width:100%}
+.light .rule{background:var(--line-light)}
+
+/* ---------- positioning: model table-ish ---------- */
+.model{display:grid;grid-template-columns:1.1fr 1fr;gap:70px;align-items:start}
+@media(max-width:900px){.model{grid-template-columns:1fr;gap:40px}}
+.model .stack{display:flex;flex-direction:column}
+.modelrow{display:flex;justify-content:space-between;gap:20px;padding:20px 0;border-bottom:1px solid var(--line-light)}
+.modelrow:first-child{border-top:1px solid var(--line-light)}
+.modelrow span:first-child{font-size:14.5px;color:var(--ink2)}
+.modelrow span:last-child{font-size:14.5px;font-weight:600;text-align:right;max-width:280px}
+.modelrow.us{background:linear-gradient(90deg,transparent,rgba(199,138,77,.09));margin:0 -20px;padding:20px;border-radius:10px;border-bottom:1px solid var(--line-light)}
+.modelrow.us span:first-child{color:var(--ink);font-weight:650}
+.modelrow.us span:last-child{color:var(--bronze-deep)}
+.model .thesis{font-family:var(--serif);font-size:23px;line-height:1.5;color:var(--ink);font-weight:440}
+.model .thesis em{font-style:italic;color:var(--bronze-deep)}
+
+/* ---------- pillars ---------- */
+.pillars{display:flex;flex-direction:column}
+.pillar{display:grid;grid-template-columns:64px 1fr 1.3fr;gap:34px;padding:38px 0;border-top:1px solid var(--line-dark);align-items:baseline}
+.pillars .pillar:last-child{border-bottom:1px solid var(--line-dark)}
+.pillar .idx{font-family:var(--serif);font-style:italic;font-size:15px;color:var(--bronze-light);align-self:start;padding-top:4px}
+.pillar h3{font-family:var(--serif);font-weight:440;font-size:23px;color:#f5f2ec;letter-spacing:-.3px;line-height:1.25}
+.pillar p{font-size:15px;color:var(--mist2);line-height:1.65;max-width:480px}
+@media(max-width:760px){.pillar{grid-template-columns:1fr;gap:8px}.pillar .idx{display:none}}
+
+/* ---------- foundation / architecture diagram ---------- */
+.foundation{background:var(--graphite)}
+.diagwrap{display:grid;grid-template-columns:1.05fr .95fr;gap:60px;align-items:center}
+@media(max-width:960px){.diagwrap{grid-template-columns:1fr}}
+.diagram{width:100%;height:auto}
+.node{cursor:pointer}
+.node circle{fill:var(--graphite2);stroke:var(--line-dark2);stroke-width:1.4;transition:.25s}
+.node text{font-family:var(--sans);font-size:11.5px;fill:var(--mist2);text-anchor:middle;pointer-events:none;transition:.25s}
+.node.top circle{stroke:rgba(199,138,77,.5)}
+.node.active circle{fill:var(--bronze);stroke:var(--bronze-light)}
+.node.active text{fill:#100b06;font-weight:600}
+.node.dim{opacity:.28}
+.link{stroke:var(--line-dark2);stroke-width:1;transition:.25s}
+.link.active{stroke:var(--bronze);stroke-width:1.6;opacity:1}
+.link.dim{opacity:.08}
+.node.hub circle{fill:var(--graphite2);stroke:rgba(199,138,77,.7);stroke-width:1.8}
+.node.hub.active circle{fill:var(--bronze);stroke:var(--bronze-light)}
+.node.hub.active text{fill:#100b06;font-weight:600}
+.bizband{opacity:.45;transition:opacity .35s ease}
+.bizband.active{opacity:1}
+.bizband rect{transition:stroke .35s ease,fill .35s ease}
+.bizband.active rect{stroke:var(--bronze);fill:rgba(199,138,77,.16)}
+.diagram .lbl-band{font-family:var(--sans);font-size:10.5px;fill:var(--mist);letter-spacing:.4px}
+.diaginfo{min-height:132px}
+.diaginfo .tag{font-family:var(--sans);font-size:12.5px;color:var(--bronze-light);font-weight:600;letter-spacing:.3px;margin-bottom:10px;display:block}
+.diaginfo h4{font-family:var(--serif);font-size:27px;font-weight:440;color:#f5f2ec;letter-spacing:-.4px;margin-bottom:12px}
+.diaginfo p{font-size:15.5px;color:var(--mist2);line-height:1.7;max-width:420px}
+.diaginfo .hint{font-size:13px;color:var(--mist);margin-top:22px;font-style:italic;font-family:var(--serif)}
+
+/* ---------- products ---------- */
+.prods-head{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;margin-bottom:44px}
+.scrollbtns{display:flex;gap:10px}
+.scrollbtns button{width:42px;height:42px;border-radius:50%;border:1px solid var(--line-dark2);background:transparent;color:#eee;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.2s}
+.scrollbtns button:hover{border-color:var(--bronze);color:var(--bronze-light)}
+.prodrail{display:flex;gap:22px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:14px;margin:0 -56px;padding-left:56px;padding-right:56px}
+@media(max-width:860px){.prodrail{margin:0 -26px;padding-left:26px;padding-right:26px}}
+.prodrail::-webkit-scrollbar{height:0}
+.pcard{scroll-snap-align:start;flex:0 0 340px;background:var(--graphite);border:1px solid var(--line-dark);border-radius:18px;padding:34px 30px;display:flex;flex-direction:column;min-height:398px;transition:border-color .25s,transform .25s}
+.pcard:hover{border-color:var(--line-dark2);transform:translateY(-4px)}
+.pcard .icon{width:40px;height:40px;margin-bottom:26px;color:var(--bronze-light)}
+.pcard h3{font-family:var(--serif);font-size:24px;font-weight:500;color:#f5f2ec;margin-bottom:6px;letter-spacing:-.2px}
+.pcard .vert{font-size:12.5px;color:var(--bronze-light);font-weight:500;margin-bottom:18px}
+.pcard p{font-size:14.5px;color:var(--mist2);line-height:1.65;flex:1}
+.pcard .metric{border-top:1px solid var(--line-dark);margin-top:22px;padding-top:16px;display:flex;justify-content:space-between;font-size:12.5px}
+.pcard .metric span:first-child{color:var(--mist)}
+.pcard .metric span:last-child{font-weight:600;color:#f0ede6}
+
+/* ---------- product cards v2: mockup-first ---------- */
+.pcard-v2{padding:0;overflow:hidden}
+.pmini{height:170px;background:linear-gradient(160deg,rgba(199,138,77,.10),rgba(255,255,255,.02));border-bottom:1px solid var(--line-dark)}
+.pmini svg{width:100%;height:100%;display:block}
+.pcard-body{padding:26px 28px 28px;display:flex;flex-direction:column;flex:1}
+.pcard-body .vert{margin-bottom:8px}
+.pcard-body h3{font-family:var(--serif);font-size:22px;font-weight:500;color:#f5f2ec;margin-bottom:10px;letter-spacing:-.2px}
+.promise{font-family:var(--serif);font-style:italic;font-size:16.5px;line-height:1.4;color:#f0ede6;margin-bottom:22px;flex:1}
+.penter{font-size:13px;font-weight:600;color:var(--bronze-light);display:inline-flex;align-items:center;gap:6px;transition:gap .2s}
+.penter:hover{gap:11px}
+.penter svg{width:13px;height:13px;transition:transform .2s ease}
+.penter:hover svg{transform:translateX(3px)}
+.pmini{overflow:hidden}
+.pmini svg{transition:transform .5s cubic-bezier(.2,.8,.2,1)}
+.pcard-v2:hover .pmini svg{transform:scale(1.035)}
+.pmini .dot,.pmini .check,.pmini .pill{transform-box:fill-box;transform-origin:center;transition:transform .4s ease}
+.pcard-v2:hover .pmini .dot{transform:scale(1.18)}
+.pcard-v2:hover .pmini .check{transform:scale(1.3)}
+.pcard-v2:hover .pmini .pill{transform:scale(1.05)}
+.pmini .bar{transform-box:fill-box;transform-origin:bottom center;transition:transform .5s cubic-bezier(.2,.8,.2,1)}
+.pcard-v2:hover .pmini .bar{transform:scaleY(1.14)}
+.pmini .line,.pmini .price{opacity:.35;transition:opacity .45s ease}
+.pcard-v2:hover .pmini .line,.pcard-v2:hover .pmini .price{opacity:1}
+.pcard-v2:hover .pmini .line:nth-of-type(2){transition-delay:.06s}
+.pcard-v2:hover .pmini .line:nth-of-type(3){transition-delay:.14s}
+.pmini .draw1,.pmini .draw2,.pmini .draw3{stroke-dasharray:340;stroke-dashoffset:340;transition:stroke-dashoffset 1s ease}
+.pcard-v2:hover .pmini .draw1{stroke-dashoffset:0}
+.pcard-v2:hover .pmini .draw2{stroke-dashoffset:0;transition-delay:.1s}
+.pcard-v2:hover .pmini .draw3{stroke-dashoffset:0;transition-delay:.2s}
+.pmini .edge{opacity:.6;transition:opacity .4s ease,stroke-width .4s ease}
+.pcard-v2:hover .pmini .edge{opacity:1;stroke-width:2}
+
+/* ---------- promise (delivery layers) ---------- */
+.promise-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:1px solid var(--line-light);border-left:1px solid var(--line-light)}
+@media(max-width:760px){.promise-grid{grid-template-columns:1fr}}
+.pcell{border-right:1px solid var(--line-light);border-bottom:1px solid var(--line-light);padding:38px 34px}
+.pcell .letter{font-family:var(--serif);font-style:italic;font-size:14px;color:var(--bronze-deep);display:block;margin-bottom:14px}
+.pcell h4{font-family:var(--serif);font-weight:500;font-size:19px;color:var(--ink);margin-bottom:10px;letter-spacing:-.2px}
+.pcell p{font-size:14px;color:var(--ink2);line-height:1.6}
+
+/* ---------- process ---------- */
+.process{display:flex;flex-direction:column}
+.step{display:grid;grid-template-columns:90px 1fr;border-top:1px solid var(--line-dark)}
+.process .step:last-child{border-bottom:1px solid var(--line-dark)}
+.step .num{font-family:var(--serif);font-size:15px;color:var(--mist);padding:30px 0}
+.step .body{padding:30px 0;display:grid;grid-template-columns:220px 1fr;gap:30px;align-items:baseline}
+@media(max-width:760px){.step .body{grid-template-columns:1fr;gap:8px}}
+.step h4{font-family:var(--serif);font-weight:500;font-size:21px;color:#f5f2ec}
+.step p{font-size:14.5px;color:var(--mist2);max-width:480px;line-height:1.65}
+
+/* ---------- quote ---------- */
+.quoteblock{text-align:left;max-width:820px}
+.quoteblock p{font-family:var(--serif);font-style:italic;font-weight:400;font-size:clamp(28px,3.6vw,46px);line-height:1.35;color:#f6f4ef;letter-spacing:-.4px}
+.quoteblock cite{display:block;margin-top:30px;font-style:normal;font-size:13.5px;color:var(--mist);font-family:var(--sans)}
+
+/* ---------- contact ---------- */
+.contactgrid{display:grid;grid-template-columns:.9fr 1.1fr;gap:80px}
+@media(max-width:900px){.contactgrid{grid-template-columns:1fr;gap:50px}}
+.contact-copy h2{font-family:var(--serif);font-weight:440;font-size:clamp(30px,3.6vw,46px);letter-spacing:-1px;color:#f6f4ef;line-height:1.15;margin-bottom:22px}
+.contact-copy p{font-size:16px;color:var(--mist2);line-height:1.7;max-width:400px}
+.field{margin-bottom:26px}
+.field label{display:block;font-size:12.5px;color:var(--mist);margin-bottom:9px;letter-spacing:.2px}
+.field input,.field textarea,.field select{
+  width:100%;background:transparent;border:none;border-bottom:1px solid var(--line-dark2);
+  color:#f0ede6;font-family:var(--sans);font-size:16px;padding:9px 2px;outline:none;transition:.2s;resize:none;
+}
+.field select option{background:#15171b}
+.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--bronze)}
+.field textarea{min-height:80px}
+form .btn{margin-top:8px}
+
+/* ---------- footer ---------- */
+footer{padding:70px 0 40px;border-top:1px solid var(--line-dark)}
+.footgrid{display:flex;justify-content:space-between;gap:40px;flex-wrap:wrap;padding-bottom:50px}
+.footgrid .col h5{font-size:12px;color:var(--mist);letter-spacing:.3px;margin-bottom:16px;font-weight:500}
+.footgrid .col a{display:block;font-size:14px;color:var(--mist2);margin-bottom:11px;transition:.2s}
+.footgrid .col a:hover{color:var(--bronze-light)}
+.footbottom{display:flex;justify-content:space-between;align-items:center;font-size:12.5px;color:var(--mist);border-top:1px solid var(--line-dark);padding-top:26px;flex-wrap:wrap;gap:12px}
+
+/* reveal-on-scroll (answers scroll, not decoration-heavy) */
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease}
+.reveal.in{opacity:1;transform:translateY(0)}
+
+/* ---------- product moment overlay ---------- */
+.pmoment{position:fixed;inset:0;z-index:500;background:rgba(8,9,11,.72);backdrop-filter:blur(6px);display:flex;justify-content:center;padding:60px 24px;opacity:0;pointer-events:none;transition:opacity .35s ease;overflow-y:auto}
+.pmoment.open{opacity:1;pointer-events:auto}
+.pmoment-inner{background:var(--graphite);border:1px solid var(--line-dark2);border-radius:24px;max-width:920px;width:100%;padding:56px 60px 64px;position:relative;transform:translateY(24px);transition:transform .4s cubic-bezier(.2,.8,.2,1);margin-bottom:60px;height:fit-content}
+.pmoment.open .pmoment-inner{transform:translateY(0)}
+@media(max-width:760px){.pmoment-inner{padding:44px 26px 48px}}
+.pmoment-close{position:absolute;top:24px;right:24px;background:transparent;border:1px solid var(--line-dark2);color:var(--mist2);border-radius:999px;padding:9px 16px;font-size:12.5px;cursor:pointer;transition:.2s}
+.pmoment-close:hover{border-color:var(--bronze);color:var(--bronze-light)}
+.pmoment .m-eyebrow{font-family:var(--serif);font-style:italic;color:var(--bronze-light);font-size:15px;display:block;margin-bottom:16px}
+.pmoment h2{font-family:var(--serif);font-weight:440;letter-spacing:-1px;font-size:clamp(28px,4vw,44px);color:#f6f4ef;line-height:1.12;max-width:620px}
+.pmoment .m-lede{margin-top:20px;font-size:16px;color:var(--mist2);line-height:1.65;max-width:560px}
+.m-dash{margin:44px 0 10px;border-radius:16px;overflow:hidden;border:1px solid var(--line-dark)}
+.m-dash svg{width:100%;height:auto;display:block}
+.m-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:8px 26px;margin-top:36px}
+.m-feat{padding:22px 4px 0;border-top:1px solid var(--line-dark)}
+.m-feat .icon{width:26px;height:26px;color:var(--bronze-light);margin-bottom:14px}
+.m-feat h4{font-family:var(--serif);font-weight:500;font-size:16.5px;color:#f0ede6;margin-bottom:7px}
+.m-feat p{font-size:13.5px;color:var(--mist2);line-height:1.55}
+.m-mobile{margin-top:50px;display:flex;gap:34px;align-items:center;border-top:1px solid var(--line-dark);padding-top:40px}
+@media(max-width:600px){.m-mobile{flex-direction:column;align-items:flex-start}}
+.m-phone{flex:none;width:110px}
+.m-mobile p{font-size:14.5px;color:var(--mist2);line-height:1.65;max-width:400px}
+.m-soon{margin-top:34px;font-size:13.5px;color:var(--mist);font-style:italic;font-family:var(--serif);border-top:1px solid var(--line-dark);padding-top:28px}
+
+/* ---------- Talk to ArtiByte orb + quote panel ---------- */
+.orb-wrap{position:fixed;top:50%;right:28px;transform:translateY(-50%);z-index:650;display:flex;align-items:center;gap:12px}
+.orb-btn{width:60px;height:60px;border-radius:50%;background:var(--bronze);color:#100b06;display:flex;align-items:center;justify-content:center;cursor:pointer;border:none;box-shadow:0 10px 28px rgba(0,0,0,.4);transition:.25s;flex:none;position:relative}
+.orb-btn:hover{background:var(--bronze-light);transform:translateY(-2px) scale(1.04)}
+.orb-btn svg{width:38px;height:38px}
+.orb-btn .orb-dot{position:absolute;top:2px;right:2px;width:12px;height:12px;border-radius:50%;background:#e5493f;border:2px solid var(--obsidian)}
+.orb-label{background:var(--graphite);color:#f0ede6;padding:9px 16px;border-radius:999px;font-size:12.5px;border:1px solid var(--line-dark2);white-space:nowrap;opacity:0;transform:translateX(6px);pointer-events:none;transition:.25s;font-weight:500}
+.orb-wrap:hover .orb-label{opacity:1;transform:translateX(0)}
+.orb-wrap.hide{display:none}
+/* === START: DRAGGABLE ORB — surgical patch === */
+.orb-wrap{cursor:grab;touch-action:none;transition:none}
+.orb-wrap.dragging{transition:none}
+.orb-wrap.dragging .orb-btn{cursor:grabbing;transform:scale(1.04)}
+.orb-btn{touch-action:none}
+/* === END: DRAGGABLE ORB — surgical patch === */
+
+.talkpanel{position:fixed;bottom:104px;right:28px;z-index:651;width:392px;max-width:calc(100vw - 32px);max-height:min(660px,calc(100vh - 140px));background:var(--graphite);border:1px solid var(--line-dark2);border-radius:22px;box-shadow:0 24px 70px rgba(0,0,0,.55);display:flex;flex-direction:column;overflow:hidden;opacity:0;transform:translateY(18px) scale(.97);pointer-events:none;transition:opacity .28s cubic-bezier(.2,.8,.2,1),transform .28s cubic-bezier(.2,.8,.2,1),width .22s ease,max-height .22s ease}
+.talkpanel.no-anim{transition:opacity .28s cubic-bezier(.2,.8,.2,1),transform .28s cubic-bezier(.2,.8,.2,1)!important}
+.talkpanel.open{opacity:1;transform:translateY(0) scale(1);pointer-events:auto}
+@media(max-width:480px){.talkpanel{right:16px;bottom:96px;width:calc(100vw - 32px)}}
+.tp-head{padding:18px 20px;border-bottom:1px solid var(--line-dark);display:flex;justify-content:space-between;align-items:center;flex:none;background:linear-gradient(180deg,rgba(199,138,77,.08),transparent)}
+.tp-head .tp-htext{display:flex;align-items:center;gap:11px}
+.tp-head .tp-mark{width:26px;height:26px;flex:none}
+.tp-head .tp-htext-col{display:flex;flex-direction:column;gap:2px}
+.tp-head .tp-title{font-family:var(--serif);font-size:16.5px;color:#f5f2ec;font-weight:500}
+.tp-head .tp-sub{font-size:11.5px;color:var(--mist)}
+.tp-close{background:transparent;border:1px solid var(--line-dark2);color:var(--mist2);cursor:pointer;font-size:12px;padding:6px 11px;border-radius:999px;transition:.2s;flex:none}
+.tp-close:hover{border-color:var(--bronze);color:var(--bronze-light)}
+.tp-body{flex:1;overflow-y:auto;padding:20px}
+.tp-body::-webkit-scrollbar{width:6px}
+.tp-body::-webkit-scrollbar-thumb{background:var(--line-dark2);border-radius:3px}
+.tp-foot{padding:14px 20px 18px;border-top:1px solid var(--line-dark);flex:none}
+
+.tp-msg{background:var(--graphite2);border-radius:14px;padding:13px 15px;font-size:13.5px;color:var(--mist2);line-height:1.6;margin-bottom:16px;max-width:92%}
+.tp-msg strong{color:#f0ede6}
+.tp-msg .tp-eyebrow{display:block;font-family:var(--serif);font-style:italic;color:var(--bronze-light);font-size:12.5px;margin-bottom:6px}
+
+.tp-options{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
+.tp-opt{text-align:left;background:transparent;border:1px solid var(--line-dark2);color:#f0ede6;padding:12px 14px;border-radius:11px;font-size:13.5px;cursor:pointer;transition:.2s;font-family:var(--sans)}
+.tp-opt:hover{border-color:var(--bronze);background:rgba(199,138,77,.08);color:var(--bronze-light)}
+.tp-opt .tp-opt-sub{display:block;font-size:11.5px;color:var(--mist);margin-top:2px}
+.tp-opt:hover .tp-opt-sub{color:var(--bronze-light);opacity:.8}
+
+.tp-module{display:flex;justify-content:space-between;align-items:center;gap:10px;border:1px solid var(--line-dark2);border-radius:11px;padding:12px 14px;margin-bottom:8px;cursor:pointer;transition:.2s}
+.tp-module:hover{background:rgba(255,255,255,.02)}
+.tp-module.checked{border-color:var(--bronze);background:rgba(199,138,77,.08)}
+.tp-module .tm-left{display:flex;align-items:center;gap:11px;min-width:0}
+.tp-module .tm-box{width:18px;height:18px;border-radius:5px;border:1.4px solid var(--line-dark2);flex:none;display:flex;align-items:center;justify-content:center;background:transparent;transition:.2s}
+.tp-module.checked .tm-box{background:var(--bronze);border-color:var(--bronze)}
+.tp-module .tm-box svg{width:11px;height:11px;opacity:0}
+.tp-module.checked .tm-box svg{opacity:1}
+.tp-module .tm-text{min-width:0}
+.tp-module .tm-label{font-size:13px;color:#f0ede6;display:block}
+.tp-module .tm-note{font-size:11px;color:var(--mist);display:block;margin-top:1px}
+.tp-module .tm-price{font-size:12.5px;color:var(--bronze-light);font-weight:600;white-space:nowrap;flex:none}
+
+.tp-qty{display:flex;align-items:center;gap:10px;border:1px solid var(--line-dark2);border-radius:11px;padding:12px 14px;margin-bottom:16px}
+.tp-qty label{font-size:13px;color:#f0ede6;flex:1}
+.tp-qty .tp-stepper{display:flex;align-items:center;gap:8px}
+.tp-qty .tp-stepper button{width:26px;height:26px;border-radius:50%;border:1px solid var(--line-dark2);background:transparent;color:#f0ede6;cursor:pointer;font-size:14px;line-height:1;display:flex;align-items:center;justify-content:center;transition:.2s}
+.tp-qty .tp-stepper button:hover{border-color:var(--bronze);color:var(--bronze-light)}
+.tp-qty .tp-stepper span{font-size:13.5px;color:#f5f2ec;min-width:18px;text-align:center;font-weight:600}
+
+.tp-line{display:flex;justify-content:space-between;gap:10px;font-size:12.5px;color:var(--mist2);padding:8px 0;border-bottom:1px solid var(--line-dark)}
+.tp-line span:first-child{max-width:70%}
+.tp-line span:last-child{color:#f0ede6;font-weight:600;white-space:nowrap}
+.tp-total{display:flex;justify-content:space-between;align-items:baseline;padding-top:14px;margin-top:4px}
+.tp-total .tt-label{font-size:12.5px;color:var(--mist);letter-spacing:.2px}
+.tp-total .tt-value{font-family:var(--serif);font-size:21px;color:var(--bronze-light)}
+.tp-disclaimer{font-size:11.5px;color:var(--mist);font-style:italic;margin-top:14px;line-height:1.55;font-family:var(--serif)}
+.tp-discount-note{font-size:12px;color:var(--mist2);background:rgba(199,138,77,.08);border:1px solid var(--line-dark2);border-radius:10px;padding:11px 13px;margin-top:14px;line-height:1.55}
+.tp-discount-note strong{color:var(--bronze-light)}
+
+.tp-field{margin-bottom:14px}
+.tp-field label{display:block;font-size:11.5px;color:var(--mist);margin-bottom:7px;letter-spacing:.2px}
+.tp-field input,.tp-field textarea{width:100%;background:var(--graphite2);border:1px solid var(--line-dark2);border-radius:9px;color:#f0ede6;font-family:var(--sans);font-size:13.5px;padding:10px 12px;outline:none;transition:.2s;resize:none}
+.tp-field input:focus,.tp-field textarea:focus{border-color:var(--bronze)}
+.tp-field textarea{min-height:64px}
+
+.tp-btnrow{display:flex;gap:10px;margin-top:6px}
+.tp-btn{flex:1;padding:12px;border-radius:999px;font-size:13px;font-weight:600;cursor:pointer;border:none;transition:.2s;font-family:var(--sans)}
+.tp-btn.primary{background:var(--bronze);color:#100b06}
+.tp-btn.primary:hover{background:var(--bronze-light)}
+.tp-btn.ghost{background:transparent;border:1px solid var(--line-dark2);color:#f0ede6}
+.tp-btn.ghost:hover{border-color:var(--bronze);color:var(--bronze-light)}
+.tp-progress{display:flex;gap:5px;margin-bottom:16px}
+.tp-progress span{height:3px;flex:1;background:var(--line-dark2);border-radius:2px;overflow:hidden}
+.tp-progress span i{display:block;height:100%;width:0;background:var(--bronze);transition:width .3s ease}
+.tp-progress span.done i{width:100%}
+.tp-success{text-align:center;padding:14px 6px}
+.tp-success .ts-icon{width:46px;height:46px;border-radius:50%;background:rgba(199,138,77,.15);display:flex;align-items:center;justify-content:center;margin:0 auto 16px}
+.tp-success .ts-icon svg{width:22px;height:22px;color:var(--bronze-light)}
+.tp-success h4{font-family:var(--serif);font-size:18px;color:#f5f2ec;margin-bottom:8px}
+.tp-success p{font-size:13px;color:var(--mist2);line-height:1.6}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <linearGradient id="artibyteBlueGrad" x1="110" y1="97" x2="450" y2="330" gradientUnits="userSpaceOnUse">
+  <stop offset="0%" stop-color="#5EEAD4"/>
+  <stop offset="35%" stop-color="#38BDF8"/>
+  <stop offset="100%" stop-color="#1D4ED8"/>
+</linearGradient>
+<mask id="artibyteLogoMask" maskUnits="userSpaceOnUse" x="100" y="10" width="360" height="385">
+      <rect x="100" y="10" width="360" height="385" fill="#fff"/>
+      <path d="M240,240 L360,240 L360,290 L320,290 L300,310 L280,290 L240,290 Z" fill="#000"/>
+    </mask>
+    <symbol id="artibyte-logo" viewBox="118 10 360 385">
+      <g mask="url(#artibyteLogoMask)">
+        <path d="M280,22 L320,22 L320,62 L280,62 Z" fill="#ffffff"/>
+        <path d="M320,62 L380,62 L415,97 L355,97 Z" fill="#ffffff"/>
+        <path d="M280,62 L220,62 L185,97 L245,97 Z" fill="#ffffff"/>
+        <path d="M415,97 L450,132 L395,187 L355,97 Z" fill="#ffffff"/>
+        <path d="M415,97 L450,97 L450,132 L415,132 Z" fill="#ffffff"/>
+        <path d="M145,97 L110,97 L110,132 L145,132 Z" fill="#ffffff"/>
+        <path d="M450,132 L450,220 L395,275 L395,187 Z" fill="#ffffff"/>
+        <path d="M450,220 L395,275 L345,325 L395,275 Z" fill="#ffffff"/>
+        <path d="M395,275 L340,330 L300,290 L355,235 Z" fill="#ffffff"/>
+        <path d="M185,97 L150,132 L205,187 L245,97 Z" fill="#ffffff"/>
+        <path d="M150,132 L150,220 L205,275 L205,187 Z" fill="#ffffff"/>
+        <path d="M110,180 L150,180 L150,220 L110,220 Z" fill="#ffffff"/>
+        <path d="M450,180 L410,180 L410,220 L450,220 Z" fill="#ffffff"/>
+        <path d="M205,275 L260,330 L300,290 L245,235 Z" fill="#ffffff"/>
+        <path d="M280,320 L320,320 L320,365 L300,385 L280,365 Z" fill="#ffffff"/>
+        <path d="M280,125 L320,125 L320,165 L280,165 Z" fill="#ffffff"/>
+        <path d="M240,165 L280,165 L280,220 L240,220 Z" fill="#ffffff"/>
+        <path d="M320,165 L360,165 L360,220 L320,220 Z" fill="#ffffff"/>
+        <path d="M200,220 L400,220 L400,280 L360,320 L240,320 L200,280 Z" fill="#ffffff"/>
+      </g>
+    </symbol>
+  </defs>
+</svg>
+<svg class="grain" width="0" height="0"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" stitchTiles="stitch"/></filter></svg>
+<div class="grain" style="filter:url(#n)"></div>
+
+<header id="siteHeader">
+  <div class="bar">
+        <a href="#top" class="brand">
+      <svg class="mark" viewBox="100 10 360 385" fill="none">
+      </svg>
+      ArtiByte
+    </a>
+    <nav class="links">
+      <a href="#foundation">Platform</a>
+      <a href="#products">Products</a>
+      <a href="#approach">Approach</a>
+      <a href="#work">How we work</a>
+    </nav>
+    <a href="#contact" class="navcta">Start a conversation</a>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap">
+    <p class="kicker">Custom business software, built and maintained for you.</p>
+    <h1>The systems behind<br>serious <em>businesses.</em></h1>
+    <p class="lede">We build the exact software your business needs to run — inventory, academies, retail, automation — each one custom-fit, all powered by one system underneath.</p>
+    <div class="actions">
+      <a href="#contact" class="btn">Start a conversation</a>
+      <a href="#foundation" class="btn ghost">See how it's built</a>
+    </div>
+  </div>
+  <div class="scrollcue"><i></i> Scroll</div>
+</section>
+
+<!-- POSITIONING / MODEL -->
+<section class="light pad" id="approach">
+  <div class="wrap">
+    <div class="head">
+      <h2>Software, sold the way it should be.</h2>
+      <p>Freelancers sell hours. Platforms sell one-size-fits-all. We sit deliberately between them.</p>
+    </div>
+    <div class="model">
+      <div class="stack">
+        <div class="modelrow"><span>Freelancer</span><span>Individual execution, billed by the hour</span></div>
+        <div class="modelrow"><span>Traditional agency</span><span>A project, shipped, invoiced, forgotten</span></div>
+        <div class="modelrow"><span>Consultancy</span><span>Advice, without the system to run it on</span></div>
+        <div class="modelrow"><span>Generic software</span><span>Standardized, self-serve, fits no one exactly</span></div>
+        <div class="modelrow us"><span>ArtiByte</span><span>A specialized system, built to keep working as your business grows</span></div>
+      </div>
+      <p class="thesis">We turn how your business runs into <em>software worth running it on</em>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PILLARS -->
+<section class="pad">
+  <div class="wrap">
+    <div class="head">
+      <h2>What actually makes this different</h2>
+      <p>Not marketing language — five structural decisions that shape every engagement.</p>
+    </div>
+    <div class="pillars reveal-group">
+      <div class="pillar reveal"><span class="idx">01</span><h3>Specialized outside.<br>Unified underneath.</h3><p>Every product looks built for its industry — sharing identity, data, billing and infrastructure underneath.</p></div>
+      <div class="pillar reveal"><span class="idx">02</span><h3>A systems partner,<br>not a vendor.</h3><p>We start with what your business needs to accomplish, then decide what to build.</p></div>
+      <div class="pillar reveal"><span class="idx">03</span><h3>You're buying a system,<br>not an app.</h3><p>Your process, people and data — turned into something your team can actually run.</p></div>
+      <div class="pillar reveal"><span class="idx">04</span><h3>Accountable<br>after launch.</h3><p>Maintenance, security and evolution are part of what you're paying for — indefinitely.</p></div>
+      <div class="pillar reveal"><span class="idx">05</span><h3>Every product makes<br>the next one sharper.</h3><p>What we learn on one product ships into the next. The advantage compounds.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOUNDATION / ARCHITECTURE -->
+<section class="foundation pad" id="foundation">
+  <div class="wrap">
+    <div class="head">
+      <h2>One foundation. Many businesses.</h2>
+      <p>Underneath every specialized product sits the same hardened core. Hover a layer to see how it holds everything above it up.</p>
+    </div>
+    <div class="diagwrap">
+      <svg class="diagram" id="archSvg" viewBox="0 0 960 560" xmlns="http://www.w3.org/2000/svg">
+        <text x="480" y="26" class="lbl-band" text-anchor="middle">SPECIALIZED PRODUCTS</text>
+        <text x="480" y="196" class="lbl-band" text-anchor="middle">SHARED INTELLIGENCE</text>
+        <text x="480" y="406" class="lbl-band" text-anchor="middle">SHARED FOUNDATION</text>
+        <g id="linksTop"></g>
+        <g id="linksBot"></g>
+        <g id="topNodes"></g>
+        <g id="hubNode"></g>
+        <g id="botNodes"></g>
+        <g class="bizband" id="bizband">
+          <rect x="230" y="470" width="500" height="62" rx="12" fill="rgba(199,138,77,.08)" stroke="var(--line-dark2)"/>
+          <text x="480" y="496" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" letter-spacing=".4" fill="var(--mist)">POWERS</text>
+          <text x="480" y="518" text-anchor="middle" font-family="Fraunces,serif" font-style="italic" font-size="17" fill="#f5f2ec">Your business, running on one system</text>
+        </g>
+      </svg>
+      <div class="diaginfo" id="diagInfo">
+        <span class="tag">Hover the diagram</span>
+        <h4>Everything shares one core.</h4>
+        <p>Six shared layers — identity, data, infrastructure, billing, AI and analytics — carry every product above them. Nothing gets rebuilt twice.</p>
+        <p class="hint">Move your cursor over any node.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+<section class="pad" id="products">
+  <div class="wrap">
+    <div class="prods-head">
+      <div class="head" style="margin-bottom:0">
+        <h2>Built on the foundation</h2>
+        <p>Five products today, each shaped entirely around one industry's real workflow.</p>
+      </div>
+      <div class="scrollbtns">
+        <button id="railPrev" aria-label="Previous">‹</button>
+        <button id="railNext" aria-label="Next">›</button>
+      </div>
+    </div>
+  </div>
+  <div class="prodrail" id="prodRail">
+
+    <div class="pcard pcard-v2">
+      <div class="pmini"><svg viewBox="0 0 300 170" preserveAspectRatio="xMidYMid slice">
+        <rect width="300" height="170" fill="var(--graphite2)"/>
+        <circle class="dot" cx="30" cy="34" r="10" fill="var(--bronze)"/><rect x="50" y="28" width="90" height="7" rx="2" fill="var(--line-dark2)"/><circle class="check" cx="260" cy="34" r="7" fill="var(--bronze-light)"/>
+        <circle class="dot" cx="30" cy="70" r="10" fill="rgba(199,138,77,.4)"/><rect x="50" y="64" width="70" height="7" rx="2" fill="var(--line-dark2)"/><circle class="check" cx="260" cy="70" r="7" fill="var(--line-dark2)"/>
+        <circle class="dot" cx="30" cy="106" r="10" fill="rgba(199,138,77,.4)"/><rect x="50" y="100" width="100" height="7" rx="2" fill="var(--line-dark2)"/><circle class="check" cx="260" cy="106" r="7" fill="var(--bronze-light)"/>
+        <circle class="dot" cx="30" cy="142" r="10" fill="rgba(199,138,77,.4)"/><rect x="50" y="136" width="60" height="7" rx="2" fill="var(--line-dark2)"/><circle class="check" cx="260" cy="142" r="7" fill="var(--bronze-light)"/>
+      </svg></div>
+      <div class="pcard-body">
+        <div class="vert">Sports academies</div>
+        <h3>ArtiPlay</h3>
+        <p class="promise">Every player, every session, one roster.</p>
+        <a class="penter" href="#" data-moment="artiplay">Enter ArtiPlay <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.4"/></svg></a>
+      </div>
+    </div>
+
+    <div class="pcard pcard-v2">
+      <div class="pmini"><svg viewBox="0 0 300 170" preserveAspectRatio="xMidYMid slice">
+        <rect width="300" height="170" fill="var(--graphite2)"/>
+        <rect class="bar" x="18" y="110" width="18" height="40" rx="2" fill="var(--bronze)"/><rect class="bar" x="46" y="90" width="18" height="60" rx="2" fill="var(--bronze-light)"/><rect class="bar" x="74" y="70" width="18" height="80" rx="2" fill="var(--bronze)"/><rect class="bar" x="102" y="100" width="18" height="50" rx="2" fill="var(--bronze-light)"/>
+        <rect class="pill" x="150" y="55" width="132" height="60" rx="10" fill="rgba(199,138,77,.12)" stroke="var(--line-dark2)"/>
+        <text x="164" y="80" font-family="Inter,sans-serif" font-size="10" fill="var(--mist2)">On-hand value</text>
+        <text x="164" y="102" font-family="Fraunces,serif" font-size="19" fill="#f5f2ec">₱1.82M</text>
+      </svg></div>
+      <div class="pcard-body">
+        <div class="vert">Inventory &amp; operations</div>
+        <h3>ArtiStock</h3>
+        <p class="promise">Know your stock. Know your real cost.</p>
+        <a class="penter" href="#" data-moment="artistock">Enter ArtiStock <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.4"/></svg></a>
+      </div>
+    </div>
+
+    <div class="pcard pcard-v2">
+      <div class="pmini"><svg viewBox="0 0 300 170" preserveAspectRatio="xMidYMid slice">
+        <rect width="300" height="170" fill="var(--graphite2)"/>
+        <rect x="90" y="18" width="120" height="134" rx="6" fill="var(--obsidian)" stroke="var(--line-dark2)"/>
+        <rect x="104" y="34" width="60" height="6" rx="2" fill="var(--mist)"/>
+        <rect class="line" x="104" y="54" width="92" height="5" fill="var(--line-dark2)"/><rect class="line" x="104" y="66" width="70" height="5" fill="var(--line-dark2)"/><rect class="line" x="104" y="78" width="80" height="5" fill="var(--line-dark2)"/>
+        <line x1="104" y1="94" x2="196" y2="94" stroke="var(--line-dark2)"/>
+        <rect class="price" x="104" y="104" width="40" height="8" rx="2" fill="var(--mist2)"/><rect class="price" x="150" y="104" width="46" height="8" rx="2" fill="var(--bronze-light)"/>
+        <circle class="dot" cx="150" cy="130" r="10" fill="var(--bronze)"/>
+      </svg></div>
+      <div class="pcard-body">
+        <div class="vert">Food &amp; retail POS</div>
+        <h3>ArtiSnack</h3>
+        <p class="promise">Every sale, synced the second it happens.</p>
+        <a class="penter" href="#" data-moment="artisnack">Enter ArtiSnack <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.4"/></svg></a>
+      </div>
+    </div>
+
+    <div class="pcard pcard-v2">
+      <div class="pmini"><svg viewBox="0 0 300 170" preserveAspectRatio="xMidYMid slice">
+        <rect width="300" height="170" fill="var(--graphite2)"/>
+        <polyline class="draw1" points="20,130 70,110 120,120 170,80 220,90 270,50" fill="none" stroke="var(--line-dark2)" stroke-width="2"/>
+        <polyline class="draw2" points="20,140 70,135 120,100 170,105 220,70 270,50" fill="none" stroke="var(--bronze)" stroke-width="2"/>
+        <polyline class="draw3" points="20,150 70,145 120,140 170,120 220,95 270,50" fill="none" stroke="var(--bronze-light)" stroke-width="2"/>
+        <circle class="dot" cx="270" cy="50" r="5" fill="#f5f2ec"/>
+        <rect class="pill" x="176" y="18" width="94" height="26" rx="6" fill="rgba(199,138,77,.14)"/>
+        <text x="186" y="35" font-family="Inter,sans-serif" font-size="10" fill="#f0ede6">One true number</text>
+      </svg></div>
+      <div class="pcard-body">
+        <div class="vert">Business intelligence</div>
+        <h3>Business Health Toolkit</h3>
+        <p class="promise">One honest number, from every source you have.</p>
+        <a class="penter" href="#" data-moment="bht">Enter BHT <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.4"/></svg></a>
+      </div>
+    </div>
+
+    <div class="pcard pcard-v2">
+      <div class="pmini"><svg viewBox="0 0 300 170" preserveAspectRatio="xMidYMid slice">
+        <rect width="300" height="170" fill="var(--graphite2)"/>
+        <circle class="dot" cx="40" cy="85" r="14" fill="var(--line-dark2)"/>
+        <circle class="dot" cx="130" cy="50" r="14" fill="var(--bronze)"/><circle class="dot" cx="130" cy="120" r="14" fill="var(--bronze)"/>
+        <circle class="dot" cx="220" cy="85" r="17" fill="var(--bronze-light)"/>
+        <line class="edge" x1="54" y1="85" x2="118" y2="55" stroke="var(--line-dark2)"/><line class="edge" x1="54" y1="85" x2="118" y2="115" stroke="var(--line-dark2)"/>
+        <line class="edge" x1="144" y1="52" x2="206" y2="80" stroke="var(--bronze)"/><line class="edge" x1="144" y1="118" x2="206" y2="90" stroke="var(--bronze)"/>
+        <text x="242" y="89" font-family="Inter,sans-serif" font-size="10" fill="#100b06" font-weight="600">Auto</text>
+      </svg></div>
+      <div class="pcard-body">
+        <div class="vert">AI automation</div>
+        <h3>VEX AI</h3>
+        <p class="promise">The work that shouldn't need a person — automated.</p>
+        <a class="penter" href="#" data-moment="vexai">Enter VEX AI <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.4"/></svg></a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PROMISE -->
+<section class="light pad">
+  <div class="wrap">
+    <div class="head">
+      <h2>What you're actually getting</h2>
+      <p>Six things, every time — whichever product, whichever industry.</p>
+    </div>
+  </div>
+  <div class="wrap" style="padding:0">
+    <div class="promise-grid">
+      <div class="pcell"><span class="letter">a</span><h4>Technology</h4><p>The workflows and reports your team actually uses.</p></div>
+      <div class="pcell"><span class="letter">b</span><h4>Configuration</h4><p>Shaped to your branding, roles and locations.</p></div>
+      <div class="pcell"><span class="letter">c</span><h4>Implementation</h4><p>Setup, migration, training, go-live — handled.</p></div>
+      <div class="pcell"><span class="letter">d</span><h4>Continuous development</h4><p>Fixes, security and new capability, ongoing.</p></div>
+      <div class="pcell"><span class="letter">e</span><h4>Partnership</h4><p>A real team on the other end, not a ticket queue.</p></div>
+      <div class="pcell"><span class="letter">f</span><h4>Room to grow</h4><p>Same system, scaled up — never replaced.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="pad" id="work">
+  <div class="wrap">
+    <div class="head">
+      <h2>How we work</h2>
+      <p>The same five stages, whether the engagement is a single module or an enterprise rollout.</p>
+    </div>
+    <div class="process">
+      <div class="step"><div class="num">01</div><div class="body"><h4>Discovery</h4><p>We sit with how the business actually runs today — not the idealized version of it — before proposing anything.</p></div></div>
+      <div class="step"><div class="num">02</div><div class="body"><h4>Design</h4><p>A solution mapped to the real workflow: an existing product, a module, an integration, or something new.</p></div></div>
+      <div class="step"><div class="num">03</div><div class="body"><h4>Build</h4><p>Configuration, data migration, and testing — against acceptance criteria agreed before a line of it starts.</p></div></div>
+      <div class="step"><div class="num">04</div><div class="body"><h4>Launch</h4><p>Trained users, verified data, a signed go-live — and a support line that's already active.</p></div></div>
+      <div class="step"><div class="num">05</div><div class="body"><h4>Grow</h4><p>Reviewed against agreed outcomes at 30, 60 and 90 days — then renewed, expanded, or improved.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- QUOTE -->
+<section class="pad">
+  <div class="wrap quoteblock">
+    <p>"When we can't do something yet, we say so — in writing, before you sign. Not a fake promise."</p>
+    <cite>The one habit worth more than any feature.</cite>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="pad" id="contact">
+  <div class="wrap contactgrid">
+    <div class="contact-copy">
+      <h2>Let's talk about what your business needs to run on.</h2>
+      <p>Tell us where things currently break. We'll tell you honestly whether we're the right system for it.</p>
+    </div>
+    <form id="contactForm">
+      <div class="field"><label for="f_name">Name</label><input id="f_name" type="text" required></div>
+      <div class="field"><label for="f_company">Company</label><input id="f_company" type="text" required></div>
+      <div class="field"><label for="f_email">Email</label><input id="f_email" type="email" required></div>
+      <div class="field"><label for="f_interest">What are you looking to solve?</label>
+        <select id="f_interest">
+          <option>Something new — I have a problem, not a product in mind</option>
+          <option>ArtiPlay — sports academy operations</option>
+          <option>ArtiStock — inventory &amp; operations</option>
+          <option>ArtiSnack — food &amp; retail POS</option>
+          <option>Business Health Toolkit</option>
+          <option>VEX AI — automation</option>
+          <option>Enterprise / white-label platform</option>
+        </select>
+      </div>
+      <div class="field"><label for="f_msg">A few details</label><textarea id="f_msg"></textarea></div>
+      <button type="submit" class="btn">Send</button>
+    </form>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="footgrid">
+      <div class="col" style="max-width:280px">
+               <a href="#top" class="brand" style="margin-bottom:14px;color:#f0ede6">
+          <svg class="mark" viewBox="100 10 360 385" fill="none">
+            <use href="#artibyte-logo"/>
+          </svg>
+          ArtiByte
+        </a>
+        <p style="font-size:13.5px;color:var(--mist);line-height:1.6">Specialized on the outside. Unified underneath.</p>
+      </div>
+      <div class="col"><h5>Platform</h5>
+        <a href="#foundation">Architecture</a><a href="#approach">Approach</a><a href="#work">How we work</a>
+      </div>
+      <div class="col"><h5>Products</h5>
+        <a href="#products">ArtiPlay</a><a href="#products">ArtiStock</a><a href="#products">ArtiSnack</a><a href="#products">Business Health Toolkit</a><a href="#products">VEX AI</a>
+      </div>
+      <div class="col"><h5>Get in touch</h5>
+        <a href="#contact">Start a conversation</a>
+      </div>
+    </div>
+    <div class="footbottom">
+      <span>© 2026 ArtiByte. All rights reserved.</span>
+      <span>Built for the businesses that can't afford to get it wrong.</span>
+    </div>
+  </div>
+</footer>
+
+<div class="pmoment" id="pmoment" aria-hidden="true">
+  <div class="pmoment-inner">
+    <button class="pmoment-close" id="pmomentClose" aria-label="Close">✕ Close</button>
+    <div id="pmomentContent"></div>
+  </div>
+</div>
+
+<!-- TALK TO ARTIBYTE — guided quote widget -->
+<div class="orb-wrap" id="orbWrap" data-vex="true">
+  <span class="orb-label" id="orbLabel">Talk to VEX</span>
+    <button class="orb-btn" id="orbBtn" aria-label="Talk to VEX — get an estimate">
+    <span style="font-family:var(--sans);font-weight:700;font-size:14px;letter-spacing:.5px;color:#100b06">VEX</span>
+  </button>
+</div>
+
+<div class="talkpanel" id="talkPanel" aria-hidden="true" data-vex="true">
+  <div class="tp-head">
+    <div class="tp-htext">
+      <div class="tp-htext-col">
+      <span class="tp-title">Talk to VEX</span>
+      <span class="tp-sub" id="tpSub">Let's rough out an estimate</span>
+      </div>
+    </div>
+    <button class="tp-close" id="tpClose">✕ Close</button>
+  </div>
+  <div class="tp-body" id="tpBody"></div>
+  <div class="tp-foot" id="tpFoot"></div>
+</div>
+
+<script>
+/* header solid + tint on scroll */
+const header=document.getElementById('siteHeader');
+const lightSections=[...document.querySelectorAll('section.light')];
+function onScroll(){
+  header.classList.toggle('solid',window.scrollY>40);
+  const probe=90;
+  let onLight=false;
+  lightSections.forEach(s=>{
+    const r=s.getBoundingClientRect();
+    if(r.top<=probe && r.bottom>=probe) onLight=true;
+  });
+  header.classList.toggle('on-light',onLight);
+}
+document.addEventListener('scroll',onScroll,{passive:true});onScroll();
+
+/* reveal on scroll */
+const io=new IntersectionObserver(es=>{
+  es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}});
+},{threshold:.15});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+/* product rail buttons */
+const rail=document.getElementById('prodRail');
+document.getElementById('railNext').addEventListener('click',()=>rail.scrollBy({left:360,behavior:'smooth'}));
+document.getElementById('railPrev').addEventListener('click',()=>rail.scrollBy({left:-360,behavior:'smooth'}));
+
+/* contact form -> mailto */
+document.getElementById('contactForm').addEventListener('submit',function(e){
+  e.preventDefault();
+  const name=document.getElementById('f_name').value;
+  const company=document.getElementById('f_company').value;
+  const email=document.getElementById('f_email').value;
+  const interest=document.getElementById('f_interest').value;
+  const msg=document.getElementById('f_msg').value;
+  const body=`Name: ${name}\nCompany: ${company}\nEmail: ${email}\nInterest: ${interest}\n\n${msg}`;
+  window.location.href=`mailto:hello@artibyte.co?subject=${encodeURIComponent('New inquiry — '+company)}&body=${encodeURIComponent(body)}`;
+});
+
+/* ===== Architecture diagram ===== */
+const products=[
+  {id:'artiplay',x:96, label:'ArtiPlay',   desc:"Sports academies — rosters, attendance, coaching and payments, run from one place."},
+  {id:'artistock',x:282,label:'ArtiStock',  desc:"Inventory & operations, tracked and trusted, location by location."},
+  {id:'artisnack',x:468,label:'ArtiSnack',  desc:"Food & retail, at the counter and behind it, kept in sync in real time."},
+  {id:'bht',      x:654,label:'BHT',        desc:"Business Health Toolkit — every connected number, reconciled into one honest view."},
+  {id:'vexai',    x:840,label:'VEX AI',     desc:"Automation for the parts of the business that shouldn't need a person, metered against real cost."},
+];
+const foundation=[
+  {id:'identity', x:80, label:'Identity',      desc:"One login, one set of permissions, enforced identically everywhere."},
+  {id:'data',     x:236,label:'Data',          desc:"A common schema and migration path, so every product speaks the same language."},
+  {id:'infra',    x:392,label:'Infra',         desc:"Hosting, monitoring and uptime — handled centrally, so no product reinvents it."},
+  {id:'billing',  x:548,label:'Billing',       desc:"Plans, invoicing and usage metering, enforced consistently across every account."},
+  {id:'ai',       x:704,label:'AI',            desc:"Model access and cost, metered per account — so AI never silently eats the margin."},
+  {id:'analytics',x:860,label:'Analytics',     desc:"Adoption and health signals, generated as a byproduct of normal use."},
+];
+const TOPY=90, HUBY=230, BOTY=370;
+const linksTopG=document.getElementById('linksTop');
+const linksBotG=document.getElementById('linksBot');
+const topG=document.getElementById('topNodes');
+const hubG=document.getElementById('hubNode');
+const botG=document.getElementById('botNodes');
+const svgNS='http://www.w3.org/2000/svg';
+
+function makeNode(g,item,y,cls){
+  const grp=document.createElementNS(svgNS,'g');
+  grp.setAttribute('class','node '+cls);
+  grp.setAttribute('data-id',item.id);
+  const c=document.createElementNS(svgNS,'circle');
+  c.setAttribute('cx',item.x);c.setAttribute('cy',y);c.setAttribute('r',cls==='top'?30:24);
+  grp.appendChild(c);
+  const t=document.createElementNS(svgNS,'text');
+  t.setAttribute('x',item.x);t.setAttribute('y',y+4);
+  t.textContent=item.label;
+  grp.appendChild(t);
+  g.appendChild(grp);
+  return grp;
+}
+products.forEach(p=>makeNode(topG,p,TOPY,'top'));
+foundation.forEach(f=>makeNode(botG,f,BOTY,'bot'));
+
+/* hub node — the "shared intelligence" layer */
+const hubGrp=document.createElementNS(svgNS,'g');
+hubGrp.setAttribute('class','node hub');
+hubGrp.setAttribute('data-id','hub');
+const hc=document.createElementNS(svgNS,'circle');
+hc.setAttribute('cx',480);hc.setAttribute('cy',HUBY);hc.setAttribute('r',38);
+hubGrp.appendChild(hc);
+const ht=document.createElementNS(svgNS,'text');
+ht.setAttribute('x',480);ht.setAttribute('y',HUBY-4);ht.setAttribute('font-size','10.5');
+const t1=document.createElementNS(svgNS,'tspan');t1.setAttribute('x',480);t1.setAttribute('dy','-2');t1.textContent='Shared';
+const t2=document.createElementNS(svgNS,'tspan');t2.setAttribute('x',480);t2.setAttribute('dy','13');t2.textContent='Intelligence';
+ht.appendChild(t1);ht.appendChild(t2);
+hubGrp.appendChild(ht);
+hubG.appendChild(hubGrp);
+
+products.forEach(p=>{
+  const line=document.createElementNS(svgNS,'line');
+  line.setAttribute('x1',p.x);line.setAttribute('y1',TOPY+30);
+  line.setAttribute('x2',480);line.setAttribute('y2',HUBY-38);
+  line.setAttribute('class','link');
+  line.setAttribute('data-top',p.id);
+  linksTopG.appendChild(line);
+});
+foundation.forEach(f=>{
+  const line=document.createElementNS(svgNS,'line');
+  line.setAttribute('x1',480);line.setAttribute('y1',HUBY+38);
+  line.setAttribute('x2',f.x);line.setAttribute('y2',BOTY-24);
+  line.setAttribute('class','link');
+  line.setAttribute('data-bot',f.id);
+  linksBotG.appendChild(line);
+});
+
+const diagInfo=document.getElementById('diagInfo');
+const allNodes=[...document.querySelectorAll('.node')];
+const allLinks=[...document.querySelectorAll('.link')];
+const bizband=document.getElementById('bizband');
+
+function setInfo(tag,title,desc){
+  diagInfo.innerHTML=`<span class="tag">${tag}</span><h4>${title}</h4><p>${desc}</p><p class="hint">Move your cursor over any node.</p>`;
+}
+function resetDiagram(){
+  allNodes.forEach(n=>n.classList.remove('active','dim'));
+  allLinks.forEach(l=>l.classList.remove('active','dim'));
+  bizband.classList.remove('active');
+}
+function hoverTop(id){
+  const item=products.find(p=>p.id===id);
+  allNodes.forEach(n=>{
+    const keep=n.dataset.id===id||n.classList.contains('bot')||n.dataset.id==='hub';
+    n.classList.toggle('active',keep);
+    n.classList.toggle('dim',!keep);
+  });
+  allLinks.forEach(l=>{
+    const match=l.dataset.top===id||l.hasAttribute('data-bot');
+    l.classList.toggle('active',match);
+    l.classList.toggle('dim',!match);
+  });
+  bizband.classList.add('active');
+  setInfo('Specialized product',item.label,item.desc);
+}
+function hoverBot(id){
+  const item=foundation.find(f=>f.id===id);
+  allNodes.forEach(n=>{
+    const keep=n.dataset.id===id||n.classList.contains('top')||n.dataset.id==='hub';
+    n.classList.toggle('active',keep);
+    n.classList.toggle('dim',!keep);
+  });
+  allLinks.forEach(l=>{
+    const match=l.dataset.bot===id||l.hasAttribute('data-top');
+    l.classList.toggle('active',match);
+    l.classList.toggle('dim',!match);
+  });
+  bizband.classList.add('active');
+  setInfo('Shared foundation layer',item.label,item.desc);
+}
+function hoverHub(){
+  allNodes.forEach(n=>n.classList.add('active'));
+  allLinks.forEach(l=>l.classList.add('active'));
+  bizband.classList.add('active');
+  setInfo('The connective layer','Shared Intelligence',"Every product feeds this layer, and every foundation service draws from it — the reason six layers feel like one system instead of six.");
+}
+allNodes.forEach(n=>{
+  n.addEventListener('mouseenter',()=>{
+    if(n.classList.contains('top')) hoverTop(n.dataset.id);
+    else if(n.dataset.id==='hub') hoverHub();
+    else hoverBot(n.dataset.id);
+  });
+  n.addEventListener('mouseleave',()=>{resetDiagram();setInfo('Hover the diagram','Everything shares one core.',"Six shared layers — identity, data, infrastructure, billing, AI and analytics — carry every product above them. Nothing gets rebuilt twice.");});
+  n.addEventListener('touchstart',(e)=>{
+    e.preventDefault();
+    if(n.classList.contains('top')) hoverTop(n.dataset.id);
+    else if(n.dataset.id==='hub') hoverHub();
+    else hoverBot(n.dataset.id);
+  },{passive:false});
+});
+
+/* ===== Product moments ===== */
+const ICONS={
+  'circle-user':'<circle cx="14" cy="10" r="4" stroke="currentColor" stroke-width="1.5" fill="none"/><path d="M5 23c0-5 4-8 9-8s9 3 9 8" stroke="currentColor" stroke-width="1.5" fill="none"/>',
+  'check':'<path d="M6 14l6 6 10-12" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>',
+  'whistle':'<circle cx="10" cy="16" r="6" stroke="currentColor" stroke-width="1.5" fill="none"/><path d="M16 14h9v5a4 4 0 01-4 4" stroke="currentColor" stroke-width="1.5" fill="none"/>',
+  'card':'<rect x="4" y="8" width="20" height="14" rx="2" stroke="currentColor" stroke-width="1.5" fill="none"/><path d="M4 13h20" stroke="currentColor" stroke-width="1.5"/>',
+  'spark':'<path d="M14 4l2.6 7.4L24 14l-7.4 2.6L14 24l-2.6-7.4L4 14l7.4-2.6z" stroke="currentColor" stroke-width="1.3" fill="none" stroke-linejoin="round"/>'
+};
+const PRODUCT_MOMENTS={
+  artiplay:{
+    eyebrow:'ArtiPlay',
+    statement:'The operating system for a sports academy.',
+    lede:"Rosters, attendance, coaching and payments — the entire academy run from one place, with an AI layer watching for what needs your attention.",
+    dash:'<svg viewBox="0 0 700 300" xmlns="http://www.w3.org/2000/svg"><rect width="700" height="300" fill="var(--graphite2)"/><rect width="700" height="46" fill="var(--obsidian)"/><circle cx="28" cy="23" r="7" fill="var(--bronze)"/><rect x="46" y="18" width="120" height="10" rx="3" fill="var(--line-dark2)"/><circle cx="660" cy="23" r="9" fill="var(--bronze-light)"/><rect x="24" y="70" width="150" height="26" rx="13" fill="rgba(199,138,77,.16)"/><text x="99" y="88" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#f0ede6">U-14 Basketball</text><circle cx="40" cy="128" r="9" fill="var(--bronze)"/><rect x="60" y="122" width="110" height="7" rx="2" fill="var(--line-dark2)"/><rect x="590" y="122" width="60" height="16" rx="8" fill="rgba(199,138,77,.25)"/><circle cx="40" cy="160" r="9" fill="rgba(199,138,77,.4)"/><rect x="60" y="154" width="90" height="7" rx="2" fill="var(--line-dark2)"/><rect x="590" y="154" width="60" height="16" rx="8" fill="var(--line-dark2)"/><circle cx="40" cy="192" r="9" fill="rgba(199,138,77,.4)"/><rect x="60" y="186" width="130" height="7" rx="2" fill="var(--line-dark2)"/><rect x="590" y="186" width="60" height="16" rx="8" fill="rgba(199,138,77,.25)"/><rect x="230" y="120" width="230" height="90" rx="10" fill="var(--obsidian)" stroke="var(--line-dark2)"/><text x="246" y="142" font-family="Inter,sans-serif" font-size="10" fill="var(--mist2)">Attendance this week</text><text x="246" y="172" font-family="Fraunces,serif" font-size="22" fill="#f5f2ec">94%</text><rect x="490" y="120" width="186" height="90" rx="10" fill="var(--obsidian)" stroke="var(--line-dark2)"/><text x="506" y="142" font-family="Inter,sans-serif" font-size="10" fill="var(--mist2)">Dues collected</text><text x="506" y="172" font-family="Fraunces,serif" font-size="22" fill="#f5f2ec">₱84,200</text></svg>',
+    features:[
+      {label:'Players',desc:"Every athlete's profile, progress and history in one roster.",icon:'circle-user'},
+      {label:'Attendance',desc:'Check-ins logged automatically — no more paper sign-in sheets.',icon:'check'},
+      {label:'Coaches',desc:'Assignments, schedules and notes, organized by team.',icon:'whistle'},
+      {label:'Payments',desc:'Dues, plans and reminders, tracked without spreadsheets.',icon:'card'},
+      {label:'ByteSense',desc:"The academy's AI layer — flags no-shows, overdue payments and skill gaps before you have to ask.",icon:'spark'}
+    ],
+    mobile:'Parents and coaches carry it in their pocket — check-ins, payment reminders and progress updates, wherever they are.'
+  },
+  artistock:{eyebrow:'ArtiStock',statement:'Know your stock. Know your real cost.',lede:'The full moment for ArtiStock — dashboard, transfers and reporting — is next in line.'},
+  artisnack:{eyebrow:'ArtiSnack',statement:'Every sale, synced the second it happens.',lede:'The full moment for ArtiSnack is next in line.'},
+  bht:{eyebrow:'Business Health Toolkit',statement:'One honest number, from every source you have.',lede:'The full moment for Business Health Toolkit is next in line.'},
+  vexai:{eyebrow:'VEX AI',statement:"The work that shouldn't need a person — automated.",lede:'The full moment for VEX AI is next in line.'}
+};
+const pmoment=document.getElementById('pmoment');
+const pmomentContent=document.getElementById('pmomentContent');
+const pmomentClose=document.getElementById('pmomentClose');
+
+function renderMoment(id){
+  const m=PRODUCT_MOMENTS[id];
+  if(!m) return;
+  let html=`<span class="m-eyebrow">${m.eyebrow}</span><h2>${m.statement}</h2><p class="m-lede">${m.lede}</p>`;
+  if(m.dash) html+=`<div class="m-dash">${m.dash}</div>`;
+  if(m.features){
+    html+='<div class="m-grid">';
+    m.features.forEach(f=>{html+=`<div class="m-feat"><svg class="icon" viewBox="0 0 28 28" fill="none">${ICONS[f.icon]||''}</svg><h4>${f.label}</h4><p>${f.desc}</p></div>`;});
+    html+='</div>';
+  }
+  if(m.mobile){
+    html+=`<div class="m-mobile"><svg class="m-phone" viewBox="0 0 100 200" fill="none"><rect x="4" y="4" width="92" height="192" rx="18" fill="var(--obsidian)" stroke="var(--line-dark2)"/><rect x="16" y="24" width="68" height="10" rx="3" fill="var(--line-dark2)"/><rect x="16" y="42" width="68" height="40" rx="8" fill="rgba(199,138,77,.16)"/><rect x="16" y="90" width="40" height="8" rx="3" fill="var(--line-dark2)"/><rect x="16" y="104" width="55" height="8" rx="3" fill="var(--line-dark2)"/><circle cx="50" cy="180" r="7" stroke="var(--line-dark2)"/></svg><p>${m.mobile}</p></div>`;
+  }
+  if(!m.features && !m.dash){
+    html+='<p class="m-soon">Full interactive moment for this product is next in line — dashboard preview, feature walkthrough and mobile view.</p>';
+  }
+  pmomentContent.innerHTML=html;
+}
+function openMoment(id){renderMoment(id);pmoment.classList.add('open');pmoment.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';}
+function closeMoment(){pmoment.classList.remove('open');pmoment.setAttribute('aria-hidden','true');document.body.style.overflow='';}
+document.querySelectorAll('.penter[data-moment]').forEach(a=>{
+  a.addEventListener('click',e=>{e.preventDefault();openMoment(a.dataset.moment);});
+});
+pmomentClose.addEventListener('click',closeMoment);
+pmoment.addEventListener('click',e=>{if(e.target===pmoment) closeMoment();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape' && pmoment.classList.contains('open')) closeMoment();});
+
+/* =====================================================================
+   TALK TO ARTIBYTE — guided quote widget (v1, no AI, rule-based)
+   ---------------------------------------------------------------------
+   EDIT ME: everything under TALK_CATALOG is placeholder pricing.
+   Replace the `price` values (in PHP) with your real numbers whenever
+   you're ready — nothing else in the code needs to change.
+   ===================================================================== */
+const TALK_CATALOG = {
+  currency: '₱',
+  industries: [
+    {
+      id:'artiplay', name:'ArtiPlay', tagline:'Sports academy operations',
+      base:{ label:'Base system setup & configuration', price:45000 },
+      modules:[
+        {id:'roster',    label:'Player Roster & Profiles',      note:'Unlimited athlete profiles',        price:15000},
+        {id:'attendance',label:'Attendance Tracking',           note:'QR or manual check-in',              price:12000},
+        {id:'payments',  label:'Payments & Dues Management',    note:'GCash / Maya integration',           price:18000},
+        {id:'coaches',   label:'Coach Scheduling',              note:'Assignments & session notes',        price:10000},
+        {id:'bytesense', label:'ByteSense AI Layer',            note:'Flags no-shows & overdue dues',      price:25000},
+      ],
+      hasLocations:true, locationPrice:8000
+    },
+    {
+      id:'artistock', name:'ArtiStock', tagline:'Inventory & operations',
+      base:{ label:'Base inventory system setup', price:40000 },
+      modules:[
+        {id:'multiloc',  label:'Multi-location Stock Tracking', note:'Per-branch inventory',               price:16000},
+        {id:'cogs',      label:'COGS & Landed Cost Tracking',   note:'True cost per item',                 price:14000},
+        {id:'po',        label:'Purchase Order & Suppliers',    note:'PO workflow & supplier records',     price:12000},
+        {id:'vexpipe',   label:'Vex AI Import Pipeline',        note:'Auto-extract from supplier docs',    price:20000},
+        {id:'atp',       label:'ATP Dashboard',                 note:'Available-to-promise view',          price:15000},
+      ],
+      hasLocations:true, locationPrice:7000
+    },
+    {
+      id:'artisnack', name:'ArtiSnack', tagline:'Food & retail POS',
+      base:{ label:'Base POS & sync setup', price:42000 },
+      modules:[
+        {id:'pos',       label:'Point-of-Sale Terminal Setup',  note:'Counter-ready POS',                  price:14000},
+        {id:'sync',      label:'Real-time Inventory Sync',      note:'Sale → stock, instantly',            price:16000},
+        {id:'gpay',      label:'GCash / Maya Integration',      note:'Digital payments at checkout',       price:10000},
+        {id:'multibr',   label:'Multi-branch Consolidation',    note:'One view across branches',           price:18000},
+        {id:'bhtlink',   label:'Business Health Toolkit Link',  note:'Feeds your financial dashboard',     price:15000},
+      ],
+      hasLocations:true, locationPrice:9000
+    },
+    {
+      id:'bht', name:'Business Health Toolkit', tagline:'Business intelligence',
+      base:{ label:'Base financial dashboard setup', price:38000 },
+      modules:[
+        {id:'investor',  label:'Investor Dashboard',            note:'Share-ready financial view',         price:18000},
+        {id:'recon',     label:'Multi-source Reconciliation',   note:'One honest number, every source',    price:20000},
+        {id:'reports',   label:'Automated Financial Reports',   note:'Scheduled, no manual pulls',         price:14000},
+        {id:'forecast',  label:'Cash Flow Forecasting',         note:'Look-ahead projections',             price:16000},
+      ],
+      hasLocations:false
+    },
+    {
+      id:'vexai', name:'VEX AI', tagline:'AI automation',
+      base:{ label:'Base automation setup', price:35000 },
+      modules:[
+        {id:'extract',   label:'Document / Data Extraction',    note:'The Vex AI engine',                  price:22000},
+        {id:'workflow',  label:'Workflow Automation Module',    note:'Rules-based task automation',        price:20000},
+        {id:'aiint',     label:'AI Model Integration',          note:'Gemini / Grok / OpenAI layer',       price:18000},
+        {id:'customrep', label:'Custom Reporting Automation',   note:'Auto-generated reports',             price:15000},
+      ],
+      hasLocations:false
+    }
+  ],
+  other:{ id:'other', name:'Something else', tagline:"I have a problem, not a product in mind" }
+};
+
+function tpPeso(n){ return TALK_CATALOG.currency + Math.round(n).toLocaleString('en-PH'); }
+
+let tpState = { step:'welcome', industryId:null, selectedModules:new Set(), locations:1 };
+
+const orbWrap=document.getElementById('orbWrap');
+const orbBtn=document.getElementById('orbBtn');
+const talkPanel=document.getElementById('talkPanel');
+const tpClose=document.getElementById('tpClose');
+const tpBody=document.getElementById('tpBody');
+const tpFoot=document.getElementById('tpFoot');
+const tpSub=document.getElementById('tpSub');
+
+function tpOpen(){
+  talkPanel.classList.add('open');
+  talkPanel.setAttribute('aria-hidden','false');
+  if(tpState.step==='welcome' && !tpBody.innerHTML.trim()) tpRender();
+  VexSpatialEngine.recalculate({force:true});
+}
+function tpCloseFn(){
+  talkPanel.classList.remove('open');
+  talkPanel.setAttribute('aria-hidden','true');
+  VexSpatialEngine.recalculate({force:true});
+}
+tpClose.addEventListener('click',tpCloseFn);
+
+/* close panel when clicking anywhere outside it (and outside the orb) */
+document.addEventListener('click',function(e){
+  if(!talkPanel.classList.contains('open')) return;
+  if(orbDragging || orbMoved) return; // don't close right after a drag
+  const clickedInsidePanel = talkPanel.contains(e.target);
+  const clickedOrb = orbWrap.contains(e.target);
+  if(!clickedInsidePanel && !clickedOrb){
+    tpCloseFn();
+  }
+});
+
+/* === START: DRAGGABLE ORB — surgical patch (drag engine, same pattern as Livity's ball) === */
+let orbDragging=false, orbMoved=false;
+let orbStartX=0, orbStartY=0, orbOffsetX=0, orbOffsetY=0;
+
+/* =====================================================================
+   VEX AI ARCHITECTURE — Content Brain + UI Brain + Screen Observer
+   ===================================================================== */
+
+/* ---- VIEWPORT: totoong visible area — visualViewport kung available, hindi lang innerWidth/Height ---- */
+const VexViewport = (function(){
+  function get(){
+    if(window.visualViewport){
+      const vv=window.visualViewport;
+      return { width:vv.width, height:vv.height, offsetLeft:vv.offsetLeft, offsetTop:vv.offsetTop };
+    }
+    return { width:window.innerWidth, height:window.innerHeight, offsetLeft:0, offsetTop:0 };
+  }
+  return { get };
+})();
+
+/* =====================================================================
+   FOCUS TRACKER — "Ano ang kasalukuyang tinitingnan/ginagalaw ng user?"
+   (Kailangan bago ang VexUIBrain — ginagamit ito ng scorePosition/getSafeZones)
+   ===================================================================== */
+const VexFocusTracker = (function(){
+  const INTERACTION_DECAY_MS = 6000; // kalimutan ang interaction pagkalipas nito
+
+  const vexState = {
+    lastInteraction: 0,        // timestamp
+    focusedElement: null,      // document.activeElement o recently clicked/tapped el
+    interactionRect: null      // cached bounding rect noong ma-set
+  };
+
+  function isRelevantTarget(el){
+    if(!el || el===document.body || el===document.documentElement) return false;
+    if(orbWrap.contains(el) || talkPanel.contains(el)) return false;
+    return true;
+  }
+
+  function record(el){
+    if(!isRelevantTarget(el)) return;
+    vexState.focusedElement = el;
+    vexState.lastInteraction = Date.now();
+    vexState.interactionRect = el.getBoundingClientRect();
+  }
+
+  function init(){
+    // totoong focus (keyboard nav, form fields, atbp.)
+    document.addEventListener('focus', (e)=>record(e.target), {capture:true, passive:true});
+    // click/tap = malakas na signal ng "current focus" (hal. pricing card na kina-click)
+    document.addEventListener('click', (e)=>record(e.target), {passive:true});
+    document.addEventListener('touchstart', (e)=>record(e.target), {passive:true});
+  }
+
+  /* Ibinabalik ang current interaction rect, pero NULL na kung luma na (expired) */
+  function getFocusRect(){
+    if(!vexState.focusedElement) return null;
+    if(Date.now() - vexState.lastInteraction > INTERACTION_DECAY_MS) return null;
+    // i-refresh ang rect kung baka nagbago ang layout
+    try{
+      vexState.interactionRect = vexState.focusedElement.getBoundingClientRect();
+    }catch(e){ return null; }
+    const r=vexState.interactionRect;
+    if(r.width<=0 || r.height<=0) return null;
+    return r;
+  }
+
+  return { init, getFocusRect, state: vexState };
+})();
+
+/* =====================================================================
+   DO NOT DISTURB — huwag pabago-bagohin ang posisyon habang may
+   active na interaction: typing, selecting, video, modal, reading
+   ===================================================================== */
+const VexDoNotDisturb = (function(){
+  const activeReasons = new Set();
+  let pendingRecalc = false;
+  const TYPING_IDLE_MS = 1200;
+  const READING_DWELL_MS = 1500;
+  let typingTimer=null, readingTimer=null;
+
+  function lock(reason){ activeReasons.add(reason); }
+  function unlock(reason){
+    activeReasons.delete(reason);
+    if(activeReasons.size===0 && pendingRecalc){
+      pendingRecalc=false;
+      VexUIBrain.reposition(true); // i-recalculate ngayong wala nang aktibong lock
+    }
+  }
+  function isLocked(){ return activeReasons.size>0; }
+  function queueRecalc(){ pendingRecalc=true; }
+
+  function isTextInput(el){
+    if(!el) return false;
+    const tag=(el.tagName||'').toLowerCase();
+    return tag==='input' || tag==='textarea' || el.isContentEditable;
+  }
+  function isModalLike(el){
+    return !!(el && el.closest && el.closest('[role="dialog"],[role="alertdialog"],dialog,.modal,.talkpanel'));
+  }
+  function isReadableBlock(el){
+    return !!(el && el.closest && el.closest('p,article,li,.promise,.pcell,.lede'));
+  }
+
+  function initTypingWatch(){
+    const onType=(e)=>{
+      if(!isTextInput(e.target)) return;
+      lock('typing');
+      clearTimeout(typingTimer);
+      typingTimer=setTimeout(()=>unlock('typing'), TYPING_IDLE_MS);
+    };
+    document.addEventListener('input', onType, {passive:true});
+    document.addEventListener('keydown', onType, {passive:true});
+  }
+  function initSelectionWatch(){
+    document.addEventListener('selectionchange', ()=>{
+      const sel=window.getSelection();
+      if(sel && sel.toString().length>0) lock('selecting');
+      else unlock('selecting');
+    });
+  }
+  function initVideoWatch(){
+    const isVideo=(el)=>(el.tagName||'').toLowerCase()==='video';
+    document.addEventListener('play', (e)=>{ if(isVideo(e.target)) lock('video'); }, true);
+    document.addEventListener('pause',(e)=>{ if(isVideo(e.target)) unlock('video'); }, true);
+    document.addEventListener('ended',(e)=>{ if(isVideo(e.target)) unlock('video'); }, true);
+  }
+  function initModalFocusWatch(){
+    document.addEventListener('focusin', (e)=>{ if(isModalLike(e.target)) lock('modal-interaction'); });
+    document.addEventListener('focusout', ()=>{
+      setTimeout(()=>{
+        if(!isModalLike(document.activeElement)) unlock('modal-interaction');
+      }, 50);
+    });
+  }
+  function initReadingWatch(){
+    document.addEventListener('mousemove', (e)=>{
+      clearTimeout(readingTimer);
+      unlock('reading');
+      const el=document.elementFromPoint(e.clientX,e.clientY);
+      if(isReadableBlock(el)){
+        readingTimer=setTimeout(()=>lock('reading'), READING_DWELL_MS);
+      }
+    }, {passive:true});
+  }
+
+  function init(){
+    initTypingWatch();
+    initSelectionWatch();
+    initVideoWatch();
+    initModalFocusWatch();
+    initReadingWatch();
+  }
+  return { init, isLocked, queueRecalc, lock, unlock };
+})();
+
+/* ---- UI BRAIN: "Saan ako dapat?" (with SAFE ZONE, hindi lang raw collision) ---- */
+const VexUIBrain = (function(){
+  const MARGIN = 28;
+  const SAFE_MARGIN = 20; // breathing room PALIBOT ng bawat obstacle
+  const SAFE_GAP = 16;    // minimum na agwat sa pagitan ni VEX at ng safe-zone boundary
+  const SIDE_ORDER = ['left','right','top','bottom'];
+  let preferredSide = 'left';
+  let currentSide = null;
+  let userPinned = false; // true once user manually drags — UI Brain backs off
+
+  function getOrbSize(){
+    return { w: orbWrap.offsetWidth||60, h: orbWrap.offsetHeight||60 };
+  }
+
+  function isSelfOrDescendant(el){
+    return !!(el && (el===orbWrap || el===talkPanel ||
+      (orbWrap.contains && orbWrap.contains(el)) ||
+      (talkPanel.contains && talkPanel.contains(el))));
+  }
+  function isLikelyObstacle(el){
+    if(!el || el===document.body || el===document.documentElement) return false;
+    if(isSelfOrDescendant(el)) return false;
+    const cs=getComputedStyle(el);
+    if(cs.position==='fixed' || cs.position==='sticky'){
+      const r=el.getBoundingClientRect();
+      if(r.width>0 && r.height>0) return true;
+    }
+    return false;
+  }
+  /* Lahat ng "obstacle" elements na dapat iwasan sa screen: sticky header,
+     bukas na modals/dialogs/drawers/cookie banners — maliban sa sarili ni VEX */
+  function scanObstacles(){
+    const sel='header, .pmoment.open .pmoment-inner, [role="dialog"], [role="alertdialog"], dialog, .modal, .drawer, .cookie, .cookie-banner, .consent';
+    return [...document.querySelectorAll(sel)].filter(el=>!isSelfOrDescendant(el) && el.offsetParent!==null);
+  }
+
+  /* Palawakin ang isang rect ng margin sa apat na direksyon — ito ang "safe zone" */
+  function inflateRect(rect, margin){
+    return {
+      left: rect.left - margin,
+      right: rect.right + margin,
+      top: rect.top - margin,
+      bottom: rect.bottom + margin,
+      width: rect.width + margin*2,
+      height: rect.height + margin*2
+    };
+  }
+
+  /* Lahat ng dapat pag-ingatan: DOM obstacles + kasalukuyang focus/interaction area */
+  function getSafeZones(){
+    const rawObstacles = scanObstacles().map(el=>el.getBoundingClientRect());
+    const focusRect = VexFocusTracker.getFocusRect();
+    if(focusRect) rawObstacles.push(focusRect);
+    // bawat isa ay pinapalawak ng SAFE_MARGIN — hindi na raw rect lang
+    return rawObstacles.map(r=>inflateRect(r, SAFE_MARGIN));
+  }
+
+  /* --- SPACE DETECTION: gamit na ang SAFE ZONES + totoong visualViewport --- */
+  function calculateAvailableSpace(){
+    const viewport=VexViewport.get();
+    const vw=viewport.width, vh=viewport.height;
+    const zones=getSafeZones();
+    let availableLeft=vw, availableRight=vw, availableTop=vh, availableBottom=vh;
+
+    zones.forEach(z=>{
+      availableLeft = Math.min(availableLeft, Math.max(0, z.left - viewport.offsetLeft));
+      availableRight = Math.min(availableRight, Math.max(0, (viewport.offsetLeft+vw) - z.right));
+      availableTop = Math.min(availableTop, Math.max(0, z.top - viewport.offsetTop));
+      availableBottom = Math.min(availableBottom, Math.max(0, (viewport.offsetTop+vh) - z.bottom));
+    });
+
+    return { availableLeft, availableRight, availableTop, availableBottom };
+  }
+
+  function spaceForSide(space, side){
+    if(side==='left')   return space.availableLeft;
+    if(side==='right')  return space.availableRight;
+    if(side==='top')    return space.availableTop;
+    if(side==='bottom') return space.availableBottom;
+  }
+  function requiredSpaceForSide(side){
+    const {w,h}=getOrbSize();
+    // width/height + margin + SAFE_GAP (dagdag na agwat, hindi lang bare minimum)
+    return (side==='left'||side==='right') ? (w+MARGIN*2+SAFE_GAP) : (h+MARGIN*2+SAFE_GAP);
+  }
+
+  function candidatePosition(side){
+    const {w,h}=getOrbSize();
+    const viewport=VexViewport.get();
+    const vw=viewport.width, vh=viewport.height;
+    const ox=viewport.offsetLeft, oy=viewport.offsetTop;
+    if(side==='left')   return {left:ox+MARGIN, top:oy+vh/2-h/2};
+    if(side==='right')  return {left:ox+vw-w-MARGIN, top:oy+vh/2-h/2};
+    if(side==='top')    return {left:ox+vw/2-w/2, top:oy+MARGIN};
+    if(side==='bottom') return {left:ox+vw/2-w/2, top:oy+vh-h-MARGIN};
+  }
+
+  function rectsOverlap(a,b){
+    return !(a.right<b.left||a.left>b.right||a.bottom<b.top||a.top>b.bottom);
+  }
+
+  /* Verification: hindi lang "malayo sa obstacle" kundi "may SAFE_GAP na agwat" */
+  function verifyPositionClear(side){
+    const pos=candidatePosition(side);
+    const {w,h}=getOrbSize();
+    const orbRect={left:pos.left, top:pos.top, right:pos.left+w, bottom:pos.top+h};
+    // i-check laban sa mga safe zones (obstacle + SAFE_MARGIN), tapos dagdag pa ng SAFE_GAP
+    const zones=getSafeZones();
+    for(const z of zones){
+      const gapZone=inflateRect(
+        {left:z.left, top:z.top, right:z.right, bottom:z.bottom},
+        SAFE_GAP
+      );
+      if(rectsOverlap(orbRect, gapZone)) return false;
+    }
+    // dagdag na sanity check gamit ang elementsFromPoint sa gitna
+    const viewport=VexViewport.get();
+    const cx=pos.left+w/2, cy=pos.top+h/2;
+    if(cx<viewport.offsetLeft||cy<viewport.offsetTop
+       ||cx>viewport.offsetLeft+viewport.width||cy>viewport.offsetTop+viewport.height) return false;
+    const stack=document.elementsFromPoint(cx,cy);
+    for(const el of stack){
+      if(isSelfOrDescendant(el)) continue;
+      if(isLikelyObstacle(el)) return false;
+    }
+    return true;
+  }
+
+  /* --- POSITION SCORING ENGINE --- */
+  function distanceBetweenRects(a,b){
+    // 0 kapag nag-o-overlap; kung hindi, edge-to-edge distance
+    const dx=Math.max(a.left-b.right, b.left-a.right, 0);
+    const dy=Math.max(a.top-b.bottom, b.top-a.bottom, 0);
+    return Math.sqrt(dx*dx+dy*dy);
+  }
+
+  function scorePosition(side){
+    const {w,h}=getOrbSize();
+    const pos=candidatePosition(side);
+    const orbRect={left:pos.left, top:pos.top, right:pos.left+w, bottom:pos.top+h};
+    const space=calculateAvailableSpace();
+
+    let overlapPenalty=0;
+    let minObstructionDistance=Infinity;
+    getSafeZones().forEach(z=>{
+      if(rectsOverlap(orbRect,z)) overlapPenalty += 500; // malaking penalty bawat overlap
+      else minObstructionDistance = Math.min(minObstructionDistance, distanceBetweenRects(orbRect,z));
+    });
+    if(!isFinite(minObstructionDistance)) minObstructionDistance=300; // walang obstacle malapit
+
+    // distansya mula sa kasalukuyang focus/interaction area ng user — mas malayo, mas mabuti
+    const focusRect=VexFocusTracker.getFocusRect();
+    let focusDistanceBonus=0;
+    if(focusRect){
+      focusDistanceBonus = Math.min(distanceBetweenRects(orbRect,focusRect), 300);
+      if(rectsOverlap(orbRect,focusRect)) overlapPenalty += 400;
+    }
+
+    // dapat buo siyang nasa loob ng totoong visible viewport
+    const viewport=VexViewport.get();
+    const fullyVisible = orbRect.left>=viewport.offsetLeft && orbRect.top>=viewport.offsetTop
+      && orbRect.right<=viewport.offsetLeft+viewport.width && orbRect.bottom<=viewport.offsetTop+viewport.height;
+    const visibilityScore = fullyVisible ? 200 : -1000;
+
+    const preferredSideBonus = (side===preferredSide) ? 150 : 0;
+    const availableSpaceScore = spaceForSide(space, side) * 0.5;
+
+    return availableSpaceScore
+      + Math.min(minObstructionDistance,300)
+      + focusDistanceBonus*0.5
+      + visibilityScore
+      + preferredSideBonus
+      - overlapPenalty;
+  }
+
+  const HYSTERESIS_THRESHOLD = 60; // kailangan ng score margin na ito bago pumayag lumipat
+
+  function computeBestSide(){
+    let bestSide=preferredSide, bestScore=-Infinity;
+    SIDE_ORDER.forEach(side=>{
+      const s=scorePosition(side);
+      if(s>bestScore){ bestScore=s; bestSide=side; }
+    });
+
+    // HYSTERESIS: kung kasing-close lang ng score ang bago sa kasalukuyan,
+    // manatili sa kasalukuyang side — iwasan ang flicker
+    if(currentSide && currentSide!==bestSide){
+      const currentScore = scorePosition(currentSide);
+      if(bestScore - currentScore < HYSTERESIS_THRESHOLD){
+        return currentSide; // hindi sapat ang advantage — huwag lumipat
+      }
+    }
+    return bestSide;
+  }
+
+  /* --- STABILITY CHECK: gamit sa "detection ≠ reaction" — huwag tumalon nang walang totoong banggaan --- */
+  function isCurrentPositionColliding(){
+    if(!currentSide) return true;
+    const {w,h}=getOrbSize();
+    const pos=candidatePosition(currentSide);
+    const orbRect={left:pos.left, top:pos.top, right:pos.left+w, bottom:pos.top+h};
+    for(const z of getSafeZones()){
+      if(rectsOverlap(orbRect,z)) return true;
+    }
+    const focusRect=VexFocusTracker.getFocusRect();
+    if(focusRect && rectsOverlap(orbRect,focusRect)) return true;
+    return false;
+  }
+
+  /* --- RAPID-CHANGE DETECTION: i-disable ang animation kung sunod-sunod ang mga pagbabago --- */
+  let repositionTimestamps = [];
+  const RAPID_WINDOW_MS = 1000;
+  const RAPID_COUNT_THRESHOLD = 4;
+
+  function isChangingRapidly(){
+    const now=Date.now();
+    repositionTimestamps.push(now);
+    repositionTimestamps = repositionTimestamps.filter(t => now-t < RAPID_WINDOW_MS);
+    return repositionTimestamps.length > RAPID_COUNT_THRESHOLD;
+  }
+
+  function applyPosition(side, animate=true){
+    const pos=candidatePosition(side);
+    const rapid = isChangingRapidly();
+    const shouldAnimate = animate && !rapid;
+
+    orbWrap.style.transition = shouldAnimate
+      ? 'left .28s cubic-bezier(.2,.8,.2,1), top .28s cubic-bezier(.2,.8,.2,1)'
+      : 'none';
+    orbWrap.style.left=pos.left+'px';
+    orbWrap.style.top=pos.top+'px';
+    orbWrap.style.right='auto';
+    orbWrap.style.bottom='auto';
+    currentSide=side;
+  }
+  function reposition(force){
+    if(userPinned) return;
+    if(!force && typeof VexDoNotDisturb!=='undefined' && VexDoNotDisturb.isLocked()){
+      VexDoNotDisturb.queueRecalc(); // recalculate lang pagkatapos ma-unlock
+      return;
+    }
+    const side=computeBestSide();
+    if(side!==currentSide) applyPosition(side);
+  }
+
+  /* Event detection ≠ event reaction: huwag gumalaw hangga't hindi TALAGANG naba-block */
+  function repositionIfNeeded(){
+    if(userPinned) return;
+    if(!isCurrentPositionColliding()) return; // stable — walang dahilan para gumalaw
+    reposition(); // may totoong banggaan — saka lang mag-recompute
+  }
+
+  return {
+    reposition,
+    repositionIfNeeded,
+    calculateAvailableSpace,
+    getSafeZones,
+    scanObstacles,
+    scorePosition,
+    isCurrentPositionColliding,
+    setPreferredSide(side){ preferredSide=side; reposition(); },
+    pinByUser(){ userPinned=true; },
+    unpin(){ userPinned=false; reposition(); },
+    init(){ applyPosition(preferredSide,false); }
+  };
+})();
+
+/* =====================================================================
+   SCREEN OBSERVER + EVENT LAYER
+   Priority system: HIGH (immediate) → MEDIUM (light debounce) → LOW (heavy throttle)
+   ===================================================================== */
+const VexScreenObserver = (function(){
+  function debounce(fn,ms){ let t; return (...a)=>{clearTimeout(t); t=setTimeout(()=>fn(...a),ms);}; }
+  function throttle(fn,ms){
+    let last=0, pending=null;
+    return (...a)=>{
+      const now=Date.now();
+      if(now-last>=ms){ last=now; fn(...a); }
+      else{
+        clearTimeout(pending);
+        pending=setTimeout(()=>{ last=Date.now(); fn(...a); }, ms-(now-last));
+      }
+    };
+  }
+
+  /* ---- EVENT PRIORITY LAYER ----
+     HIGH   = definitely may structural change → full forced recompute
+     MEDIUM/LOW = detection lang; huwag gumalaw maliban kung may TOTOONG banggaan
+                  (event detection ≠ event reaction — huwag habulin ang user) */
+  const respondHigh   = (reason)=>{ VexSpatialEngine.recalculate({force:true, reason}); };
+  const respondMedium = debounce((reason)=>{ VexSpatialEngine.recalculate({reason}); }, 150);
+  const respondLow    = throttle((reason)=>{ VexSpatialEngine.recalculate({reason}); }, 400);
+
+  const EVENT_PRIORITY = {
+    // HIGH — dapat agad tumugon si VEX, malinaw na obstruction ang nangyari
+    'modal-opened':        'high',
+    'drawer-opened':       'high',
+    'keyboard-appeared':   'high',
+    'viewport-resized':    'high',
+    'orientation-changed': 'high',
+    // MEDIUM — malamang may pagbabago pero hindi kagyat
+    'cta-clicked':         'medium',
+    'menu-opened':         'medium',
+    'section-expanded':    'medium',
+    'viewport-scrolled':   'medium', // pinch-zoom pan via visualViewport
+    // LOW — madalas mangyari, hindi laging obstruction
+    'scroll':              'low',
+    'mousemove':           'low',
+    'hover':               'low',
+  };
+
+  function dispatch(eventName){
+    const level = EVENT_PRIORITY[eventName] || 'medium';
+    if(level==='high') respondHigh(eventName);
+    else if(level==='medium') respondMedium(eventName);
+    else respondLow(eventName);
+  }
+
+  /* ---- RESIZE OBSERVER: internal size changes (sidebar/drawer/modal/keyboard) ---- */
+  let resizeObserver = null;
+  const watchedElements = new WeakSet();
+  let lastViewportHeight = window.innerHeight;
+
+  function watchElement(el){
+    if(!resizeObserver || watchedElements.has(el)) return;
+    resizeObserver.observe(el);
+    watchedElements.add(el);
+  }
+
+  function initResizeObserver(){
+    if(typeof ResizeObserver === 'undefined') return;
+    resizeObserver = new ResizeObserver(()=>{
+      dispatch('viewport-resized');
+    });
+    resizeObserver.observe(document.documentElement);
+    ['.talkpanel', '.pmoment-inner', '.pmoment'].forEach(sel=>{
+      document.querySelectorAll(sel).forEach(watchElement);
+    });
+  }
+
+  /* visualViewport watch: mobile keyboard, zoom, at pan — mas reliable kaysa window.resize lang */
+  function initViewportWatch(){
+    if(!window.visualViewport) return;
+    window.visualViewport.addEventListener('resize', ()=>{
+      const heightDrop = lastViewportHeight - window.visualViewport.height;
+      if(heightDrop > 120){ // malaking pagbaba ng height = malamang keyboard
+        dispatch('keyboard-appeared');
+      } else {
+        dispatch('viewport-resized'); // pwede ring zoom
+      }
+      lastViewportHeight = window.visualViewport.height;
+    });
+    window.visualViewport.addEventListener('scroll', ()=>{
+      dispatch('viewport-scrolled'); // pan habang naka-zoom
+    }, {passive:true});
+  }
+
+  /* ---- MUTATION OBSERVER: dynamically generated UI detection ---- */
+  const MODAL_LIKE_SELECTOR = '[role="dialog"],[role="alertdialog"],dialog,.modal,.drawer,.sidebar,.side-nav,.cookie,.cookie-banner,.consent';
+
+  function classifyMutation(addedNode){
+    if(addedNode.nodeType!==1) return null;
+    let matches=false;
+    try{ matches = addedNode.matches(MODAL_LIKE_SELECTOR) || !!addedNode.querySelector(MODAL_LIKE_SELECTOR); }catch(e){}
+    if(matches) return 'modal-opened';
+    // fixed/sticky na bagong element = malamang drawer o floating UI
+    const cs=getComputedStyle(addedNode);
+    if(cs.position==='fixed' || cs.position==='sticky') return 'drawer-opened';
+    return null;
+  }
+
+  function initMutationObserver(){
+    const mo=new MutationObserver((mutations)=>{
+      let highestEvent=null;
+      mutations.forEach(m=>{
+        // === SELF-MUTATION GUARD: iwasan ang infinite loop kapag si VEX mismo ang gumalaw ===
+        if(m.target && m.target.closest && m.target.closest('[data-vex]')) return;
+
+        m.addedNodes && m.addedNodes.forEach(node=>{
+          if(node.nodeType!==1) return;
+          if(node.closest && node.closest('[data-vex]')) return; // bahagi ni VEX — hindi obstacle
+          if(node.matches && node.matches('[data-vex]')) return;
+          watchElement(node);
+          node.querySelectorAll && node.querySelectorAll('.talkpanel,.pmoment-inner,.pmoment,'+MODAL_LIKE_SELECTOR)
+            .forEach(watchElement);
+          const evt=classifyMutation(node);
+          if(evt) highestEvent=evt;
+        });
+      });
+      if(mutations.length && mutations.every(m=>m.target && m.target.closest && m.target.closest('[data-vex]'))) return;
+      dispatch(highestEvent || 'section-expanded');
+    });
+    mo.observe(document.body,{attributes:true, attributeFilter:['class','style'], childList:true, subtree:true});
+  }
+
+  /* ---- USER EVENT LAYER ---- */
+  function initUserEvents(){
+    // HIGH priority triggers
+    window.addEventListener('resize', ()=>dispatch('viewport-resized'));
+    window.addEventListener('orientationchange', ()=>dispatch('orientation-changed'));
+
+    // MEDIUM priority triggers — meaningful interactions, hindi kailangan agad
+    document.addEventListener('click', (e)=>{
+      const el=e.target.closest('a,button,[role="button"],.btn,.navcta,.tp-opt');
+      if(el) dispatch('cta-clicked');
+    }, {passive:true});
+    document.addEventListener('focus', ()=>dispatch('cta-clicked'), {capture:true, passive:true});
+    document.addEventListener('input', ()=>dispatch('section-expanded'), {passive:true});
+    document.addEventListener('keydown', ()=>dispatch('section-expanded'), {passive:true});
+
+    // LOW priority triggers — madalas, throttled nang mabigat
+    document.addEventListener('scroll', ()=>dispatch('scroll'), {passive:true});
+    document.addEventListener('wheel', ()=>dispatch('scroll'), {passive:true});
+    document.addEventListener('mousemove', ()=>dispatch('mousemove'), {passive:true});
+    document.addEventListener('mouseenter', ()=>dispatch('hover'), {passive:true, capture:true});
+    document.addEventListener('touchstart', ()=>dispatch('scroll'), {passive:true});
+    document.addEventListener('touchmove', ()=>dispatch('scroll'), {passive:true});
+    document.addEventListener('pointerdown', ()=>dispatch('hover'), {passive:true});
+    document.addEventListener('pointermove', ()=>dispatch('hover'), {passive:true});
+    document.addEventListener('visibilitychange', ()=>{
+      if(document.visibilityState==='visible') dispatch('viewport-resized');
+    });
+  }
+
+  function init(){
+    initResizeObserver();
+    initViewportWatch();
+    initMutationObserver();
+    initUserEvents();
+  }
+  return {init, dispatch};
+})();
+
+/* ---- CONTENT BRAIN: "Ano ang sasabihin?" (stub — palawakin mo dito) ---- */
+const VexContentBrain = (function(){
+  function greeting(){
+    const h=new Date().getHours();
+    if(h<12) return 'Good morning! Need a quick estimate?';
+    if(h<18) return 'Good afternoon! Want a quick estimate?';
+    return 'Good evening! Let\'s rough out an estimate.';
+  }
+  return { greeting };
+})();
+
+/* =====================================================================
+   VEX SPATIAL ENGINE — central coordinator; lahat dumadaan dito
+   ===================================================================== */
+const VexSpatialEngine = {
+  viewport: VexViewport,
+  obstacles: { scan: () => VexUIBrain.scanObstacles() },
+  safeZones: { get: () => VexUIBrain.getSafeZones() },
+  collision: { isCurrentPositionColliding: () => VexUIBrain.isCurrentPositionColliding() },
+  positionScoring: { score: (side) => VexUIBrain.scorePosition(side) },
+  responsive: null,
+
+  /* ANG SENTRAL NA PINTUAN — lahat ng reposition requests dumadaan dito */
+  recalculate(opts){
+    opts = opts || {};
+    if(opts.force) VexUIBrain.reposition(true);
+    else VexUIBrain.repositionIfNeeded();
+    VexPanelSizer.apply();
+  }
+};
+VexSpatialEngine.responsive = { apply: () => VexPanelSizer.apply() };
+
+/* Top-level VEX namespace. Tapat na paalala: vexConversation (talk-panel
+   state/render) at vexRenderer (device-specific layout) ay HINDI pa
+   hiwalay na modules — nasa tpState/tpRender functions pa rin ang mga ito.
+   Kung gusto mong buong ihiwalay ang mga iyon bilang tunay na submodules,
+   sabihin mo lang — ibang refactor pass na ito. */
+const VEX = {
+  vexBrain: VexContentBrain,
+  vexEvents: VexScreenObserver,
+  vexSpatialEngine: VexSpatialEngine,
+  vexObservers: {
+    focusTracker: VexFocusTracker,
+    doNotDisturb: VexDoNotDisturb
+  }
+};
+
+function orbPointerDown(e){
+  orbDragging=true;
+  orbMoved=false;
+  const rect=orbWrap.getBoundingClientRect();
+  orbStartX=e.clientX;
+  orbStartY=e.clientY;
+  orbOffsetX=e.clientX-rect.left;
+  orbOffsetY=e.clientY-rect.top;
+  orbWrap.classList.add('dragging');
+  orbWrap.setPointerCapture(e.pointerId);
+}
+
+function orbPointerMove(e){
+  if(!orbDragging) return;
+  const dx=e.clientX-orbStartX;
+  const dy=e.clientY-orbStartY;
+  if(Math.abs(dx)>6||Math.abs(dy)>6) orbMoved=true;
+
+  const w=orbWrap.offsetWidth, h=orbWrap.offsetHeight;
+  let left=e.clientX-orbOffsetX;
+  let top=e.clientY-orbOffsetY;
+  left=Math.max(28,Math.min(window.innerWidth-w-28,left));
+  top=Math.max(28,Math.min(window.innerHeight-h-28,top));
+
+  orbWrap.style.left=left+'px';
+  orbWrap.style.top=top+'px';
+  orbWrap.style.right='auto';
+  orbWrap.style.bottom='auto';
+}
+
+function orbPointerUp(e){
+  if(!orbDragging) return;
+  orbDragging=false;
+  orbWrap.classList.remove('dragging');
+  if(!orbMoved){
+    tpOpen(); // treat as a tap, not a drag — opens the quote panel
+  } else {
+    VexUIBrain.pinByUser(); // ginalang ang bagong lokasyon, hindi na i-o-override ng UI Brain
+  }
+}
+
+function initOrbDrag(){
+  orbWrap.addEventListener('pointerdown', orbPointerDown);
+  window.addEventListener('pointermove', orbPointerMove);
+  window.addEventListener('pointerup', orbPointerUp);
+}
+
+/* ===================================================================
+   PANEL SIZER — dynamic width/height ng talk panel batay sa available space
+   =================================================================== */
+const VexPanelSizer = (function(){
+  const PREFERRED_WIDTH = 392;
+  const MIN_WIDTH = 280;
+  const MAX_WIDTH = 460;
+  const PREFERRED_HEIGHT = 660;
+  const MIN_HEIGHT = 320;
+  const SAFE_MARGIN = 20;
+
+  function computeSize(){
+    const viewport=VexViewport.get();
+    const vw=viewport.width, vh=viewport.height;
+    const availableWidth = vw - SAFE_MARGIN*2;
+    const availableHeight = vh - SAFE_MARGIN*2;
+
+    // width: preferred, pero hindi lalampas sa available space,
+    // at hindi babagsak sa ibaba ng minimum na kailangan para mabasa
+    let width = Math.min(PREFERRED_WIDTH, MAX_WIDTH, availableWidth);
+    width = Math.max(MIN_WIDTH, width);
+
+    // height: parehong prinsipyo — max-height lang, hindi fixed height,
+    // kaya kung maikli ang content, hindi ito babagsak sa buong 660px
+    let maxHeight = Math.min(PREFERRED_HEIGHT, availableHeight);
+    maxHeight = Math.max(MIN_HEIGHT, maxHeight);
+
+    return { width, maxHeight, availableWidth, availableHeight };
+  }
+
+  let sizeChangeTimestamps=[];
+  function isResizingRapidly(){
+    const now=Date.now();
+    sizeChangeTimestamps.push(now);
+    sizeChangeTimestamps = sizeChangeTimestamps.filter(t => now-t < 1000);
+    return sizeChangeTimestamps.length > 4;
+  }
+
+  function apply(){
+    const el=document.getElementById('talkPanel');
+    if(!el) return;
+    const {width, maxHeight}=computeSize();
+    el.classList.toggle('no-anim', isResizingRapidly());
+    el.style.width = width + 'px';
+    el.style.maxWidth = `calc(100vw - ${SAFE_MARGIN*2}px)`;
+    el.style.maxHeight = maxHeight + 'px';
+  }
+
+  function init(){
+    apply();
+    window.addEventListener('resize', apply);
+    window.addEventListener('orientationchange', apply);
+    if(window.visualViewport){
+      window.visualViewport.addEventListener('resize', apply); // keyboard appearing, atbp.
+    }
+  }
+  return { init, apply, computeSize };
+})();
+
+initOrbDrag();
+VexFocusTracker.init();
+VexDoNotDisturb.init();
+VexPanelSizer.init();
+VexUIBrain.setPreferredSide('left');
+VexUIBrain.init();
+VexScreenObserver.init();
+/* === END: DRAGGABLE ORB — surgical patch === */
+
+function tpIndustry(){ return TALK_CATALOG.industries.find(i=>i.id===tpState.industryId); }
+
+function tpComputeQuote(){
+  const ind=tpIndustry();
+  if(!ind) return {lines:[],total:0};
+  let total=ind.base.price;
+  const lines=[{label:ind.base.label,price:ind.base.price}];
+  ind.modules.forEach(m=>{
+    if(tpState.selectedModules.has(m.id)){
+      total+=m.price;
+      lines.push({label:m.label,price:m.price});
+    }
+  });
+  if(ind.hasLocations && tpState.locations>1){
+    const extra=(tpState.locations-1)*ind.locationPrice;
+    total+=extra;
+    lines.push({label:`Additional locations (${tpState.locations-1} × ${tpPeso(ind.locationPrice)})`,price:extra});
+  }
+  return {lines,total};
+}
+
+function tpRender(){
+  if(tpState.step==='welcome') return tpRenderWelcome();
+  if(tpState.step==='industry') return tpRenderIndustry();
+  if(tpState.step==='modules') return tpRenderModules();
+  if(tpState.step==='quote') return tpRenderQuote();
+  if(tpState.step==='contact') return tpRenderContact();
+  if(tpState.step==='success') return tpRenderSuccess();
+}
+
+function tpRenderWelcome(){
+  tpSub.textContent="Let's rough out an estimate";
+  tpBody.innerHTML=`
+    <div class="tp-msg"><span class="tp-eyebrow">Talk to VEX</span>Hi! Want a preliminary estimate for the system your business needs? Just a few questions, then you'll see an itemized breakdown right away.</div>
+    <div class="tp-options">
+      <button class="tp-opt" data-action="start">Yes, let's do it<span class="tp-opt-sub">Takes about 2 minutes</span></button>
+      <button class="tp-opt" data-action="goto-contact-direct">I'd rather talk directly<span class="tp-opt-sub">Skip the estimate</span></button>
+    </div>`;
+  tpFoot.innerHTML='';
+}
+
+function tpRenderIndustry(){
+  tpSub.textContent='Step 1 — What industry?';
+  const opts=TALK_CATALOG.industries.map(i=>
+    `<button class="tp-opt" data-industry="${i.id}">${i.name}<span class="tp-opt-sub">${i.tagline}</span></button>`
+  ).join('');
+  tpBody.innerHTML=`
+    <div class="tp-msg">What kind of business or product are you looking for?</div>
+    <div class="tp-options">
+      ${opts}
+      <button class="tp-opt" data-industry="other">${TALK_CATALOG.other.name}<span class="tp-opt-sub">${TALK_CATALOG.other.tagline}</span></button>
+    </div>`;
+  tpFoot.innerHTML=`<div class="tp-btnrow"><button class="tp-btn ghost" data-action="restart">Back</button></div>`;
+}
+
+function tpRenderModules(){
+  const ind=tpIndustry();
+  tpSub.textContent=`Step 2 — ${ind.name} modules`;
+  const modHtml=ind.modules.map(m=>{
+    const checked=tpState.selectedModules.has(m.id);
+    return `<div class="tp-module${checked?' checked':''}" data-module="${m.id}">
+      <div class="tm-left">
+        <div class="tm-box"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#100b06" stroke-width="1.6" fill="none"/></svg></div>
+        <div class="tm-text"><span class="tm-label">${m.label}</span><span class="tm-note">${m.note}</span></div>
+      </div>
+      <span class="tm-price">${tpPeso(m.price)}</span>
+    </div>`;
+  }).join('');
+  const locHtml=ind.hasLocations?`
+    <div class="tp-qty">
+      <label>Number of branches/locations</label>
+      <div class="tp-stepper">
+        <button data-action="loc-dec">−</button>
+        <span id="tpLocCount">${tpState.locations}</span>
+        <button data-action="loc-inc">+</button>
+      </div>
+    </div>`:'';
+  tpBody.innerHTML=`
+    <div class="tp-msg">Base setup (<strong>${tpPeso(ind.base.price)}</strong>) is always included. Pick any additional modules you need:</div>
+    ${modHtml}
+    ${locHtml}`;
+  tpFoot.innerHTML=`
+    <div class="tp-line" style="border-bottom:none;padding-top:0">
+      <span>Running estimate</span><span id="tpRunningTotal">${tpPeso(tpComputeQuote().total)}</span>
+    </div>
+    <div class="tp-btnrow">
+      <button class="tp-btn ghost" data-action="back-industry">Back</button>
+      <button class="tp-btn primary" data-action="to-quote">See full quote</button>
+    </div>`;
+}
+
+function tpRenderQuote(){
+  const ind=tpIndustry();
+  tpSub.textContent='Step 3 — Itemized estimate';
+  const {lines,total}=tpComputeQuote();
+  const lineHtml=lines.map(l=>`<div class="tp-line"><span>${l.label}</span><span>${tpPeso(l.price)}</span></div>`).join('');
+  tpBody.innerHTML=`
+    <div class="tp-msg"><span class="tp-eyebrow">${ind.name}</span>Here's the itemized breakdown based on what you picked:</div>
+    ${lineHtml}
+    <div class="tp-total"><span class="tt-label">Estimated total</span><span class="tt-value">${tpPeso(total)}</span></div>
+    <p class="tp-disclaimer">This is a preliminary estimate — not final yet. Our team validates it before confirming.</p>
+    <div class="tp-discount-note"><strong>Note:</strong> when you request a formal quote, there may be room for a discount or adjustment depending on scope — we'll work out the final numbers there.</div>`;
+  tpFoot.innerHTML=`
+    <div class="tp-btnrow">
+      <button class="tp-btn ghost" data-action="back-modules">Back</button>
+      <button class="tp-btn primary" data-action="request-quote">Request a formal quote</button>
+    </div>
+    <div class="tp-btnrow" style="margin-top:8px">
+      <button class="tp-btn ghost" data-action="restart" style="flex:1">Start over</button>
+    </div>`;
+}
+
+function tpRenderContact(){
+  const ind=tpIndustry();
+  tpSub.textContent='Final step — contact details';
+  tpBody.innerHTML=`
+    <div class="tp-msg">${ind?`We've got your estimate for <strong>${ind.name}</strong>. `:''}Leave your details so we can process your formal quote request.</div>
+    <div class="tp-field"><label>Name</label><input id="tpName" type="text" placeholder="Juan Dela Cruz"></div>
+    <div class="tp-field"><label>Company / Business</label><input id="tpCompany" type="text" placeholder="Company name"></div>
+    <div class="tp-field"><label>Email</label><input id="tpEmail" type="email" placeholder="you@company.com"></div>
+    <div class="tp-field"><label>Additional details (optional)</label><textarea id="tpNotes" placeholder="Any specifics, timeline, or questions"></textarea></div>`;
+  tpFoot.innerHTML=`
+    <div class="tp-btnrow">
+      <button class="tp-btn ghost" data-action="${ind?'back-quote':'restart'}">Back</button>
+      <button class="tp-btn primary" data-action="submit-quote">Send</button>
+    </div>`;
+}
+
+function tpRenderSuccess(){
+  tpSub.textContent='Thank you!';
+  tpBody.innerHTML=`
+    <div class="tp-success">
+      <div class="ts-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M4 12l5 5L20 6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <h4>We've received your request</h4>
+      <p>Our team will follow up on your email with the validated quote — including any discount or adjustment.</p>
+    </div>`;
+  tpFoot.innerHTML=`<div class="tp-btnrow"><button class="tp-btn ghost" style="flex:1" data-action="restart">Close</button></div>`;
+}
+
+function tpSubmit(){
+  const name=(document.getElementById('tpName')||{}).value||'';
+  const company=(document.getElementById('tpCompany')||{}).value||'';
+  const email=(document.getElementById('tpEmail')||{}).value||'';
+  const notes=(document.getElementById('tpNotes')||{}).value||'';
+  if(!name||!email){
+    alert('Please enter your name and email before sending.');
+    return;
+  }
+  const ind=tpIndustry();
+  let body=`Name: ${name}\nCompany: ${company}\nEmail: ${email}\n`;
+  if(ind){
+    const {lines,total}=tpComputeQuote();
+    body+=`\nInterested in: ${ind.name}\n\nItemized preliminary estimate:\n`;
+    lines.forEach(l=>{ body+=`- ${l.label}: ${tpPeso(l.price)}\n`; });
+    body+=`\nEstimated total: ${tpPeso(total)}\n(Preliminary — subject to validation. Discount/adjustment possible upon formal request.)\n`;
+  } else {
+    body+=`\nInterested in: Something new — no product selected yet\n`;
+  }
+  if(notes) body+=`\nNotes:\n${notes}\n`;
+  const subject=`Quote Request — ${ind?ind.name:'General'} — ${company||name}`;
+  window.location.href=`mailto:hello@artibyte.co?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  tpState.step='success';
+  tpRender();
+}
+
+/* event delegation for all clicks inside the panel */
+function tpHandleClick(e){
+  const opt=e.target.closest('[data-action],[data-industry],[data-module]');
+  if(!opt) return;
+
+  if(opt.dataset.action==='start'){ tpState.step='industry'; tpRender(); return; }
+  if(opt.dataset.action==='goto-contact-direct'){ tpState.industryId=null; tpState.step='contact'; tpRender(); return; }
+  if(opt.dataset.action==='restart'){ tpState={step:'welcome',industryId:null,selectedModules:new Set(),locations:1}; tpRender(); return; }
+  if(opt.dataset.action==='back-industry'){ tpState.step='industry'; tpRender(); return; }
+  if(opt.dataset.action==='back-modules'){ tpState.step='modules'; tpRender(); return; }
+  if(opt.dataset.action==='back-quote'){ tpState.step='quote'; tpRender(); return; }
+  if(opt.dataset.action==='to-quote'){ tpState.step='quote'; tpRender(); return; }
+  if(opt.dataset.action==='request-quote'){ tpState.step='contact'; tpRender(); return; }
+  if(opt.dataset.action==='submit-quote'){ tpSubmit(); return; }
+  if(opt.dataset.action==='loc-inc'){ tpState.locations=Math.min(50,tpState.locations+1); tpRefreshModulesFooter(); return; }
+  if(opt.dataset.action==='loc-dec'){ tpState.locations=Math.max(1,tpState.locations-1); tpRefreshModulesFooter(); return; }
+
+  if(opt.dataset.industry){
+    if(opt.dataset.industry==='other'){
+      tpState.industryId=null;
+      tpState.step='contact';
+    } else {
+      tpState.industryId=opt.dataset.industry;
+      tpState.selectedModules=new Set();
+      tpState.locations=1;
+      tpState.step='modules';
+    }
+    tpRender();
+    return;
+  }
+
+  if(opt.dataset.module){
+    if(tpState.selectedModules.has(opt.dataset.module)) tpState.selectedModules.delete(opt.dataset.module);
+    else tpState.selectedModules.add(opt.dataset.module);
+    tpRenderModules();
+    return;
+  }
+}
+function tpRefreshModulesFooter(){
+  const locCount=document.getElementById('tpLocCount');
+  if(locCount) locCount.textContent=tpState.locations;
+  const rt=document.getElementById('tpRunningTotal');
+  if(rt) rt.textContent=tpPeso(tpComputeQuote().total);
+}
+tpBody.addEventListener('click',tpHandleClick);
+tpFoot.addEventListener('click',tpHandleClick);
+</script>
+</body>
+</html>
