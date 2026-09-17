@@ -68,6 +68,75 @@ header.on-light .navcta{border-color:var(--line-light2);color:var(--ink)}
 
 /* ---------- hero ---------- */
 .hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;position:relative;padding:150px 0 90px}
+/* === START: HERO LEFT-ALIGN — asymmetric right negative space === */
+.hero .wrap{margin:0;max-width:100%;padding-right:min(30vw,460px)}
+@media(max-width:1100px){.hero .wrap{padding-right:min(18vw,240px)}}
+@media(max-width:860px){.hero .wrap{padding-right:26px}}
+/* === END: HERO LEFT-ALIGN — asymmetric right negative space === */
+
+/* === START: HERO FLOWER OF LIFE — animated sacred geometry in the right negative space === */
+.hero-flower{
+  position:absolute;
+  right:clamp(20px,6vw,90px);
+  top:50%;
+  transform:translateY(-50%);
+  width:min(34vw,480px);
+  aspect-ratio:1/1;
+  pointer-events:none;
+  z-index:0;
+  opacity:.9;
+}
+.hero-flower svg{width:100%;height:100%;display:block}
+.hero-flower circle{
+  fill:none;
+  stroke:rgba(227,178,127,.4);
+  stroke-width:1.7;
+  stroke-dasharray:214;
+  animation-duration:19s;
+  animation-iteration-count:infinite;
+  animation-timing-function:cubic-bezier(.65,0,.35,1);
+}
+.hero-flower .fl-c0{animation-name:flowerC0}
+.hero-flower .fl-c1{animation-name:flowerC1}
+.hero-flower .fl-c2{animation-name:flowerC2}
+.hero-flower .fl-c3{animation-name:flowerC3}
+.hero-flower .fl-c4{animation-name:flowerC4}
+.hero-flower .fl-c5{animation-name:flowerC5}
+.hero-flower .fl-c6{animation-name:flowerC6}
+.hero-flower .fl-c7{animation-name:flowerC7}
+.hero-flower .fl-c8{animation-name:flowerC8}
+.hero-flower .fl-c9{animation-name:flowerC9}
+.hero-flower .fl-c10{animation-name:flowerC10}
+.hero-flower .fl-c11{animation-name:flowerC11}
+.hero-flower .fl-c12{animation-name:flowerC12}
+.hero-flower .fl-c13{animation-name:flowerC13}
+.hero-flower .fl-c14{animation-name:flowerC14}
+.hero-flower .fl-c15{animation-name:flowerC15}
+.hero-flower .fl-c16{animation-name:flowerC16}
+.hero-flower .fl-c17{animation-name:flowerC17}
+.hero-flower .fl-c18{animation-name:flowerC18}
+
+@keyframes flowerC0{0%{stroke-dashoffset:214}2.63%{stroke-dashoffset:0}97.37%{stroke-dashoffset:0}100%{stroke-dashoffset:214}}
+@keyframes flowerC1{0%,2.63%{stroke-dashoffset:214}5.26%{stroke-dashoffset:0}94.74%{stroke-dashoffset:0}97.37%,100%{stroke-dashoffset:214}}
+@keyframes flowerC2{0%,5.26%{stroke-dashoffset:214}7.89%{stroke-dashoffset:0}92.11%{stroke-dashoffset:0}94.74%,100%{stroke-dashoffset:214}}
+@keyframes flowerC3{0%,7.89%{stroke-dashoffset:214}10.53%{stroke-dashoffset:0}89.47%{stroke-dashoffset:0}92.11%,100%{stroke-dashoffset:214}}
+@keyframes flowerC4{0%,10.53%{stroke-dashoffset:214}13.16%{stroke-dashoffset:0}86.84%{stroke-dashoffset:0}89.47%,100%{stroke-dashoffset:214}}
+@keyframes flowerC5{0%,13.16%{stroke-dashoffset:214}15.79%{stroke-dashoffset:0}84.21%{stroke-dashoffset:0}86.84%,100%{stroke-dashoffset:214}}
+@keyframes flowerC6{0%,15.79%{stroke-dashoffset:214}18.42%{stroke-dashoffset:0}81.58%{stroke-dashoffset:0}84.21%,100%{stroke-dashoffset:214}}
+@keyframes flowerC7{0%,18.42%{stroke-dashoffset:214}21.05%{stroke-dashoffset:0}78.95%{stroke-dashoffset:0}81.58%,100%{stroke-dashoffset:214}}
+@keyframes flowerC8{0%,21.05%{stroke-dashoffset:214}23.68%{stroke-dashoffset:0}76.32%{stroke-dashoffset:0}78.95%,100%{stroke-dashoffset:214}}
+@keyframes flowerC9{0%,23.68%{stroke-dashoffset:214}26.32%{stroke-dashoffset:0}73.68%{stroke-dashoffset:0}76.32%,100%{stroke-dashoffset:214}}
+@keyframes flowerC10{0%,26.32%{stroke-dashoffset:214}28.95%{stroke-dashoffset:0}71.05%{stroke-dashoffset:0}73.68%,100%{stroke-dashoffset:214}}
+@keyframes flowerC11{0%,28.95%{stroke-dashoffset:214}31.58%{stroke-dashoffset:0}68.42%{stroke-dashoffset:0}71.05%,100%{stroke-dashoffset:214}}
+@keyframes flowerC12{0%,31.58%{stroke-dashoffset:214}34.21%{stroke-dashoffset:0}65.79%{stroke-dashoffset:0}68.42%,100%{stroke-dashoffset:214}}
+@keyframes flowerC13{0%,34.21%{stroke-dashoffset:214}36.84%{stroke-dashoffset:0}63.16%{stroke-dashoffset:0}65.79%,100%{stroke-dashoffset:214}}
+@keyframes flowerC14{0%,36.84%{stroke-dashoffset:214}39.47%{stroke-dashoffset:0}60.53%{stroke-dashoffset:0}63.16%,100%{stroke-dashoffset:214}}
+@keyframes flowerC15{0%,39.47%{stroke-dashoffset:214}42.11%{stroke-dashoffset:0}57.89%{stroke-dashoffset:0}60.53%,100%{stroke-dashoffset:214}}
+@keyframes flowerC16{0%,42.11%{stroke-dashoffset:214}44.74%{stroke-dashoffset:0}55.26%{stroke-dashoffset:0}57.89%,100%{stroke-dashoffset:214}}
+@keyframes flowerC17{0%,44.74%{stroke-dashoffset:214}47.37%{stroke-dashoffset:0}52.63%{stroke-dashoffset:0}55.26%,100%{stroke-dashoffset:214}}
+@keyframes flowerC18{0%,47.37%{stroke-dashoffset:214}50.00%{stroke-dashoffset:0}52.63%,100%{stroke-dashoffset:214}}
+@media(max-width:960px){.hero-flower{display:none}}
+/* === END: HERO FLOWER OF LIFE — animated sacred geometry in the right negative space === */
 .hero::before{
   content:"";position:absolute;inset:0;z-index:-1;
   background:
@@ -304,10 +373,11 @@ footer{padding:70px 0 40px;border-top:1px solid var(--line-dark)}
 .orb-btn{touch-action:none}
 /* === END: DRAGGABLE ORB — surgical patch === */
 
-.talkpanel{position:fixed;bottom:104px;right:28px;z-index:651;width:392px;max-width:calc(100vw - 32px);max-height:min(660px,calc(100vh - 140px));background:var(--graphite);border:1px solid var(--line-dark2);border-radius:22px;box-shadow:0 24px 70px rgba(0,0,0,.55);display:flex;flex-direction:column;overflow:hidden;opacity:0;transform:translateY(18px) scale(.97);pointer-events:none;transition:opacity .28s cubic-bezier(.2,.8,.2,1),transform .28s cubic-bezier(.2,.8,.2,1),width .22s ease,max-height .22s ease}
+.talkpanel{position:fixed;z-index:700;bottom:104px;right:28px;width:392px;max-width:calc(100vw - 32px);max-height:min(660px,calc(100vh - 140px));background:var(--graphite);border:1px solid var(--line-dark2);border-radius:22px;box-shadow:0 24px 70px rgba(0,0,0,.55);display:flex;flex-direction:column;overflow:hidden;opacity:0;transform:translateY(18px) scale(.97);pointer-events:none;transition:opacity .28s cubic-bezier(.2,.8,.2,1),transform .28s cubic-bezier(.2,.8,.2,1),width .22s ease,max-height .22s ease}
+.talkpanel.anchor-left{right:auto;left:28px}
 .talkpanel.no-anim{transition:opacity .28s cubic-bezier(.2,.8,.2,1),transform .28s cubic-bezier(.2,.8,.2,1)!important}
 .talkpanel.open{opacity:1;transform:translateY(0) scale(1);pointer-events:auto}
-@media(max-width:480px){.talkpanel{right:16px;bottom:96px;width:calc(100vw - 32px)}}
+@media(max-width:480px){.talkpanel{right:16px;bottom:96px;width:calc(100vw - 32px)}.talkpanel.anchor-left{left:16px}}
 .tp-head{padding:18px 20px;border-bottom:1px solid var(--line-dark);display:flex;justify-content:space-between;align-items:center;flex:none;background:linear-gradient(180deg,rgba(199,138,77,.08),transparent)}
 .tp-head .tp-htext{display:flex;align-items:center;gap:11px}
 .tp-head .tp-mark{width:26px;height:26px;flex:none}
@@ -451,10 +521,37 @@ footer{padding:70px 0 40px;border-top:1px solid var(--line-dark)}
     <p class="lede">We build the exact software your business needs to run — inventory, academies, retail, automation — each one custom-fit, all powered by one system underneath.</p>
     <div class="actions">
       <a href="#contact" class="btn">Start a conversation</a>
-      <a href="#foundation" class="btn ghost">See how it's built</a>
+      <a href="#foundation" class="btn ghost">See the system</a>
     </div>
   </div>
-  <div class="scrollcue"><i></i> Scroll</div>
+
+  <!-- === START: HERO FLOWER OF LIFE — 19-circle sacred geometry, bloom then dissolve === -->
+  <div class="hero-flower" aria-hidden="true">
+    <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+      <!-- === SEED OF LIFE — center + first ring (c0–c6, 7 circles) === -->
+      <circle class="fl-c0" cx="200.00" cy="200.00" r="34"/>
+      <circle class="fl-c1" cx="234.00" cy="200.00" r="34"/>
+      <circle class="fl-c2" cx="217.00" cy="170.56" r="34"/>
+      <circle class="fl-c3" cx="183.00" cy="170.56" r="34"/>
+      <circle class="fl-c4" cx="166.00" cy="200.00" r="34"/>
+      <circle class="fl-c5" cx="183.00" cy="229.44" r="34"/>
+      <circle class="fl-c6" cx="217.00" cy="229.44" r="34"/>
+      <!-- === FLOWER OF LIFE — outer ring completing the pattern (c7–c18, 12 circles) === -->
+      <circle class="fl-c7" cx="268.00" cy="200.00" r="34"/>
+      <circle class="fl-c8" cx="251.00" cy="170.56" r="34"/>
+      <circle class="fl-c9" cx="234.00" cy="141.11" r="34"/>
+      <circle class="fl-c10" cx="200.00" cy="141.11" r="34"/>
+      <circle class="fl-c11" cx="166.00" cy="141.11" r="34"/>
+      <circle class="fl-c12" cx="149.00" cy="170.56" r="34"/>
+      <circle class="fl-c13" cx="132.00" cy="200.00" r="34"/>
+      <circle class="fl-c14" cx="149.00" cy="229.44" r="34"/>
+      <circle class="fl-c15" cx="166.00" cy="258.89" r="34"/>
+      <circle class="fl-c16" cx="200.00" cy="258.89" r="34"/>
+      <circle class="fl-c17" cx="234.00" cy="258.89" r="34"/>
+      <circle class="fl-c18" cx="251.00" cy="229.44" r="34"/>
+    </svg>
+  </div>
+  <!-- === END: HERO FLOWER OF LIFE — 19-circle sacred geometry, bloom then dissolve === -->
 </section>
 
 <!-- POSITIONING / MODEL -->
@@ -462,15 +559,15 @@ footer{padding:70px 0 40px;border-top:1px solid var(--line-dark)}
   <div class="wrap">
     <div class="head">
       <h2>Software, sold the way it should be.</h2>
-      <p>Freelancers sell hours. Platforms sell one-size-fits-all. We sit deliberately between them.</p>
+      <p>Freelancers bill by the hour. Agencies ship and disappear. Consultants hand you advice with nowhere to run it. Platforms hand you a template that fits no one. We built something that isn't any of those.</p>
     </div>
     <div class="model">
       <div class="stack">
-        <div class="modelrow"><span>Freelancer</span><span>Individual execution, billed by the hour</span></div>
+        <div class="modelrow"><span>Freelancer</span><span>Individual execution, billed by the hour — the moment they stop, so does progress</span></div>
         <div class="modelrow"><span>Traditional agency</span><span>A project, shipped, invoiced, forgotten</span></div>
         <div class="modelrow"><span>Consultancy</span><span>Advice, without the system to run it on</span></div>
         <div class="modelrow"><span>Generic software</span><span>Standardized, self-serve, fits no one exactly</span></div>
-        <div class="modelrow us"><span>ArtiByte</span><span>A specialized system, built to keep working as your business grows</span></div>
+        <div class="modelrow us"><span>ArtiByte</span><span>A specialized system — owned by you, maintained by us, built to keep working as your business grows</span></div>
       </div>
       <p class="thesis">We turn how your business runs into <em>software worth running it on</em>.</p>
     </div>
@@ -1084,7 +1181,58 @@ const tpBody=document.getElementById('tpBody');
 const tpFoot=document.getElementById('tpFoot');
 const tpSub=document.getElementById('tpSub');
 
+/* === START: VEX MODAL DOCKING — panel always attaches to the orb, never separates === */
+function tpClamp(v,min,max){ return Math.max(min, Math.min(v,max)); }
+
+function tpPositionPanel(){
+  if(!orbWrap || !talkPanel) return;
+  const orbRect = orbWrap.getBoundingClientRect();
+  const { width, maxHeight } = VexPanelSizer.computeSize();
+  const margin = 16, gap = 12;
+  const vw = window.innerWidth, vh = window.innerHeight;
+
+  /* === START: VEX MODAL DOCKING — huwag mag-overlap sa sticky header === */
+  const headerEl = document.getElementById('siteHeader');
+  const topSafe = (headerEl ? headerEl.offsetHeight : 0) + margin;
+  const availableHeight = Math.max(240, vh - topSafe - margin);
+  const cappedHeight = Math.min(maxHeight, availableHeight);
+  /* === END: VEX MODAL DOCKING — huwag mag-overlap sa sticky header === */
+
+  const spaceRight  = vw - orbRect.right - margin;
+  const spaceLeft   = orbRect.left - margin;
+  const spaceBottom = vh - orbRect.bottom - margin;
+
+  let left, top;
+
+  if(spaceRight >= width + gap){
+    left = orbRect.right + gap;
+    top  = orbRect.top + orbRect.height/2 - cappedHeight/2;
+  } else if(spaceLeft >= width + gap){
+    left = orbRect.left - gap - width;
+    top  = orbRect.top + orbRect.height/2 - cappedHeight/2;
+  } else if(spaceBottom >= cappedHeight + gap){
+    left = orbRect.left + orbRect.width/2 - width/2;
+    top  = orbRect.bottom + gap;
+  } else {
+    left = orbRect.left + orbRect.width/2 - width/2;
+    top  = orbRect.top - gap - cappedHeight;
+  }
+
+  // kahit saan mapunta si VEX, hindi lalampas sa screen ang modal, at hindi tatabihan ang header
+  left = tpClamp(left, margin, vw - width - margin);
+  top  = tpClamp(top, topSafe, vh - cappedHeight - margin);
+
+  talkPanel.style.left = left+'px';
+  talkPanel.style.top = top+'px';
+  talkPanel.style.right = 'auto';
+  talkPanel.style.bottom = 'auto';
+  talkPanel.style.maxHeight = cappedHeight+'px';
+  talkPanel.classList.remove('anchor-left');
+}
+/* === END: VEX MODAL DOCKING — panel always attaches to the orb, never separates === */
+
 function tpOpen(){
+  tpPositionPanel();
   talkPanel.classList.add('open');
   talkPanel.setAttribute('aria-hidden','false');
   if(tpState.step==='welcome' && !tpBody.innerHTML.trim()) tpRender();
@@ -1524,6 +1672,7 @@ const VexUIBrain = (function(){
     scanObstacles,
     scorePosition,
     isCurrentPositionColliding,
+    getCurrentSide(){ return currentSide; },
     setPreferredSide(side){ preferredSide=side; reposition(); },
     pinByUser(){ userPinned=true; },
     unpin(){ userPinned=false; reposition(); },
@@ -1725,6 +1874,9 @@ const VexSpatialEngine = {
     if(opts.force) VexUIBrain.reposition(true);
     else VexUIBrain.repositionIfNeeded();
     VexPanelSizer.apply();
+    /* === START: VEX MODAL DOCKING — sumusunod si panel kapag na-recalculate si orb === */
+    if(talkPanel.classList.contains('open')) tpPositionPanel();
+    /* === END: VEX MODAL DOCKING — sumusunod si panel kapag na-recalculate si orb === */
   }
 };
 VexSpatialEngine.responsive = { apply: () => VexPanelSizer.apply() };
@@ -1772,6 +1924,10 @@ function orbPointerMove(e){
   orbWrap.style.top=top+'px';
   orbWrap.style.right='auto';
   orbWrap.style.bottom='auto';
+
+  /* === START: VEX MODAL DOCKING — live tracking habang naka-drag === */
+  if(talkPanel.classList.contains('open')) tpPositionPanel();
+  /* === END: VEX MODAL DOCKING — live tracking habang naka-drag === */
 }
 
 function orbPointerUp(e){
@@ -1782,6 +1938,9 @@ function orbPointerUp(e){
     tpOpen(); // treat as a tap, not a drag — opens the quote panel
   } else {
     VexUIBrain.pinByUser(); // ginalang ang bagong lokasyon, hindi na i-o-override ng UI Brain
+    /* === START: VEX MODAL DOCKING — final snap pagkatapos mag-settle ang drag === */
+    if(talkPanel.classList.contains('open')) tpPositionPanel();
+    /* === END: VEX MODAL DOCKING — final snap pagkatapos mag-settle ang drag === */
   }
 }
 
@@ -1854,9 +2013,22 @@ initOrbDrag();
 VexFocusTracker.init();
 VexDoNotDisturb.init();
 VexPanelSizer.init();
-VexUIBrain.setPreferredSide('left');
+VexUIBrain.setPreferredSide('right');
 VexUIBrain.init();
 VexScreenObserver.init();
+
+/* === START: VEX MODAL DOCKING — direct fallback listeners (bukod sa throttled engine) === */
+function tpFollowIfOpen(){
+  if(talkPanel.classList.contains('open')) tpPositionPanel();
+}
+window.addEventListener('scroll', tpFollowIfOpen, {passive:true});
+window.addEventListener('resize', tpFollowIfOpen);
+window.addEventListener('orientationchange', tpFollowIfOpen);
+if(window.visualViewport){
+  window.visualViewport.addEventListener('resize', tpFollowIfOpen);
+  window.visualViewport.addEventListener('scroll', tpFollowIfOpen);
+}
+/* === END: VEX MODAL DOCKING — direct fallback listeners (bukod sa throttled engine) === */
 /* === END: DRAGGABLE ORB — surgical patch === */
 
 function tpIndustry(){ return TALK_CATALOG.industries.find(i=>i.id===tpState.industryId); }
@@ -1936,18 +2108,22 @@ function tpRenderModules(){
         <button data-action="loc-inc">+</button>
       </div>
     </div>`:'';
+/* === START: VEX COPY EDIT — modules intro === */
   tpBody.innerHTML=`
-    <div class="tp-msg">Base setup (<strong>${tpPeso(ind.base.price)}</strong>) is always included. Pick any additional modules you need:</div>
+    <div class="tp-msg">Base setup (<strong>${tpPeso(ind.base.price)}</strong>) is always included. Pick the modules that sound closest to what you need — we'll refine the exact scope together on a call:</div>
     ${modHtml}
     ${locHtml}`;
+/* === END: VEX COPY EDIT — modules intro === */
+/* === START: VEX COPY EDIT — modules footer CTA === */
   tpFoot.innerHTML=`
     <div class="tp-line" style="border-bottom:none;padding-top:0">
-      <span>Running estimate</span><span id="tpRunningTotal">${tpPeso(tpComputeQuote().total)}</span>
+      <span>Rough starting range</span><span id="tpRunningTotal">${tpPeso(tpComputeQuote().total)}</span>
     </div>
     <div class="tp-btnrow">
       <button class="tp-btn ghost" data-action="back-industry">Back</button>
-      <button class="tp-btn primary" data-action="to-quote">See full quote</button>
+      <button class="tp-btn primary" data-action="to-quote">See indicative range</button>
     </div>`;
+/* === END: VEX COPY EDIT — modules footer CTA === */
 }
 
 function tpRenderQuote(){
@@ -1955,20 +2131,21 @@ function tpRenderQuote(){
   tpSub.textContent='Step 3 — Itemized estimate';
   const {lines,total}=tpComputeQuote();
   const lineHtml=lines.map(l=>`<div class="tp-line"><span>${l.label}</span><span>${tpPeso(l.price)}</span></div>`).join('');
+/* === START: VEX COPY EDIT — quote screen reframed as discovery starting point === */
   tpBody.innerHTML=`
-    <div class="tp-msg"><span class="tp-eyebrow">${ind.name}</span>Here's the itemized breakdown based on what you picked:</div>
+    <div class="tp-msg"><span class="tp-eyebrow">${ind.name}</span>Here's a rough starting range based on what you picked — think of it as a conversation starter, not a final number:</div>
     ${lineHtml}
-    <div class="tp-total"><span class="tt-label">Estimated total</span><span class="tt-value">${tpPeso(total)}</span></div>
-    <p class="tp-disclaimer">This is a preliminary estimate — not final yet. Our team validates it before confirming.</p>
-    <div class="tp-discount-note"><strong>Note:</strong> when you request a formal quote, there may be room for a discount or adjustment depending on scope — we'll work out the final numbers there.</div>`;
+    <div class="tp-total"><span class="tt-label">Indicative range</span><span class="tt-value">${tpPeso(total)}</span></div>
+    <p class="tp-disclaimer">Every engagement starts with a short discovery call — actual scope, pricing and timeline get set there, based on how your business actually runs.</p>`;
   tpFoot.innerHTML=`
     <div class="tp-btnrow">
       <button class="tp-btn ghost" data-action="back-modules">Back</button>
-      <button class="tp-btn primary" data-action="request-quote">Request a formal quote</button>
+      <button class="tp-btn primary" data-action="request-quote">Book a discovery call</button>
     </div>
     <div class="tp-btnrow" style="margin-top:8px">
       <button class="tp-btn ghost" data-action="restart" style="flex:1">Start over</button>
     </div>`;
+/* === END: VEX COPY EDIT — quote screen reframed as discovery starting point === */
 }
 
 function tpRenderContact(){
