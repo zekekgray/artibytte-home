@@ -18,6 +18,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,340;0,9..144,440;0,9..144,560;0,9..144,650;1,9..144,440;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
+  /* === START: VEX BLUE TOKEN === */
+  --vex-blue:#142541; /* sampled from logo background */
+  /* === END: VEX BLUE TOKEN === */
   --obsidian:#0b0c0f;
   --graphite:#15171b;
   --graphite2:#1c1f24;
@@ -532,7 +535,34 @@ footer{padding:70px 0 40px;border-top:1px solid var(--line-dark)}
 .orb-btn:hover{background:var(--bronze-light);transform:translateY(-2px) scale(1.04)}
 .orb-btn svg{width:38px;height:38px}
 .orb-btn .orb-dot{position:absolute;top:2px;right:2px;width:12px;height:12px;border-radius:50%;background:#e5493f;border:2px solid var(--obsidian)}
-.orb-label{background:var(--graphite);color:#f0ede6;padding:9px 16px;border-radius:999px;font-size:12.5px;border:1px solid var(--line-dark2);white-space:nowrap;opacity:0;transform:translateX(6px);pointer-events:none;transition:.25s;font-weight:500}
+/* === START: VEX ASSISTIVE ICON EDIT === */
+.vex-assistive-button{
+  width:58px;height:58px;padding:0;border:none;border-radius:50%;
+  background:var(--vex-blue);color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;opacity:.6;
+  /* === START: VEX RING LIGHT === */
+  box-shadow:
+    0 4px 14px rgba(0,0,0,.35),
+    0 0 0 1px rgba(255,255,255,.16),
+    0 0 0 5px rgba(255,255,255,.06),
+    0 0 0 9px rgba(255,255,255,.03);
+  transition:transform .15s ease,opacity .4s ease 1.5s,filter .15s ease,box-shadow .2s ease;
+  /* === END: VEX RING LIGHT === */
+}
+.vex-assistive-button:hover{transform:scale(1.05);opacity:1;filter:brightness(1.25);box-shadow:0 4px 14px rgba(0,0,0,.35),0 0 0 1px rgba(255,255,255,.28),0 0 0 6px rgba(255,255,255,.10),0 0 0 11px rgba(255,255,255,.05)}
+/* === START: VEX IDLE DIM === */
+.vex-assistive-button:hover,
+.vex-assistive-button:focus-visible,
+.orb-wrap.dragging .vex-assistive-button,
+body:has(.talkpanel.open) .vex-assistive-button{
+  opacity:1;
+  transition:transform .15s ease,opacity .15s ease 0s,filter .15s ease,box-shadow .2s ease;
+}
+/* === END: VEX IDLE DIM === */
+.vex-assistive-button:active{transform:scale(.92)}
+.vex-assistive-button svg{width:30px;height:30px}
+/* === END: VEX ASSISTIVE ICON EDIT === */color:#f0ede6;padding:9px 16px;border-radius:999px;font-size:12.5px;border:1px solid var(--line-dark2);white-space:nowrap;opacity:0;transform:translateX(6px);pointer-events:none;transition:.25s;font-weight:500}
 .orb-wrap:hover .orb-label{opacity:1;transform:translateX(0)}
 .orb-wrap.hide{display:none}
 /* === START: DRAGGABLE ORB — surgical patch === */
@@ -1029,9 +1059,22 @@ footer{padding:70px 0 40px;border-top:1px solid var(--line-dark)}
 
 <!-- TALK TO artibytte — guided quote widget -->
 <div class="orb-wrap" id="orbWrap" data-vex="true">
-  <span class="orb-label" id="orbLabel">Talk to VEX</span>
-    <button class="orb-btn" id="orbBtn" aria-label="Talk to VEX — get an estimate">
-    <span style="font-family:var(--sans);font-weight:700;font-size:14px;letter-spacing:.5px;color:#100b06">VEX</span>
+  <!-- === START: VEX ICON-ONLY TRIGGER === -->
+  <button class="orb-btn vex-assistive-button" id="orbBtn" type="button" aria-label="Open VEX" aria-haspopup="dialog">
+  <!-- === END: VEX ICON-ONLY TRIGGER === -->
+    <!-- === START: VEX ASSISTIVE ICON EDIT === -->
+    <svg viewBox="240 247 545 548" fill="none" aria-hidden="true">
+      <defs>
+        <mask id="vexNotch">
+          <rect x="240" y="247" width="545" height="548" fill="#fff"/>
+          <circle cx="697" cy="433" r="75" fill="#000"/>
+        </mask>
+      </defs>
+      <circle cx="505" cy="432" r="185" fill="#fff" mask="url(#vexNotch)"/>
+      <rect x="240" y="660" width="463" height="50" fill="#fff"/>
+      <rect x="240" y="745" width="545" height="50" fill="#fff"/>
+    </svg>
+    <!-- === END: VEX ASSISTIVE ICON EDIT === -->
   </button>
 </div>
 
@@ -2174,7 +2217,11 @@ function orbPointerUp(e){
     /* === END: VEX MODAL DOCKING — final snap pagkatapos mag-settle ang drag === */
   }
 }
-
+/* === START: VEX KEYBOARD OPEN === */
+orbBtn.addEventListener('keydown',function(e){
+  if(e.key==='Enter'||e.key===' '){ e.preventDefault(); tpOpen(); }
+});
+/* === END: VEX KEYBOARD OPEN === */
 function initOrbDrag(){
   orbWrap.addEventListener('pointerdown', orbPointerDown);
   window.addEventListener('pointermove', orbPointerMove);
@@ -2481,4 +2528,3 @@ tpFoot.addEventListener('click',tpHandleClick);
 </script>
 </body>
 </html>
-
