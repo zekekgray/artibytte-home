@@ -67,6 +67,9 @@ header.on-light .bar{color:var(--ink)}
 @media(max-width:860px){header .bar{padding:18px 26px}}
 .brand{display:flex;align-items:center;gap:0;font-family:var(--serif);font-size:19px;letter-spacing:.2px;font-weight:560}
 .brand .mark{display:block;width:1.1em;height:1.1em;flex:none;margin-right:1px}
+/* === START: BRAND LOGO EDIT === */
+.brand-logo{width:28px;height:28px;border-radius:7px;margin-right:10px;flex:none}
+/* === END: BRAND LOGO EDIT === */
 nav.links{position:relative;display:flex;justify-content:center;gap:36px;font-size:13.5px;color:var(--mist);padding:14px 56px}
 
 /* the grid line = bottom edge of a full-height header "sheet".
@@ -640,7 +643,9 @@ footer{padding:70px 0 40px;border-top:1px solid var(--line-dark)}
 
 <header id="siteHeader">
   <div class="bar">
-    <a href="#top" class="brand">ArtiBytte</a>
+    <!-- === START: BRAND LOGO EDIT === -->
+<a href="#top" class="brand"><img class="brand-logo" src="/logo-256.png" alt="" width="28" height="28">ArtiBytte</a>
+<!-- === END: BRAND LOGO EDIT === -->
     <a href="#contact" class="navcta">Start a conversation</a>
   </div>
   <nav class="links">
