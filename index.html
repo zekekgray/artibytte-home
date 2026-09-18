@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ArtiByte — The systems behind serious businesses</title>
-<meta name="description" content="ArtiByte designs, builds, and stands behind specialized software systems — one foundation, many businesses.">
+<title>ArtiBytte — The systems behind serious businesses</title>
+<meta name="description" content="artibytte designs, builds, and stands behind specialized software systems — one foundation, many businesses.">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Crect width='400' height='400' rx='80' fill='%230b0c0f'/%3E%3Ccircle cx='200' cy='200' r='42' fill='%23e3b27f'/%3E%3Cline x1='200' y1='56' x2='76' y2='376' stroke='%23e3b27f' stroke-width='22' stroke-linecap='round'/%3E%3Cline x1='200' y1='56' x2='324' y2='376' stroke='%23e3b27f' stroke-width='22' stroke-linecap='round'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,6 +21,7 @@
   --bronze:#c78a4d;
   --bronze-light:#e3b27f;
   --bronze-deep:#8a5a2b;
+  --curtain-bg:rgba(21,23,27,.94);
   --mist:#9298a3;
   --mist2:#c7cbd1;
   --line-dark:rgba(255,255,255,.09);
@@ -48,26 +49,124 @@ img,svg{display:block;max-width:100%}
 .grain{position:fixed;inset:0;pointer-events:none;z-index:999;opacity:.035;mix-blend-mode:overlay}
 
 /* ---------- nav ---------- */
-header{position:fixed;top:0;left:0;right:0;z-index:200;transition:background .3s,border-color .3s}
-header .bar{display:flex;align-items:center;justify-content:space-between;padding:22px 56px;border-bottom:1px solid transparent;transition:border-color .3s,background .3s}
-header.solid .bar{background:rgba(11,12,15,.78);backdrop-filter:blur(18px);border-color:var(--line-dark)}
+header{position:fixed;top:0;left:0;right:0;z-index:200}
+/* blur/background lives on a pseudo-element so both rows share ONE surface
+   and the fixed mega-curtain isn't trapped by a backdrop-filter ancestor */
+header::before{content:"";position:absolute;inset:0;z-index:-1;background:rgba(11,12,15,.78);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);opacity:0;clip-path:inset(0 0 0 0);transition:opacity .3s,background .3s,clip-path .5s cubic-bezier(.22,1,.36,1)}
+header.solid::before{opacity:1}
+header.on-light.solid::before{background:rgba(246,242,234,.84)}
+header .bar{display:flex;align-items:center;justify-content:space-between;padding:20px 56px 16px}
 header.on-light .bar{color:var(--ink)}
 @media(max-width:860px){header .bar{padding:18px 26px}}
 .brand{display:flex;align-items:center;gap:0;font-family:var(--serif);font-size:19px;letter-spacing:.2px;font-weight:560}
 .brand .mark{display:block;width:1.1em;height:1.1em;flex:none;margin-right:1px}
-nav.links{display:flex;gap:36px;font-size:13.5px;color:var(--mist)}
+nav.links{position:relative;display:flex;justify-content:center;gap:36px;font-size:13.5px;color:var(--mist);padding:14px 56px}
+
+/* the grid line = bottom edge of a full-height header "sheet".
+   REST: only the 1px bottom edge is visible (looks like the line).
+   OPEN: the sheet rises to the top of the header carrying the curtain color,
+   while the curtain drops down — header + curtain read as ONE surface. */
+header::after{
+  content:"";position:absolute;inset:0;z-index:-1;
+  pointer-events:none;
+  background-color:var(--line-dark);        /* rest: this color IS the 1px line */
+  -webkit-backdrop-filter:blur(22px);
+  backdrop-filter:blur(22px);               /* always on, so nothing pops when it toggles */
+  clip-path:inset(calc(100% - 1px) 0 0 0);  /* only the bottom 1px is visible */
+  /* CLOSE: the sheet sinks while keeping the curtain color, then turns into the line color at the very end */
+  transition:clip-path .5s cubic-bezier(.22,1,.36,1), background-color .15s linear .35s;
+}
+header.on-light::after{background-color:var(--line-light)}
+
+/* ONE state class (header.menu-open) drives: sheet UP + curtain DOWN */
+header.menu-open::after{
+  clip-path:inset(var(--bar-h,58px) 0 0 0); /* rises only up to the bottom of the ArtiBytte row */
+  background-color:var(--curtain-bg);       /* same color as .navcurtain = identical surface */
+  /* OPEN: color snaps to the curtain color immediately while the sheet rises */
+  transition:clip-path .5s cubic-bezier(.22,1,.36,1), background-color .15s linear 0s;
+}
+/* the normal header tint stays, but only on the ArtiBytte row (no double layer under the sheet) */
+header.menu-open::before{
+  clip-path:inset(0 0 calc(100% - var(--bar-h,58px)) 0);
+}
 header.on-light nav.links{color:var(--ink2)}
-nav.links a{position:relative;padding:4px 0}
-nav.links a::after{content:"";position:absolute;left:0;right:0;bottom:-2px;height:1px;background:currentColor;transform:scaleX(0);transform-origin:right;transition:transform .25s}
-nav.links a:hover::after{transform:scaleX(1);transform-origin:left}
+nav.links > .navitem > a{position:relative;padding:4px 0}
+nav.links > .navitem > a::after{content:"";position:absolute;left:0;right:0;bottom:-2px;height:1px;background:currentColor;transform:scaleX(0);transform-origin:right;transition:transform .25s}
+nav.links > .navitem > a:hover::after{transform:scaleX(1);transform-origin:left}
 .navcta{border:1px solid var(--line-dark2);border-radius:999px;padding:9px 18px;font-size:13px;font-weight:500;transition:.2s;color:#f0ede6}
 header.on-light .navcta{border-color:var(--line-light2);color:var(--ink)}
 .navcta:hover{border-color:var(--bronze);color:var(--bronze-light)}
+nav.links{transition:color .2s linear .3s}      /* CLOSE: text returns to normal only after the sheet has sunk */
+header.menu-open nav.links{color:var(--mist);transition:color .1s linear 0s}   /* nav row sits on the dark sheet */
 .navmob{display:none}
 @media(max-width:860px){nav.links{display:none}}
 
+/* === START: NAV MEGA CURTAIN — Apple-style hover reveal === */
+.navitem{padding:16px 0;margin:-16px 0}
+
+     .navcurtain{
+  position:fixed;
+  top:var(--header-h,73px);
+  left:0;
+  right:0;
+  width:100vw;
+  max-height:calc(100vh - var(--header-h,73px));
+  overflow-y:auto;
+
+  /* NO FLOATING / NO DROPDOWN TRANSLATION */
+  transform:none;
+
+  /* DARK TRANSLUCENT SURFACE */
+  background:var(--curtain-bg);
+  backdrop-filter:blur(22px);
+  -webkit-backdrop-filter:blur(22px);
+
+  /* NO CARD SHAPE */
+  border:none;
+  border-radius:0;
+
+  /* NO FLOATING SHADOW */
+  box-shadow:none;
+
+  opacity:0;
+
+  /* TOP → BOTTOM CURTAIN */
+  clip-path:inset(0 0 100% 0);
+
+  pointer-events:none;
+
+  /* CLOSE: stays fully opaque until the wipe finishes, so it retracts in sync with the sheet */
+  transition:
+    clip-path .5s cubic-bezier(.22,1,.36,1),
+    opacity 0s linear .5s;
+
+  z-index:999;
+}
+.navitem.open .navcurtain{
+  /* OPEN — straight TOP → BOTTOM */
+  clip-path:inset(0 0 0 0);
+  opacity:1;
+  transition:clip-path .5s cubic-bezier(.22,1,.36,1), opacity 0s linear 0s;
+  pointer-events:auto;
+}       
+/* moving between menu items: swap curtains instantly, no double-layer flash (class is set by the JS controller) */
+header.swap .navitem .navcurtain{transition:none!important}
+.navcurtain-inner{
+  padding:44px 48px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:38px;
+}
+.navcurtain h5{font-family:var(--serif);font-style:italic;font-size:14px;color:var(--bronze-light);margin-bottom:14px;font-weight:440}
+.navcurtain a.navcurtain-link{display:block;font-size:14.5px;color:#f0ede6;padding:8px 0;border-bottom:1px solid var(--line-dark);transition:.2s}
+.navcurtain a.navcurtain-link:hover{color:var(--bronze-light);padding-left:6px}
+.navcurtain p{font-size:13.5px;color:var(--mist2);line-height:1.6}
+@media(max-width:860px){.navcurtain{display:none}}
+/* === END: NAV MEGA CURTAIN === */
+
 /* ---------- hero ---------- */
-.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;position:relative;padding:150px 0 90px}
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;position:relative;padding:190px 0 90px}
+@media(max-width:860px){.hero{padding-top:150px}}
 /* === START: HERO LEFT-ALIGN — asymmetric right negative space === */
 .hero .wrap{margin:0;max-width:100%;padding-right:min(30vw,460px)}
 @media(max-width:1100px){.hero .wrap{padding-right:min(18vw,240px)}}
@@ -195,20 +294,7 @@ header.on-light .navcta{border-color:var(--line-light2);color:var(--ink)}
 @media(max-width:960px){.hero-flower{display:none}}
 /* === END: HERO FLOWER OF LIFE — animated sacred geometry in the right negative space === */
 
-/* === START: INTRO SPLASH — flower reused fullscreen at site open === */
-.intro-splash{
-  position:fixed;inset:0;z-index:9999;
-  background:var(--obsidian);
-  display:flex;align-items:center;justify-content:center;
-  transition:opacity .8s ease;
-}
-.intro-splash.intro-hide{opacity:0;pointer-events:none}
-#introSplash .hero-flower{
-  position:static;right:auto;top:auto;transform:none;
-  width:min(60vw,420px);opacity:1;display:flex;
-}
-body.intro-active{overflow:hidden}
-/* === END: INTRO SPLASH === */
+/* INTRO SPLASH REMOVED — site loads directly */
 
 .hero::before{
   content:"";position:absolute;inset:0;z-index:-1;
@@ -257,11 +343,11 @@ section{position:relative}
 .model{display:grid;grid-template-columns:1.1fr 1fr;gap:70px;align-items:start}
 @media(max-width:900px){.model{grid-template-columns:1fr;gap:40px}}
 .model .stack{display:flex;flex-direction:column}
-.modelrow{display:flex;justify-content:space-between;gap:20px;padding:20px 0;border-bottom:1px solid var(--line-light)}
-.modelrow:first-child{border-top:1px solid var(--line-light)}
+.modelrow{display:flex;justify-content:space-between;gap:20px;padding:20px 0}
+.modelrow:first-child{border-top:none}
 .modelrow span:first-child{font-size:14.5px;color:var(--ink2)}
 .modelrow span:last-child{font-size:14.5px;font-weight:600;text-align:right;max-width:280px}
-.modelrow.us{background:linear-gradient(90deg,transparent,rgba(199,138,77,.09));margin:0 -20px;padding:20px;border-radius:10px;border-bottom:1px solid var(--line-light)}
+.modelrow.us{background:linear-gradient(90deg,transparent,rgba(199,138,77,.09));margin:0 -20px;padding:20px;border-radius:10px;border-bottom:none}
 .modelrow.us span:first-child{color:var(--ink);font-weight:650}
 .modelrow.us span:last-child{color:var(--bronze-deep)}
 .model .thesis{font-family:var(--serif);font-size:23px;line-height:1.5;color:var(--ink);font-weight:440}
@@ -269,8 +355,8 @@ section{position:relative}
 
 /* ---------- pillars ---------- */
 .pillars{display:flex;flex-direction:column}
-.pillar{display:grid;grid-template-columns:64px 1fr 1.3fr;gap:34px;padding:38px 0;border-top:1px solid var(--line-dark);align-items:baseline}
-.pillars .pillar:last-child{border-bottom:1px solid var(--line-dark)}
+.pillar{display:grid;grid-template-columns:64px 1fr 1.3fr;gap:34px;padding:38px 0;border-top:none;align-items:baseline}
+.pillars .pillar:last-child{border-bottom:none}
 .pillar .idx{font-family:var(--serif);font-style:italic;font-size:15px;color:var(--bronze-light);align-self:start;padding-top:4px}
 .pillar h3{font-family:var(--serif);font-weight:440;font-size:23px;color:#f5f2ec;letter-spacing:-.3px;line-height:1.25}
 .pillar p{font-size:15px;color:var(--mist2);line-height:1.65;max-width:480px}
@@ -430,7 +516,7 @@ footer{padding:70px 0 40px;border-top:1px solid var(--line-dark)}
 .m-mobile p{font-size:14.5px;color:var(--mist2);line-height:1.65;max-width:400px}
 .m-soon{margin-top:34px;font-size:13.5px;color:var(--mist);font-style:italic;font-family:var(--serif);border-top:1px solid var(--line-dark);padding-top:28px}
 
-/* ---------- Talk to ArtiByte orb + quote panel ---------- */
+/* ---------- Talk to artibytte orb + quote panel ---------- */
 .orb-wrap{position:fixed;top:50%;right:28px;transform:translateY(-50%);z-index:650;display:flex;align-items:center;gap:12px}
 .orb-btn{width:60px;height:60px;border-radius:50%;background:var(--bronze);color:#100b06;display:flex;align-items:center;justify-content:center;cursor:pointer;border:none;box-shadow:0 10px 28px rgba(0,0,0,.4);transition:.25s;flex:none;position:relative}
 .orb-btn:hover{background:var(--bronze-light);transform:translateY(-2px) scale(1.04)}
@@ -530,12 +616,12 @@ footer{padding:70px 0 40px;border-top:1px solid var(--line-dark)}
 <body>
 <svg width="0" height="0" style="position:absolute">
   <defs>
-    <linearGradient id="artibyteBlueGrad" x1="110" y1="97" x2="450" y2="330" gradientUnits="userSpaceOnUse">
+    <linearGradient id="artibytteBlueGrad" x1="110" y1="97" x2="450" y2="330" gradientUnits="userSpaceOnUse">
   <stop offset="0%" stop-color="#5EEAD4"/>
   <stop offset="35%" stop-color="#38BDF8"/>
   <stop offset="100%" stop-color="#1D4ED8"/>
 </linearGradient>
-    <symbol id="artibyte-logo" viewBox="125 115 150 185">
+    <symbol id="artibytte-logo" viewBox="125 115 150 185">
       <circle cx="200" cy="200" r="21" fill="#e3b27f"/>
       <line x1="200" y1="128" x2="138" y2="288" stroke="#e3b27f" stroke-width="4.5" stroke-linecap="round"/>
       <line x1="200" y1="128" x2="262" y2="288" stroke="#e3b27f" stroke-width="4.5" stroke-linecap="round"/>
@@ -545,56 +631,91 @@ footer{padding:70px 0 40px;border-top:1px solid var(--line-dark)}
 <svg class="grain" width="0" height="0"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" stitchTiles="stitch"/></filter></svg>
 <div class="grain" style="filter:url(#n)"></div>
 
-<!-- === START: INTRO SPLASH — flower-of-life bloom plays once at site open === -->
-<div class="intro-splash" id="introSplash" aria-hidden="true">
-  <div class="hero-flower" aria-hidden="true">
-    <svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
-      <!-- === SEED OF LIFE — center + first ring (c0–c6, 7 circles) === -->
-      <circle class="fl-c0" cx="200.00" cy="200.00" r="23.8"/>
-      <circle class="fl-c1" cx="223.80" cy="200.00" r="23.8"/>
-      <circle class="fl-c2" cx="211.90" cy="179.39" r="23.8"/>
-      <circle class="fl-c3" cx="188.10" cy="179.39" r="23.8"/>
-      <circle class="fl-c4" cx="176.20" cy="200.00" r="23.8"/>
-      <circle class="fl-c5" cx="188.10" cy="220.61" r="23.8"/>
-      <circle class="fl-c6" cx="211.90" cy="220.61" r="23.8"/>
-      <!-- === FLOWER OF LIFE — outer ring completing the pattern (c7–c18, 12 circles) === -->
-      <circle class="fl-c7" cx="247.60" cy="200.00" r="23.8"/>
-      <circle class="fl-c8" cx="235.70" cy="179.39" r="23.8"/>
-      <circle class="fl-c9" cx="223.80" cy="158.78" r="23.8"/>
-      <circle class="fl-c10" cx="200.00" cy="158.78" r="23.8"/>
-      <circle class="fl-c11" cx="176.20" cy="158.78" r="23.8"/>
-      <circle class="fl-c12" cx="164.30" cy="179.39" r="23.8"/>
-      <circle class="fl-c13" cx="152.40" cy="200.00" r="23.8"/>
-      <circle class="fl-c14" cx="164.30" cy="220.61" r="23.8"/>
-      <circle class="fl-c15" cx="176.20" cy="241.22" r="23.8"/>
-      <circle class="fl-c16" cx="200.00" cy="241.22" r="23.8"/>
-      <circle class="fl-c17" cx="223.80" cy="241.22" r="23.8"/>
-      <circle class="fl-c18" cx="235.70" cy="220.61" r="23.8"/>
-      <path class="fl-pentagon" d="M 200,110 L 285.6,172.19 L 252.9,272.81 L 147.1,272.81 L 114.4,172.19 Z"/>
-      <circle class="fl-pentagon-circle" cx="200" cy="200" r="90"/>
-      <line class="fl-a-left" x1="200" y1="125" x2="135" y2="290"/>
-      <line class="fl-a-right" x1="200" y1="125" x2="265" y2="290"/>
-    </svg>
-  </div>
-</div>
-<!-- === END: INTRO SPLASH === -->
-
 <header id="siteHeader">
   <div class="bar">
-                <a href="#top" class="brand">
-      <svg class="mark" viewBox="0 0 400 400" fill="none">
-        <use href="#artibyte-logo"/>
-      </svg>
-      rtibyte
-    </a>
-    <nav class="links">
-      <a href="#foundation">Platform</a>
-      <a href="#products">Products</a>
-      <a href="#approach">Approach</a>
-      <a href="#work">How we work</a>
-    </nav>
+    <a href="#top" class="brand">ArtiBytte</a>
     <a href="#contact" class="navcta">Start a conversation</a>
   </div>
+  <nav class="links">
+    <div class="navitem">
+      <a href="#foundation">Platform</a>
+      <div class="navcurtain" aria-hidden="true">
+        <div class="navcurtain-inner">
+          <div>
+            <h5>Shared foundation</h5>
+            <a class="navcurtain-link" href="#foundation">Identity</a>
+            <a class="navcurtain-link" href="#foundation">Data</a>
+            <a class="navcurtain-link" href="#foundation">Infrastructure</a>
+          </div>
+          <div>
+            <h5>Shared intelligence</h5>
+            <a class="navcurtain-link" href="#foundation">Billing</a>
+            <a class="navcurtain-link" href="#foundation">AI</a>
+            <a class="navcurtain-link" href="#foundation">Analytics</a>
+          </div>
+          <div>
+            <h5>One core</h5>
+            <p>Six shared layers carry every product above them. Nothing gets rebuilt twice.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="navitem">
+      <a href="#products">Products</a>
+      <div class="navcurtain" aria-hidden="true">
+        <div class="navcurtain-inner">
+          <div>
+            <h5>Specialized products</h5>
+            <a class="navcurtain-link" href="#products">ArtiPlay — Sports academies</a>
+            <a class="navcurtain-link" href="#products">ArtiStock — Inventory &amp; operations</a>
+            <a class="navcurtain-link" href="#products">ArtiSnack — Food &amp; retail POS</a>
+          </div>
+          <div>
+            <h5>&nbsp;</h5>
+            <a class="navcurtain-link" href="#products">Business Health Toolkit</a>
+            <a class="navcurtain-link" href="#products">VEX AI — Automation</a>
+          </div>
+          <div>
+            <h5>Built on one foundation</h5>
+            <p>Five products today, each shaped entirely around one industry's real workflow.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="navitem">
+      <a href="#approach">Approach</a>
+      <div class="navcurtain" aria-hidden="true">
+        <div class="navcurtain-inner">
+          <div>
+            <h5>Not a vendor</h5>
+            <p>We start with what your business needs to accomplish, then decide what to build.</p>
+          </div>
+          <div>
+            <h5>Software, sold right</h5>
+            <p>A specialized system — owned by you, maintained by us, built to keep working as your business grows.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="navitem">
+      <a href="#work">How we work</a>
+      <div class="navcurtain" aria-hidden="true">
+        <div class="navcurtain-inner">
+          <div>
+            <h5>Five stages</h5>
+            <a class="navcurtain-link" href="#work">01 — Discovery</a>
+            <a class="navcurtain-link" href="#work">02 — Design</a>
+            <a class="navcurtain-link" href="#work">03 — Build</a>
+          </div>
+          <div>
+            <h5>&nbsp;</h5>
+            <a class="navcurtain-link" href="#work">04 — Launch</a>
+            <a class="navcurtain-link" href="#work">05 — Grow</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
 </header>
 
 <main id="top">
@@ -626,7 +747,7 @@ footer{padding:70px 0 40px;border-top:1px solid var(--line-dark)}
         <div class="modelrow"><span>Traditional agency</span><span>A project, shipped, invoiced, forgotten</span></div>
         <div class="modelrow"><span>Consultancy</span><span>Advice, without the system to run it on</span></div>
         <div class="modelrow"><span>Generic software</span><span>Standardized, self-serve, fits no one exactly</span></div>
-        <div class="modelrow us"><span>ArtiByte</span><span>A specialized system — owned by you, maintained by us, built to keep working as your business grows</span></div>
+        <div class="modelrow us"><span>artibytte</span><span>A specialized system — owned by you, maintained by us, built to keep working as your business grows</span></div>
       </div>
       <p class="thesis">We turn how your business runs into <em>software worth running it on</em>.</p>
     </div>
@@ -662,8 +783,8 @@ footer{padding:70px 0 40px;border-top:1px solid var(--line-dark)}
         <text x="480" y="26" class="lbl-band" text-anchor="middle">SPECIALIZED PRODUCTS</text>
         <text x="480" y="196" class="lbl-band" text-anchor="middle">SHARED INTELLIGENCE</text>
         <text x="480" y="406" class="lbl-band" text-anchor="middle">SHARED FOUNDATION</text>
-        <g id="linksTop"></g>
-        <g id="linksBot"></g>
+       <g id="linksTop" style="display:none"></g>
+<g id="linksBot" style="display:none"></g>
         <g id="topNodes"></g>
         <g id="hubNode"></g>
         <g id="botNodes"></g>
@@ -867,12 +988,7 @@ footer{padding:70px 0 40px;border-top:1px solid var(--line-dark)}
   <div class="wrap">
     <div class="footgrid">
       <div class="col" style="max-width:280px">
-                             <a href="#top" class="brand" style="margin-bottom:14px;color:#f0ede6">
-          <svg class="mark" viewBox="0 0 400 400" fill="none">
-            <use href="#artibyte-logo"/>
-          </svg>
-          rtibyte
-        </a>
+                             
         <p style="font-size:13.5px;color:var(--mist);line-height:1.6">Specialized on the outside. Unified underneath.</p>
       </div>
       <div class="col"><h5>Platform</h5>
@@ -886,7 +1002,7 @@ footer{padding:70px 0 40px;border-top:1px solid var(--line-dark)}
       </div>
     </div>
     <div class="footbottom">
-      <span>© 2026 ArtiByte. All rights reserved.</span>
+      <span>© 2026 artibytte. All rights reserved.</span>
       <span>Built for the businesses that can't afford to get it wrong.</span>
     </div>
   </div>
@@ -899,7 +1015,7 @@ footer{padding:70px 0 40px;border-top:1px solid var(--line-dark)}
   </div>
 </div>
 
-<!-- TALK TO ARTIBYTE — guided quote widget -->
+<!-- TALK TO artibytte — guided quote widget -->
 <div class="orb-wrap" id="orbWrap" data-vex="true">
   <span class="orb-label" id="orbLabel">Talk to VEX</span>
     <button class="orb-btn" id="orbBtn" aria-label="Talk to VEX — get an estimate">
@@ -922,22 +1038,7 @@ footer{padding:70px 0 40px;border-top:1px solid var(--line-dark)}
 </div>
 
 <script>
-/* === START: INTRO SPLASH — flower-of-life plays once, then reveals the site === */
-(function(){
-  var splash=document.getElementById('introSplash');
-  if(!splash){ return; }
-  document.body.classList.add('intro-active');
-  var TOTAL_MS=7300; // katumbas ng buong animation sequence (blooms + a-left/a-right lines)
-  function reveal(){
-    splash.classList.add('intro-hide');
-    document.body.classList.remove('intro-active');
-    setTimeout(function(){ splash.style.display='none'; }, 850);
-  }
-  window.addEventListener('load',function(){
-    setTimeout(reveal, TOTAL_MS);
-  });
-})();
-/* === END: INTRO SPLASH === */
+/* INTRO SPLASH REMOVED — site loads directly */
 
 /* header solid + tint on scroll */
 const header=document.getElementById('siteHeader');
@@ -953,6 +1054,48 @@ function onScroll(){
   header.classList.toggle('on-light',onLight);
 }
 document.addEventListener('scroll',onScroll,{passive:true});onScroll();
+
+/* keep --header-h in sync so the mega-curtain always opens flush under the 2-row header */
+function setHeaderH(){
+  const root=document.documentElement.style;
+  root.setProperty('--header-h',header.getBoundingClientRect().height+'px');
+  root.setProperty('--bar-h',header.querySelector('.bar').getBoundingClientRect().height+'px');
+}
+setHeaderH();
+window.addEventListener('resize',setHeaderH);
+if(document.fonts&&document.fonts.ready) document.fonts.ready.then(setHeaderH);
+if(window.ResizeObserver) new ResizeObserver(setHeaderH).observe(header);
+
+/* mega menu controller — one state drives BOTH the curtain (down) and the grid line (up) */
+(function(){
+  const items=[...header.querySelectorAll('.navitem')];
+  const bar=header.querySelector('.bar');
+  let active=null, closeT=null;
+
+  function setOpen(item){
+    clearTimeout(closeT);
+    if(item===active) return;
+    const swapping=!!active && !!item;
+    if(swapping) header.classList.add('swap');
+    items.forEach(i=>i.classList.toggle('open',i===item));
+    header.classList.toggle('menu-open',!!item);
+    active=item;
+    if(swapping){
+      void header.offsetHeight; // commit the instant swap before re-enabling transitions
+      requestAnimationFrame(()=>header.classList.remove('swap'));
+    }
+  }
+
+  items.forEach(it=>{
+    it.addEventListener('mouseenter',()=>setOpen(it));
+    it.addEventListener('focusin',e=>{ if(e.target.matches(':focus-visible')) setOpen(it); }); // keyboard only
+    it.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{ setOpen(null); a.blur(); }));
+  });
+  header.addEventListener('mouseleave',()=>{ closeT=setTimeout(()=>setOpen(null),90); });
+  bar.addEventListener('mouseenter',()=>setOpen(null));
+  header.addEventListener('focusout',e=>{ if(!header.contains(e.relatedTarget)) setOpen(null); });
+  document.addEventListener('keydown',e=>{ if(e.key==='Escape') setOpen(null); });
+})();
 
 /* reveal on scroll */
 const io=new IntersectionObserver(es=>{
@@ -974,7 +1117,7 @@ document.getElementById('contactForm').addEventListener('submit',function(e){
   const interest=document.getElementById('f_interest').value;
   const msg=document.getElementById('f_msg').value;
   const body=`Name: ${name}\nCompany: ${company}\nEmail: ${email}\nInterest: ${interest}\n\n${msg}`;
-  window.location.href=`mailto:hello@artibyte.co?subject=${encodeURIComponent('New inquiry — '+company)}&body=${encodeURIComponent(body)}`;
+  window.location.href=`mailto:hello@artibytte.co?subject=${encodeURIComponent('New inquiry — '+company)}&body=${encodeURIComponent(body)}`;
 });
 
 /* ===== Architecture diagram ===== */
@@ -1174,7 +1317,7 @@ pmoment.addEventListener('click',e=>{if(e.target===pmoment) closeMoment();});
 document.addEventListener('keydown',e=>{if(e.key==='Escape' && pmoment.classList.contains('open')) closeMoment();});
 
 /* =====================================================================
-   TALK TO ARTIBYTE — guided quote widget (v1, no AI, rule-based)
+   TALK TO artibytte — guided quote widget (v1, no AI, rule-based)
    ---------------------------------------------------------------------
    EDIT ME: everything under TALK_CATALOG is placeholder pricing.
    Replace the `price` values (in PHP) with your real numbers whenever
@@ -2272,7 +2415,7 @@ function tpSubmit(){
   }
   if(notes) body+=`\nNotes:\n${notes}\n`;
   const subject=`Quote Request — ${ind?ind.name:'General'} — ${company||name}`;
-  window.location.href=`mailto:hello@artibyte.co?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  window.location.href=`mailto:hello@artibytte.co?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   tpState.step='success';
   tpRender();
 }
