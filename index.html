@@ -419,6 +419,11 @@ section{position:relative}
 .pillar p{font-size:15px;color:var(--mist2);line-height:1.65;max-width:480px}
 @media(max-width:760px){.pillar{grid-template-columns:1fr;gap:8px}.pillar .idx{display:none}}
 
+/* === START: FOUNDATION LEFT-AXIS EDIT === */
+/* same left axis as hero + products head + rail cards (56px desktop, 26px ≤860px from padding) */
+.foundation > .wrap{margin:0;max-width:100%}
+/* === END: FOUNDATION LEFT-AXIS EDIT === */
+
 /* ---------- foundation / platform + how-it-works (simple, no diagram) ---------- */
 /* === START: FOUNDATION EDITORIAL — intro === */
 .foundation{background:var(--graphite)}
@@ -430,6 +435,10 @@ section{position:relative}
 /* === END: FOUNDATION EDITORIAL — intro === */
 
 /* ---------- products ---------- */
+/* === START: PRODUCTS HEAD LEFT-AXIS EDIT === */
+/* same left axis as hero + rail cards (56px from viewport edge, 26px on mobile) */
+#products > .wrap{margin:0;max-width:100%}
+/* === END: PRODUCTS HEAD LEFT-AXIS EDIT === */
 .prods-head{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;margin-bottom:44px}
 /* === START: RAIL NAV — floating edge arrows === */
 .railwrap{position:relative}
@@ -464,8 +473,10 @@ section{position:relative}
   .railnav.next{right:6px}
 }
 /* === END: RAIL NAV === */
-.prodrail{display:flex;gap:22px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:14px;margin:0 -56px;padding-left:56px;padding-right:56px}
-@media(max-width:860px){.prodrail{margin:0 -26px;padding-left:26px;padding-right:26px}}
+/* === START: PRODRAIL LEFT-AXIS EDIT === */
+.prodrail{display:flex;gap:22px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:14px;margin:0;padding-left:56px;padding-right:56px;scroll-padding-left:56px}
+@media(max-width:860px){.prodrail{margin:0;padding-left:26px;padding-right:26px;scroll-padding-left:26px}}
+/* === END: PRODRAIL LEFT-AXIS EDIT === */
 .prodrail::-webkit-scrollbar{height:0}
 .pcard{scroll-snap-align:start;flex:0 0 340px;background:var(--graphite);border:1px solid var(--line-dark);border-radius:18px;padding:34px 30px;display:flex;flex-direction:column;min-height:398px;transition:border-color .25s,transform .25s}
 .pcard:hover{border-color:var(--line-dark2);transform:translateY(-4px)}
@@ -520,12 +531,14 @@ section{position:relative}
 /* ---------- process ---------- */
 /* === START: FOUNDATION EDITORIAL — steps === */
 .process{display:flex;flex-direction:column}
-.foundation .process{margin-top:clamp(90px,11vw,160px)}
+.foundation .process{margin-top:clamp(56px,6vw,72px)}
+/* === START: PROCESS RHYTHM EDIT === */
 .step{
-  display:grid;grid-template-columns:clamp(72px,18vw,260px) 1fr;
-  align-items:start;padding:42px 0;
+  display:grid;grid-template-columns:120px 1fr;column-gap:48px;
+  align-items:start;padding:56px 0;
   border-top:1px solid rgba(255,255,255,.10);
 }
+/* === END: PROCESS RHYTHM EDIT === */
 .process .step:last-child{border-bottom:1px solid rgba(255,255,255,.10)}
 .step .num{
   font-family:var(--sans);font-size:12px;font-weight:500;
@@ -536,13 +549,18 @@ section{position:relative}
 .step h4{
   font-family:var(--serif);font-weight:500;color:#f5f2ec;
   font-size:clamp(25px,2.5vw,38px);line-height:1.08;
-  letter-spacing:-.035em;margin:0 0 18px;max-width:560px;
+  letter-spacing:-.035em;margin:0 0 16px;max-width:560px;
 }
-.step p{font-size:15px;line-height:1.7;color:var(--mist2);opacity:.62;max-width:520px}
-@media(max-width:760px){
-  .step{grid-template-columns:44px 1fr;padding:34px 0}
-  .step h4{margin-bottom:14px}
+.step p{font-size:15px;line-height:1.7;color:var(--mist2);opacity:.62;max-width:620px;margin:0}
+/* === START: PROCESS RESPONSIVE EDIT === */
+@media(max-width:1100px){
+  .step{grid-template-columns:90px 1fr;column-gap:32px}
 }
+@media(max-width:860px){
+  .step{grid-template-columns:1fr;row-gap:20px;padding:40px 0}
+  .step .num{padding-top:0}
+}
+/* === END: PROCESS RESPONSIVE EDIT === */
 /* === END: FOUNDATION EDITORIAL — steps === */
 
 /* ---------- approach: unified/single pillar callout ---------- */
@@ -577,14 +595,20 @@ section{position:relative}
 form .btn{margin-top:8px}
 
 /* ---------- footer ---------- */
+/* === START: FOOTER LEFT-AXIS EDIT === */
+/* same left axis as hero, products, foundation + rail cards (56px desktop, 26px ≤860px from .wrap padding) */
+footer > .wrap{margin:0;max-width:100%}
+/* === END: FOOTER LEFT-AXIS EDIT === */
 /* === START: FOOTER EDITORIAL === */
-footer{padding:clamp(80px,9vw,130px) 0 40px;border-top:1px solid var(--line-dark)}
-.footgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:48px;padding-bottom:clamp(64px,8vw,110px)}
+/* === START: FOOTER SPACING EDIT === */
+footer{padding:96px 0 32px;border-top:1px solid var(--line-dark)}
+.footgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));max-width:1180px;gap:48px;padding-bottom:80px}
 .footgrid .col h5{font-size:11.5px;color:var(--mist);letter-spacing:.16em;text-transform:uppercase;margin-bottom:20px;font-weight:500}
 .footgrid .col a,.footlink{display:block;font-size:14px;color:var(--mist2);margin-bottom:12px;transition:.2s}
 .footlink{background:transparent;border:none;font-family:var(--sans);cursor:pointer;padding:0;text-align:left}
 .footgrid .col a:hover,.footlink:hover{color:var(--bronze-light)}
-.footbottom{display:flex;justify-content:space-between;align-items:center;font-size:12.5px;color:var(--mist);border-top:1px solid var(--line-dark);padding-top:26px;flex-wrap:wrap;gap:12px}
+.footbottom{display:flex;justify-content:space-between;align-items:center;font-size:12.5px;color:var(--mist);border-top:1px solid var(--line-dark);padding-top:24px;flex-wrap:wrap;gap:12px}
+/* === END: FOOTER SPACING EDIT === */
 .footlegal a{transition:.2s}
 .footlegal a:hover{color:var(--bronze-light)}
 @media(max-width:900px){.footgrid{grid-template-columns:1fr 1fr;gap:44px 32px}.footbrand{grid-column:1/-1}}
