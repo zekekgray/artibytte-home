@@ -419,40 +419,51 @@ section{position:relative}
 .pillar p{font-size:15px;color:var(--mist2);line-height:1.65;max-width:480px}
 @media(max-width:760px){.pillar{grid-template-columns:1fr;gap:8px}.pillar .idx{display:none}}
 
-/* ---------- foundation / architecture diagram ---------- */
+/* ---------- foundation / platform + how-it-works (simple, no diagram) ---------- */
+/* === START: FOUNDATION EDITORIAL — intro === */
 .foundation{background:var(--graphite)}
-.diagwrap{display:grid;grid-template-columns:1.05fr .95fr;gap:60px;align-items:center}
-@media(max-width:960px){.diagwrap{grid-template-columns:1fr}}
-.diagram{width:100%;height:auto}
-.node{cursor:pointer}
-.node circle{fill:var(--graphite2);stroke:var(--line-dark2);stroke-width:1.4;transition:.25s}
-.node text{font-family:var(--sans);font-size:11.5px;fill:var(--mist2);text-anchor:middle;pointer-events:none;transition:.25s}
-.node.top circle{stroke:rgba(199,138,77,.5)}
-.node.active circle{fill:var(--bronze);stroke:var(--bronze-light)}
-.node.active text{fill:#100b06;font-weight:600}
-.node.dim{opacity:.28}
-.link{stroke:var(--line-dark2);stroke-width:1;transition:.25s}
-.link.active{stroke:var(--bronze);stroke-width:1.6;opacity:1}
-.link.dim{opacity:.08}
-.node.hub circle{fill:var(--graphite2);stroke:rgba(199,138,77,.7);stroke-width:1.8}
-.node.hub.active circle{fill:var(--bronze);stroke:var(--bronze-light)}
-.node.hub.active text{fill:#100b06;font-weight:600}
-.bizband{opacity:.45;transition:opacity .35s ease}
-.bizband.active{opacity:1}
-.bizband rect{transition:stroke .35s ease,fill .35s ease}
-.bizband.active rect{stroke:var(--bronze);fill:rgba(199,138,77,.16)}
-.diagram .lbl-band{font-family:var(--sans);font-size:10.5px;fill:var(--mist);letter-spacing:.4px}
-.diaginfo{min-height:132px}
-.diaginfo .tag{font-family:var(--sans);font-size:12.5px;color:var(--bronze-light);font-weight:600;letter-spacing:.3px;margin-bottom:10px;display:block}
-.diaginfo h4{font-family:var(--serif);font-size:27px;font-weight:440;color:#f5f2ec;letter-spacing:-.4px;margin-bottom:12px}
-.diaginfo p{font-size:15.5px;color:var(--mist2);line-height:1.7;max-width:420px}
-.diaginfo .hint{font-size:13px;color:var(--mist);margin-top:22px;font-style:italic;font-family:var(--serif)}
+.foundation .head{max-width:780px;margin-bottom:0}
+.foundation .head h2{font-weight:340;letter-spacing:-.035em;line-height:1.08;font-size:clamp(34px,4.4vw,58px)}
+.foundation .head p{max-width:600px;font-size:17px;line-height:1.75;color:var(--mist2);opacity:.66}
+.foundation .head h2+p{margin-top:32px}
+.foundation .head p+p{margin-top:22px}
+/* === END: FOUNDATION EDITORIAL — intro === */
 
 /* ---------- products ---------- */
 .prods-head{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;margin-bottom:44px}
-.scrollbtns{display:flex;gap:10px}
-.scrollbtns button{width:42px;height:42px;border-radius:50%;border:1px solid var(--line-dark2);background:transparent;color:#eee;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.2s}
-.scrollbtns button:hover{border-color:var(--bronze);color:var(--bronze-light)}
+/* === START: RAIL NAV — floating edge arrows === */
+.railwrap{position:relative}
+.railnav{
+  position:absolute;top:50%;transform:translateY(-50%);z-index:5;
+  display:flex;align-items:center;gap:8px;
+  height:44px;padding:0 14px 0 10px;border-radius:999px;
+  border:1px solid transparent;background:transparent;
+  -webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);
+  color:rgba(255,255,255,.32);cursor:pointer;
+  font-family:var(--sans);font-size:12.5px;font-weight:500;letter-spacing:.1px;
+  -webkit-tap-highlight-color:transparent;
+  transition:color .3s,background .3s,border-color .3s,box-shadow .3s;
+}
+.railnav.prev{left:14px}
+.railnav.next{right:14px;flex-direction:row-reverse;padding:0 10px 0 14px}
+.railnav svg{width:18px;height:18px;flex:none;transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+.railnav .rn-label{max-width:0;opacity:0;overflow:hidden;white-space:nowrap;transition:max-width .35s cubic-bezier(.2,.8,.2,1),opacity .25s}
+.railnav:hover,.railnav:focus-visible{
+  color:#f0ede6;background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.14);
+  box-shadow:0 4px 18px rgba(0,0,0,.25);outline:none;
+}
+.railnav:hover .rn-label,.railnav:focus-visible .rn-label{max-width:72px;opacity:1}
+.railnav.prev:hover svg,.railnav.prev:focus-visible svg{transform:translateX(-3px)}
+.railnav.next:hover svg,.railnav.next:focus-visible svg{transform:translateX(3px)}
+.railnav:active{transform:translateY(-50%) scale(.94)}
+@media(max-width:860px){
+  .railnav{width:40px;height:40px;padding:0!important;justify-content:center;gap:0;
+    color:rgba(255,255,255,.7);background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.14)}
+  .railnav .rn-label{display:none}
+  .railnav.prev{left:6px}
+  .railnav.next{right:6px}
+}
+/* === END: RAIL NAV === */
 .prodrail{display:flex;gap:22px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:14px;margin:0 -56px;padding-left:56px;padding-right:56px}
 @media(max-width:860px){.prodrail{margin:0 -26px;padding-left:26px;padding-right:26px}}
 .prodrail::-webkit-scrollbar{height:0}
@@ -507,14 +518,32 @@ section{position:relative}
 .pcell p{font-size:14px;color:var(--ink2);line-height:1.6}
 
 /* ---------- process ---------- */
+/* === START: FOUNDATION EDITORIAL — steps === */
 .process{display:flex;flex-direction:column}
-.step{display:grid;grid-template-columns:90px 1fr;border-top:1px solid var(--line-dark)}
-.process .step:last-child{border-bottom:1px solid var(--line-dark)}
-.step .num{font-family:var(--serif);font-size:15px;color:var(--mist);padding:30px 0}
-.step .body{padding:30px 0;display:grid;grid-template-columns:220px 1fr;gap:30px;align-items:baseline}
-@media(max-width:760px){.step .body{grid-template-columns:1fr;gap:8px}}
-.step h4{font-family:var(--serif);font-weight:500;font-size:21px;color:#f5f2ec}
-.step p{font-size:14.5px;color:var(--mist2);max-width:480px;line-height:1.65}
+.foundation .process{margin-top:clamp(90px,11vw,160px)}
+.step{
+  display:grid;grid-template-columns:clamp(72px,18vw,260px) 1fr;
+  align-items:start;padding:42px 0;
+  border-top:1px solid rgba(255,255,255,.10);
+}
+.process .step:last-child{border-bottom:1px solid rgba(255,255,255,.10)}
+.step .num{
+  font-family:var(--sans);font-size:12px;font-weight:500;
+  letter-spacing:.16em;color:#f0ede6;opacity:.45;
+  padding:10px 0 0;
+}
+.step .body{display:block;padding:0}
+.step h4{
+  font-family:var(--serif);font-weight:500;color:#f5f2ec;
+  font-size:clamp(25px,2.5vw,38px);line-height:1.08;
+  letter-spacing:-.035em;margin:0 0 18px;max-width:560px;
+}
+.step p{font-size:15px;line-height:1.7;color:var(--mist2);opacity:.62;max-width:520px}
+@media(max-width:760px){
+  .step{grid-template-columns:44px 1fr;padding:34px 0}
+  .step h4{margin-bottom:14px}
+}
+/* === END: FOUNDATION EDITORIAL — steps === */
 
 /* ---------- approach: unified/single pillar callout ---------- */
 .unified{display:grid;grid-template-columns:64px 1fr;gap:34px;padding:38px 0 0;border-top:1px solid var(--line-dark);align-items:baseline}
@@ -548,12 +577,18 @@ section{position:relative}
 form .btn{margin-top:8px}
 
 /* ---------- footer ---------- */
-footer{padding:70px 0 40px;border-top:1px solid var(--line-dark)}
-.footgrid{display:flex;justify-content:space-between;gap:40px;flex-wrap:wrap;padding-bottom:50px}
-.footgrid .col h5{font-size:12px;color:var(--mist);letter-spacing:.3px;margin-bottom:16px;font-weight:500}
-.footgrid .col a{display:block;font-size:14px;color:var(--mist2);margin-bottom:11px;transition:.2s}
-.footgrid .col a:hover{color:var(--bronze-light)}
+/* === START: FOOTER EDITORIAL === */
+footer{padding:clamp(80px,9vw,130px) 0 40px;border-top:1px solid var(--line-dark)}
+.footgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:48px;padding-bottom:clamp(64px,8vw,110px)}
+.footgrid .col h5{font-size:11.5px;color:var(--mist);letter-spacing:.16em;text-transform:uppercase;margin-bottom:20px;font-weight:500}
+.footgrid .col a,.footlink{display:block;font-size:14px;color:var(--mist2);margin-bottom:12px;transition:.2s}
+.footlink{background:transparent;border:none;font-family:var(--sans);cursor:pointer;padding:0;text-align:left}
+.footgrid .col a:hover,.footlink:hover{color:var(--bronze-light)}
 .footbottom{display:flex;justify-content:space-between;align-items:center;font-size:12.5px;color:var(--mist);border-top:1px solid var(--line-dark);padding-top:26px;flex-wrap:wrap;gap:12px}
+.footlegal a{transition:.2s}
+.footlegal a:hover{color:var(--bronze-light)}
+@media(max-width:900px){.footgrid{grid-template-columns:1fr 1fr;gap:44px 32px}.footbrand{grid-column:1/-1}}
+/* === END: FOOTER EDITORIAL === */
 
 /* reveal-on-scroll (answers scroll, not decoration-heavy) */
 .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease}
@@ -616,8 +651,7 @@ body:has(.talkpanel.open) .vex-assistive-button{
 /* === END: VEX IDLE DIM === */
 .vex-assistive-button:active{transform:scale(.92)}
 .vex-assistive-button svg{width:30px;height:30px}
-/* === END: VEX ASSISTIVE ICON EDIT === */color:#f0ede6;padding:9px 16px;border-radius:999px;font-size:12.5px;border:1px solid var(--line-dark2);white-space:nowrap;opacity:0;transform:translateX(6px);pointer-events:none;transition:.25s;font-weight:500}
-.orb-wrap:hover .orb-label{opacity:1;transform:translateX(0)}
+/* === END: VEX ASSISTIVE ICON EDIT === */
 .orb-wrap.hide{display:none}
 /* === START: DRAGGABLE ORB — surgical patch === */
 .orb-wrap{cursor:grab;touch-action:none;transition:none}
@@ -799,20 +833,14 @@ body:has(.talkpanel.open) .vex-assistive-button{
       <div class="navcurtain" aria-hidden="true">
         <div class="navcurtain-inner">
           <div>
-            <h5>Shared foundation</h5>
-            <a class="navcurtain-link" href="#foundation">Identity</a>
-            <a class="navcurtain-link" href="#foundation">Data</a>
-            <a class="navcurtain-link" href="#foundation">Infrastructure</a>
+            <h5>One platform</h5>
+            <p>One proven foundation, adapted to the way each business actually works.</p>
           </div>
           <div>
-            <h5>Shared intelligence</h5>
-            <a class="navcurtain-link" href="#foundation">Billing</a>
-            <a class="navcurtain-link" href="#foundation">AI</a>
-            <a class="navcurtain-link" href="#foundation">Analytics</a>
-          </div>
-          <div>
-            <h5>One core</h5>
-            <p>Six shared layers carry every product above them. Nothing gets rebuilt twice.</p>
+            <h5>How it works</h5>
+            <a class="navcurtain-link" href="#approach">Tell us how your business works</a>
+            <a class="navcurtain-link" href="#approach">We build the system around it</a>
+            <a class="navcurtain-link" href="#approach">You use it. We keep improving it.</a>
           </div>
         </div>
       </div>
@@ -826,47 +854,21 @@ body:has(.talkpanel.open) .vex-assistive-button{
             <a class="navcurtain-link" href="#products">ArtiPlay — Sports academies</a>
             <a class="navcurtain-link" href="#products">ArtiStock — Inventory &amp; operations</a>
             <a class="navcurtain-link" href="#products">ArtiSnack — Food &amp; retail POS</a>
+            <a class="navcurtain-link" href="#products">ArtiDrive — Vehicle care &amp; maintenance</a>
+            <a class="navcurtain-link" href="#products">ArtiHome — Home care &amp; maintenance</a>
           </div>
           <div>
             <h5>&nbsp;</h5>
             <a class="navcurtain-link" href="#products">Business Health Toolkit</a>
             <a class="navcurtain-link" href="#products">VEX AI — Automation</a>
+            <a class="navcurtain-link" href="#products">ArtiField — Construction control</a>
+            <a class="navcurtain-link" href="#products">OWLBOUND — Games &amp; engagement</a>
+            <a class="navcurtain-link" href="#products">ArtiSlide — Interactive presentations</a>
+            <a class="navcurtain-link" href="#products">ATH•NA — Digital identity cards</a>
           </div>
           <div>
             <h5>Built on one foundation</h5>
-            <p>Five products today, each shaped entirely around one industry's real workflow.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="navitem">
-      <a href="#approach">Approach</a>
-      <div class="navcurtain" aria-hidden="true">
-        <div class="navcurtain-inner">
-          <div>
-            <h5>Not a vendor</h5>
-            <p>We start with what your business needs to accomplish, then decide what to build.</p>
-          </div>
-          <div>
-            <h5>Software, sold right</h5>
-            <p>A specialized system — owned by you, maintained by us, built to keep working as your business grows.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="navitem">
-      <a href="#approach">How we work</a>
-      <div class="navcurtain" aria-hidden="true">
-        <div class="navcurtain-inner">
-          <div>
-            <h5>Four stages</h5>
-            <a class="navcurtain-link" href="#approach">01 — Understand</a>
-            <a class="navcurtain-link" href="#approach">02 — Design</a>
-          </div>
-          <div>
-            <h5>&nbsp;</h5>
-            <a class="navcurtain-link" href="#approach">03 — Build</a>
-            <a class="navcurtain-link" href="#approach">04 — Evolve</a>
+            <p>Eleven products today, each shaped entirely around one industry's real workflow.</p>
           </div>
         </div>
       </div>
@@ -905,12 +907,17 @@ body:has(.talkpanel.open) .vex-assistive-button{
         <h2>Software for the way you work.</h2>
         <p>Built around the work. Connected underneath.</p>
       </div>
-      <div class="scrollbtns">
-        <button id="railPrev" aria-label="Previous">‹</button>
-        <button id="railNext" aria-label="Next">›</button>
-      </div>
     </div>
   </div>
+  <div class="railwrap">
+  <button class="railnav prev" id="railPrev" type="button" aria-label="Previous">
+    <svg viewBox="0 0 20 20" fill="none"><path d="M12.5 4.5L7 10l5.5 5.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <span class="rn-label">Previous</span>
+  </button>
+  <button class="railnav next" id="railNext" type="button" aria-label="Next">
+    <svg viewBox="0 0 20 20" fill="none"><path d="M7.5 4.5L13 10l-5.5 5.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <span class="rn-label">Next</span>
+  </button>
   <div class="prodrail" id="prodRail">
 
     <div class="pcard pcard-v2">
@@ -999,69 +1006,162 @@ body:has(.talkpanel.open) .vex-assistive-button{
       </div>
     </div>
 
+    <div class="pcard pcard-v2">
+      <div class="pmini"><svg viewBox="0 0 300 170" preserveAspectRatio="xMidYMid slice">
+        <rect width="300" height="170" fill="var(--graphite2)"/>
+        <rect class="bar" x="20" y="30" width="90" height="10" rx="3" fill="var(--bronze)"/>
+        <rect class="bar" x="50" y="52" width="120" height="10" rx="3" fill="var(--bronze-light)"/>
+        <rect class="bar" x="90" y="74" width="100" height="10" rx="3" fill="var(--bronze)"/>
+        <line x1="140" y1="18" x2="140" y2="96" stroke="var(--bronze-light)" stroke-dasharray="3 3"/>
+        <polyline class="draw1" points="20,150 70,146 120,132 170,118 220,100 270,90" fill="none" stroke="var(--line-dark2)" stroke-width="2"/>
+        <polyline class="draw2" points="20,150 70,148 120,138 170,128 220,116 270,108" fill="none" stroke="var(--bronze-light)" stroke-width="2"/>
+        <circle class="dot" cx="270" cy="108" r="5" fill="#f5f2ec"/>
+        <rect class="pill" x="200" y="22" width="80" height="26" rx="6" fill="rgba(199,138,77,.14)"/>
+        <text x="210" y="39" font-family="Inter,sans-serif" font-size="10" fill="#f0ede6">SPI 0.94</text>
+      </svg></div>
+      <div class="pcard-body">
+        <div class="vert">Construction control</div>
+        <h3>ArtiField</h3>
+        <p class="promise">Schedule, cost and supply — one decision engine.</p>
+        <a class="penter" href="#" data-moment="artifield">Enter ArtiField <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.4"/></svg></a>
+      </div>
+    </div>
+
+    <div class="pcard pcard-v2">
+      <div class="pmini"><svg viewBox="0 0 300 170" preserveAspectRatio="xMidYMid slice">
+        <rect width="300" height="170" fill="var(--graphite2)"/>
+        <rect x="70" y="0" width="26" height="52" rx="2" fill="var(--obsidian)" stroke="var(--line-dark2)"/>
+        <rect x="70" y="112" width="26" height="58" rx="2" fill="var(--obsidian)" stroke="var(--line-dark2)"/>
+        <rect x="200" y="0" width="26" height="72" rx="2" fill="var(--obsidian)" stroke="var(--line-dark2)"/>
+        <rect x="200" y="130" width="26" height="40" rx="2" fill="var(--obsidian)" stroke="var(--line-dark2)"/>
+        <circle class="dot" cx="140" cy="86" r="13" fill="var(--bronze-light)"/>
+        <circle cx="136" cy="83" r="3" fill="var(--obsidian)"/><circle cx="145" cy="83" r="3" fill="var(--obsidian)"/>
+        <circle class="dot" cx="176" cy="60" r="6" fill="var(--bronze)"/>
+        <rect class="pill" x="20" y="16" width="56" height="22" rx="6" fill="rgba(199,138,77,.14)"/>
+        <text x="30" y="31" font-family="Inter,sans-serif" font-size="10" fill="#f0ede6">Score 42</text>
+      </svg></div>
+      <div class="pcard-body">
+        <div class="vert">Games &amp; engagement</div>
+        <h3>OWLBOUND</h3>
+        <p class="promise">How far can you fly?</p>
+        <a class="penter" href="#" data-moment="owlbound">Enter OWLBOUND <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.4"/></svg></a>
+      </div>
+    </div>
+
+    <div class="pcard pcard-v2">
+      <div class="pmini"><svg viewBox="0 0 300 170" preserveAspectRatio="xMidYMid slice">
+        <rect width="300" height="170" fill="var(--graphite2)"/>
+        <rect x="0" y="0" width="300" height="3" fill="var(--line-dark2)"/>
+        <rect class="bar" x="0" y="0" width="120" height="3" fill="var(--bronze-light)"/>
+        <rect x="26" y="30" width="150" height="10" rx="3" fill="#f5f2ec" opacity=".85"/>
+        <rect x="26" y="48" width="100" height="10" rx="3" fill="#f5f2ec" opacity=".85"/>
+        <rect class="line" x="26" y="72" width="170" height="5" fill="var(--line-dark2)"/>
+        <rect class="line" x="26" y="84" width="130" height="5" fill="var(--line-dark2)"/>
+        <rect class="pill" x="26" y="108" width="72" height="26" rx="6" fill="rgba(199,138,77,.14)" stroke="var(--line-dark2)"/>
+        <rect class="pill" x="106" y="108" width="72" height="26" rx="6" fill="rgba(199,138,77,.14)" stroke="var(--line-dark2)"/>
+        <circle class="dot" cx="256" cy="34" r="16" fill="var(--bronze-light)"/>
+        <path d="M252 28l7 6-7 6" stroke="var(--obsidian)" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg></div>
+      <div class="pcard-body">
+        <div class="vert">Interactive presentations</div>
+        <h3>ArtiSlide</h3>
+        <p class="promise">Present differently.</p>
+        <a class="penter" href="#" data-moment="artislide">Enter ArtiSlide <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.4"/></svg></a>
+      </div>
+    </div>
+
+    <div class="pcard pcard-v2">
+      <div class="pmini"><svg viewBox="0 0 300 170" preserveAspectRatio="xMidYMid slice">
+        <rect width="300" height="170" fill="var(--graphite2)"/>
+        <path d="M60 110 A60 60 0 0 1 180 110" fill="none" stroke="var(--line-dark2)" stroke-width="6" stroke-linecap="round"/>
+        <path class="draw2" d="M60 110 A60 60 0 0 1 180 110" fill="none" stroke="var(--bronze)" stroke-width="6" stroke-linecap="round"/>
+        <line x1="120" y1="110" x2="150" y2="70" stroke="var(--bronze-light)" stroke-width="3" stroke-linecap="round"/>
+        <circle class="dot" cx="120" cy="110" r="6" fill="var(--bronze-light)"/>
+        <rect class="line" x="60" y="132" width="120" height="5" fill="var(--line-dark2)"/>
+        <rect class="line" x="60" y="144" width="80" height="5" fill="var(--line-dark2)"/>
+        <rect class="pill" x="204" y="24" width="78" height="26" rx="6" fill="rgba(199,138,77,.14)"/>
+        <text x="214" y="41" font-family="Inter,sans-serif" font-size="10" fill="#f0ede6">Health 96</text>
+        <rect x="204" y="70" width="78" height="30" rx="6" fill="var(--obsidian)" stroke="var(--line-dark2)"/>
+        <rect class="bar" x="210" y="78" width="52" height="14" rx="3" fill="var(--bronze-light)"/>
+        <rect x="283" y="80" width="4" height="10" rx="1" fill="var(--line-dark2)"/>
+        <text x="204" y="118" font-family="Inter,sans-serif" font-size="10" fill="var(--mist2)">Battery 84%</text>
+      </svg></div>
+      <div class="pcard-body">
+        <div class="vert">Vehicle care</div>
+        <h3>ArtiDrive</h3>
+        <p class="promise">Know your car. Predict problems.</p>
+        <a class="penter" href="#" data-moment="artidrive">Enter ArtiDrive <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.4"/></svg></a>
+      </div>
+    </div>
+
+    <div class="pcard pcard-v2">
+      <div class="pmini"><svg viewBox="0 0 300 170" preserveAspectRatio="xMidYMid slice">
+        <rect width="300" height="170" fill="var(--graphite2)"/>
+        <polyline points="60,90 120,40 180,90" fill="none" stroke="var(--line-dark2)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M74 84 V132 H166 V84" fill="none" stroke="var(--line-dark2)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        <polyline class="draw2" points="60,90 120,40 180,90" fill="none" stroke="var(--bronze)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle class="dot" cx="120" cy="76" r="7" fill="var(--bronze-light)"/>
+        <rect x="108" y="104" width="24" height="28" rx="3" fill="rgba(199,138,77,.4)"/>
+        <rect class="line" x="60" y="146" width="120" height="5" fill="var(--line-dark2)"/>
+        <rect class="line" x="60" y="158" width="80" height="5" fill="var(--line-dark2)"/>
+        <rect class="pill" x="204" y="24" width="78" height="26" rx="6" fill="rgba(199,138,77,.14)"/>
+        <text x="214" y="41" font-family="Inter,sans-serif" font-size="10" fill="#f0ede6">Care 94</text>
+        <rect class="bar" x="208" y="100" width="18" height="30" rx="2" fill="var(--bronze)"/>
+        <rect class="bar" x="236" y="80" width="18" height="50" rx="2" fill="var(--bronze-light)"/>
+        <rect class="bar" x="264" y="90" width="18" height="40" rx="2" fill="var(--bronze)"/>
+        <text x="204" y="148" font-family="Inter,sans-serif" font-size="10" fill="var(--mist2)">Monthly spend</text>
+      </svg></div>
+      <div class="pcard-body">
+        <div class="vert">Home care</div>
+        <h3>ArtiHome</h3>
+        <p class="promise">Know your home. Predict problems.</p>
+        <a class="penter" href="#" data-moment="artihome">Enter ArtiHome <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.4"/></svg></a>
+      </div>
+    </div>
+
+    <div class="pcard pcard-v2">
+      <div class="pmini"><svg viewBox="0 0 300 170" preserveAspectRatio="xMidYMid slice">
+        <rect width="300" height="170" fill="var(--graphite2)"/>
+        <rect x="100" y="14" width="100" height="142" rx="10" fill="var(--obsidian)" stroke="var(--line-dark2)"/>
+        <circle cx="150" cy="32" r="5" fill="none" stroke="var(--bronze-light)" stroke-width="1.2"/>
+        <circle cx="150" cy="78" r="28" fill="none" stroke="var(--line-dark2)" stroke-width="3"/>
+        <circle class="draw2" cx="150" cy="78" r="28" fill="none" stroke="var(--bronze)" stroke-width="3"/>
+        <rect x="138" y="66" width="10" height="10" rx="1.5" fill="none" stroke="var(--bronze-light)" stroke-width="1.4"/>
+        <rect x="152" y="66" width="10" height="10" rx="1.5" fill="none" stroke="var(--bronze-light)" stroke-width="1.4"/>
+        <rect x="138" y="80" width="10" height="10" rx="1.5" fill="none" stroke="var(--bronze-light)" stroke-width="1.4"/>
+        <circle class="dot" cx="157" cy="85" r="3" fill="var(--bronze-light)"/>
+        <rect class="line" x="116" y="118" width="68" height="4" fill="var(--line-dark2)"/>
+        <rect class="pill" x="112" y="130" width="76" height="18" rx="9" fill="rgba(199,138,77,.14)" stroke="var(--line-dark2)"/>
+        <rect class="pill" x="14" y="54" width="76" height="22" rx="11" fill="rgba(199,138,77,.14)" stroke="var(--line-dark2)"/>
+        <text x="28" y="68" font-family="Inter,sans-serif" font-size="9" fill="#f0ede6">Scan</text>
+        <rect class="pill" x="210" y="90" width="76" height="22" rx="11" fill="rgba(199,138,77,.14)" stroke="var(--line-dark2)"/>
+        <text x="220" y="104" font-family="Inter,sans-serif" font-size="9" fill="#f0ede6">Save contact</text>
+      </svg></div>
+      <div class="pcard-body">
+        <div class="vert">Digital identity</div>
+        <h3>ATH•NA</h3>
+        <p class="promise">Your identity, encoded.</p>
+        <a class="penter" href="#" data-moment="athna">Enter ATH•NA <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.4"/></svg></a>
+      </div>
+    </div>
+
   </div>
+  </div><!-- /railwrap -->
 </section>
 
-<!-- FOUNDATION / ARCHITECTURE -->
+<!-- FOUNDATION / PLATFORM — simple, no diagram -->
 <section class="foundation pad" id="foundation">
   <div class="wrap">
     <div class="head">
-      <h2>One foundation. Built for different workflows.</h2>
-      <p>Every product looks and feels built just for its industry — because it is. But underneath, they all run on the same six-layer core. Hover a layer to see how it holds everything above it up.</p>
-    </div>
-    <div class="diagwrap">
-      <svg class="diagram" id="archSvg" viewBox="0 0 960 560" xmlns="http://www.w3.org/2000/svg">
-        <text x="480" y="26" class="lbl-band" text-anchor="middle">SPECIALIZED PRODUCTS</text>
-        <text x="480" y="196" class="lbl-band" text-anchor="middle">SHARED INTELLIGENCE</text>
-        <text x="480" y="406" class="lbl-band" text-anchor="middle">SHARED FOUNDATION</text>
-       <g id="linksTop" style="display:none"></g>
-<g id="linksBot" style="display:none"></g>
-        <g id="topNodes"></g>
-        <g id="hubNode"></g>
-        <g id="botNodes"></g>
-        <g class="bizband" id="bizband">
-          <rect x="230" y="470" width="500" height="62" rx="12" fill="rgba(199,138,77,.08)" stroke="var(--line-dark2)"/>
-          <text x="480" y="496" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" letter-spacing=".4" fill="var(--mist)">POWERS</text>
-          <text x="480" y="518" text-anchor="middle" font-family="Fraunces,serif" font-style="italic" font-size="17" fill="#f5f2ec">Your business, running on one system</text>
-        </g>
-      </svg>
-      <div class="diaginfo" id="diagInfo">
-        <span class="tag">Hover the diagram</span>
-        <h4>Specialized outside. Shared underneath.</h4>
-        <p>Identity, data, infrastructure, billing, AI and analytics — one hardened core, carrying every product above it. Nothing gets rebuilt twice.</p>
-        <p class="hint">Move your cursor over any node.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- APPROACH — compact platform/about screen -->
-<section class="pad" id="approach">
-  <div class="wrap">
-    <div class="head">
-      <h2>One system.<br>Built around your business.</h2>
-      <p>We design, build, and stay accountable for specialized business software — shaped around how your business actually works.</p>
+      <h2>One platform.<br>Different businesses.</h2>
+      <p>ArtiBytte provides the technology behind the software we build for businesses. Instead of starting from scratch every time, we build on one proven foundation and adapt it to the way each business actually works.</p>
+      <p>That means your business gets its own software — designed around your people, processes, and needs — while we take care of the technology underneath.</p>
     </div>
 
-    <div class="process">
-      <div class="step"><div class="num">01</div><div class="body"><h4>Understand</h4><p>Learn the real workflow.</p></div></div>
-      <div class="step"><div class="num">02</div><div class="body"><h4>Design</h4><p>Shape the system around it.</p></div></div>
-      <div class="step"><div class="num">03</div><div class="body"><h4>Build</h4><p>Launch the product and infrastructure.</p></div></div>
-      <div class="step"><div class="num">04</div><div class="body"><h4>Evolve</h4><p>Keep improving the same system as the business grows.</p></div></div>
-    </div>
-
-    <div class="unified">
-      <span class="idx">—</span>
-      <div>
-        <h3>Specialized outside. Unified underneath.</h3>
-        <p>Every product is built for its industry while sharing the same hardened foundation — identity, data, billing, infrastructure, and continuous development.</p>
-      </div>
-    </div>
-
-    <p class="approach-tagline">Built for your business. Owned by you. <em>Evolved with you.</em></p>
-
-    <div style="margin-top:44px">
-      <button type="button" class="btn" id="ctaStart2">Start a conversation →</button>
+    <div class="process" id="approach">
+      <div class="step"><div class="num">01</div><div class="body"><h4>Tell us how your business works.</h4><p>We learn what you need, what you currently use, and where things can work better.</p></div></div>
+      <div class="step"><div class="num">02</div><div class="body"><h4>We build the system around it.</h4><p>Your software is designed specifically for your business, rather than forcing your business to change around generic software.</p></div></div>
+      <div class="step"><div class="num">03</div><div class="body"><h4>You use it. We keep improving it.</h4><p>As your business grows, the system can grow with it.</p></div></div>
     </div>
   </div>
 </section>
@@ -1071,23 +1171,21 @@ body:has(.talkpanel.open) .vex-assistive-button{
 <footer>
   <div class="wrap">
     <div class="footgrid">
-      <div class="col" style="max-width:280px">
-                             
-        <p style="font-size:13.5px;color:var(--mist);line-height:1.6">Specialized on the outside. Unified underneath.</p>
-      </div>
       <div class="col"><h5>Platform</h5>
         <a href="#foundation">Architecture</a><a href="#approach">Approach</a>
       </div>
       <div class="col"><h5>Products</h5>
-        <a href="#products">ArtiPlay</a><a href="#products">ArtiStock</a><a href="#products">ArtiSnack</a><a href="#products">Business Health Toolkit</a><a href="#products">VEX AI</a>
+        <a href="#products">ArtiPlay</a><a href="#products">ArtiStock</a><a href="#products">ArtiSnack</a><a href="#products">Business Health Toolkit</a><a href="#products">VEX AI</a><a href="#products">ArtiField</a><a href="#products">OWLBOUND</a><a href="#products">ArtiSlide</a><a href="#products">ArtiDrive</a><a href="#products">ArtiHome</a><a href="#products">ATH•NA</a>
       </div>
-      <div class="col"><h5>Get in touch</h5>
-        <button type="button" id="footerCtaStart" style="background:transparent;border:none;color:inherit;font:inherit;cursor:pointer;padding:0;margin-bottom:11px;display:block">Start a conversation</button>
+      <div class="col"><h5>Company</h5>
+        <a href="#foundation">About</a>
+        <a href="mailto:hello@artibytte.co">Contact</a>
+        <button type="button" id="footerCtaStart" class="footlink">Start a conversation</button>
       </div>
     </div>
     <div class="footbottom">
       <span>© 2026 artibytte. All rights reserved.</span>
-      <span>Built for the businesses that can't afford to get it wrong.</span>
+      <span class="footlegal"><a href="#">Privacy</a> · <a href="#">Terms</a></span>
     </div>
   </div>
 </footer>
@@ -1316,150 +1414,35 @@ if(navCtaStart) navCtaStart.addEventListener('click',function(){ tpOpen(); });
 const footerCtaStart=document.getElementById('footerCtaStart');
 if(footerCtaStart) footerCtaStart.addEventListener('click',function(){ tpOpen(); });
 
-/* ===== Architecture diagram ===== */
-const products=[
-  {id:'artiplay',x:96, label:'ArtiPlay',   desc:"Sports academies — rosters, attendance, coaching and payments, run from one place."},
-  {id:'artistock',x:282,label:'ArtiStock',  desc:"Inventory & operations, tracked and trusted, location by location."},
-  {id:'artisnack',x:468,label:'ArtiSnack',  desc:"Food & retail, at the counter and behind it, kept in sync in real time."},
-  {id:'bht',      x:654,label:'BHT',        desc:"Business Health Toolkit — every connected number, reconciled into one honest view."},
-  {id:'vexai',    x:840,label:'VEX AI',     desc:"Automation for the parts of the business that shouldn't need a person, metered against real cost."},
-];
-const foundation=[
-  {id:'identity', x:80, label:'Identity',      desc:"One login, one set of permissions, enforced identically everywhere."},
-  {id:'data',     x:236,label:'Data',          desc:"A common schema and migration path, so every product speaks the same language."},
-  {id:'infra',    x:392,label:'Infra',         desc:"Hosting, monitoring and uptime — handled centrally, so no product reinvents it."},
-  {id:'billing',  x:548,label:'Billing',       desc:"Plans, invoicing and usage metering, enforced consistently across every account."},
-  {id:'ai',       x:704,label:'AI',            desc:"Model access and cost, metered per account — so AI never silently eats the margin."},
-  {id:'analytics',x:860,label:'Analytics',     desc:"Adoption and health signals, generated as a byproduct of normal use."},
-];
-const TOPY=90, HUBY=230, BOTY=370;
-const linksTopG=document.getElementById('linksTop');
-const linksBotG=document.getElementById('linksBot');
-const topG=document.getElementById('topNodes');
-const hubG=document.getElementById('hubNode');
-const botG=document.getElementById('botNodes');
-const svgNS='http://www.w3.org/2000/svg';
-
-function makeNode(g,item,y,cls){
-  const grp=document.createElementNS(svgNS,'g');
-  grp.setAttribute('class','node '+cls);
-  grp.setAttribute('data-id',item.id);
-  const c=document.createElementNS(svgNS,'circle');
-  c.setAttribute('cx',item.x);c.setAttribute('cy',y);c.setAttribute('r',cls==='top'?30:24);
-  grp.appendChild(c);
-  const t=document.createElementNS(svgNS,'text');
-  t.setAttribute('x',item.x);t.setAttribute('y',y+4);
-  t.textContent=item.label;
-  grp.appendChild(t);
-  g.appendChild(grp);
-  return grp;
-}
-products.forEach(p=>makeNode(topG,p,TOPY,'top'));
-foundation.forEach(f=>makeNode(botG,f,BOTY,'bot'));
-
-/* hub node — the "shared intelligence" layer */
-const hubGrp=document.createElementNS(svgNS,'g');
-hubGrp.setAttribute('class','node hub');
-hubGrp.setAttribute('data-id','hub');
-const hc=document.createElementNS(svgNS,'circle');
-hc.setAttribute('cx',480);hc.setAttribute('cy',HUBY);hc.setAttribute('r',38);
-hubGrp.appendChild(hc);
-const ht=document.createElementNS(svgNS,'text');
-ht.setAttribute('x',480);ht.setAttribute('y',HUBY-4);ht.setAttribute('font-size','10.5');
-const t1=document.createElementNS(svgNS,'tspan');t1.setAttribute('x',480);t1.setAttribute('dy','-2');t1.textContent='Shared';
-const t2=document.createElementNS(svgNS,'tspan');t2.setAttribute('x',480);t2.setAttribute('dy','13');t2.textContent='Intelligence';
-ht.appendChild(t1);ht.appendChild(t2);
-hubGrp.appendChild(ht);
-hubG.appendChild(hubGrp);
-
-products.forEach(p=>{
-  const line=document.createElementNS(svgNS,'line');
-  line.setAttribute('x1',p.x);line.setAttribute('y1',TOPY+30);
-  line.setAttribute('x2',480);line.setAttribute('y2',HUBY-38);
-  line.setAttribute('class','link');
-  line.setAttribute('data-top',p.id);
-  linksTopG.appendChild(line);
-});
-foundation.forEach(f=>{
-  const line=document.createElementNS(svgNS,'line');
-  line.setAttribute('x1',480);line.setAttribute('y1',HUBY+38);
-  line.setAttribute('x2',f.x);line.setAttribute('y2',BOTY-24);
-  line.setAttribute('class','link');
-  line.setAttribute('data-bot',f.id);
-  linksBotG.appendChild(line);
-});
-
-const diagInfo=document.getElementById('diagInfo');
-const allNodes=[...document.querySelectorAll('.node')];
-const allLinks=[...document.querySelectorAll('.link')];
-const bizband=document.getElementById('bizband');
-
-function setInfo(tag,title,desc){
-  diagInfo.innerHTML=`<span class="tag">${tag}</span><h4>${title}</h4><p>${desc}</p><p class="hint">Move your cursor over any node.</p>`;
-}
-function resetDiagram(){
-  allNodes.forEach(n=>n.classList.remove('active','dim'));
-  allLinks.forEach(l=>l.classList.remove('active','dim'));
-  bizband.classList.remove('active');
-}
-function hoverTop(id){
-  const item=products.find(p=>p.id===id);
-  allNodes.forEach(n=>{
-    const keep=n.dataset.id===id||n.classList.contains('bot')||n.dataset.id==='hub';
-    n.classList.toggle('active',keep);
-    n.classList.toggle('dim',!keep);
-  });
-  allLinks.forEach(l=>{
-    const match=l.dataset.top===id||l.hasAttribute('data-bot');
-    l.classList.toggle('active',match);
-    l.classList.toggle('dim',!match);
-  });
-  bizband.classList.add('active');
-  setInfo('Specialized product',item.label,item.desc);
-}
-function hoverBot(id){
-  const item=foundation.find(f=>f.id===id);
-  allNodes.forEach(n=>{
-    const keep=n.dataset.id===id||n.classList.contains('top')||n.dataset.id==='hub';
-    n.classList.toggle('active',keep);
-    n.classList.toggle('dim',!keep);
-  });
-  allLinks.forEach(l=>{
-    const match=l.dataset.bot===id||l.hasAttribute('data-top');
-    l.classList.toggle('active',match);
-    l.classList.toggle('dim',!match);
-  });
-  bizband.classList.add('active');
-  setInfo('Shared foundation layer',item.label,item.desc);
-}
-function hoverHub(){
-  allNodes.forEach(n=>n.classList.add('active'));
-  allLinks.forEach(l=>l.classList.add('active'));
-  bizband.classList.add('active');
-  setInfo('The connective layer','Shared Intelligence',"Every product feeds this layer, and every foundation service draws from it — the reason six layers feel like one system instead of six.");
-}
-allNodes.forEach(n=>{
-  n.addEventListener('mouseenter',()=>{
-    if(n.classList.contains('top')) hoverTop(n.dataset.id);
-    else if(n.dataset.id==='hub') hoverHub();
-    else hoverBot(n.dataset.id);
-  });
-  n.addEventListener('mouseleave',()=>{resetDiagram();setInfo('Hover the diagram','Everything shares one core.',"Six shared layers — identity, data, infrastructure, billing, AI and analytics — carry every product above them. Nothing gets rebuilt twice.");});
-  n.addEventListener('touchstart',(e)=>{
-    e.preventDefault();
-    if(n.classList.contains('top')) hoverTop(n.dataset.id);
-    else if(n.dataset.id==='hub') hoverHub();
-    else hoverBot(n.dataset.id);
-  },{passive:false});
-});
-
 /* ===== Product moments ===== */
 const ICONS={
+  'qr':'<g transform="scale(1.1667)" stroke="currentColor" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3M21 14v.01M14 21h.01M17 21h4v-4"/></g>',
+  'calendar':'<g transform="scale(1.1667)" stroke="currentColor" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></g>',
+  'home':'<g transform="scale(1.1667)" stroke="currentColor" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></g>',
+  'folder':'<g transform="scale(1.1667)" stroke="currentColor" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"/></g>',
+  'battery':'<g transform="scale(1.1667)" stroke="currentColor" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="17" height="10" rx="2"/><path d="M22 10v4"/><path d="M6 10v4"/></g>',
+  'wrench':'<g transform="scale(1.1667)" stroke="currentColor" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 1-5.4 5.4L4 17l3 3 5.3-5.3a4 4 0 0 1 5.4-5.4l-2.1 2.1-2-2z"/></g>',
+  'camera':'<g transform="scale(1.1667)" stroke="currentColor" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8a2 2 0 0 1 2-2h1.5l1-1.5h7l1 1.5H18a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8z"/><circle cx="12" cy="13" r="3.5"/></g>',
+  'wheel':'<g transform="scale(1.1667)" stroke="currentColor" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="2.3"/><path d="M12 5v4.7M6.3 15.5l4-2.3M17.7 15.5l-4-2.3"/></g>',
   'circle-user':'<circle cx="14" cy="10" r="4" stroke="currentColor" stroke-width="1.5" fill="none"/><path d="M5 23c0-5 4-8 9-8s9 3 9 8" stroke="currentColor" stroke-width="1.5" fill="none"/>',
   'check':'<path d="M6 14l6 6 10-12" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>',
   'whistle':'<circle cx="10" cy="16" r="6" stroke="currentColor" stroke-width="1.5" fill="none"/><path d="M16 14h9v5a4 4 0 01-4 4" stroke="currentColor" stroke-width="1.5" fill="none"/>',
   'card':'<rect x="4" y="8" width="20" height="14" rx="2" stroke="currentColor" stroke-width="1.5" fill="none"/><path d="M4 13h20" stroke="currentColor" stroke-width="1.5"/>',
-  'spark':'<path d="M14 4l2.6 7.4L24 14l-7.4 2.6L14 24l-2.6-7.4L4 14l7.4-2.6z" stroke="currentColor" stroke-width="1.3" fill="none" stroke-linejoin="round"/>'
+  'spark':'<path d="M14 4l2.6 7.4L24 14l-7.4 2.6L14 24l-2.6-7.4L4 14l7.4-2.6z" stroke="currentColor" stroke-width="1.3" fill="none" stroke-linejoin="round"/>',
+  'gantt':'<path d="M5 8h10M5 14h16M5 20h8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>',
+  'curve':'<path d="M4 21c4-1 5-8 9-11s7 5 11 3" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/><path d="M4 24h20" stroke="currentColor" stroke-width="1.4"/>',
+  'box':'<path d="M4 9l10-5 10 5-10 5z" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linejoin="round"/><path d="M4 9v10l10 5 10-5V9M14 14v10" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linejoin="round"/>',
+  'alert':'<path d="M14 4l11 19H3z" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linejoin="round"/><path d="M14 11v5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="14" cy="19.5" r="0.8" fill="currentColor"/>',
+  'coin':'<circle cx="14" cy="14" r="9" stroke="currentColor" stroke-width="1.5" fill="none"/><path d="M14 9v10M11 12c0-1.4 1.3-2 3-2s3 .6 3 2-1.3 1.6-3 2-3 .6-3 2 1.3 2 3 2 3-.6 3-2" stroke="currentColor" stroke-width="1.3" fill="none" stroke-linecap="round"/>',
+  'trophy':'<path d="M9 5h10v6a5 5 0 01-10 0z" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linejoin="round"/><path d="M9 7H5c0 3 1.5 4.5 4 5M19 7h4c0 3-1.5 4.5-4 5M14 16v5M10 23h8" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/>',
+  'bolt':'<path d="M15 3L6 15h7l-1 10 9-13h-7z" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linejoin="round"/>',
+  'moon':'<path d="M20 16A8 8 0 1112 6a6.5 6.5 0 008 10z" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linejoin="round"/>',
+  'shield':'<path d="M14 4l8 3v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V7z" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linejoin="round"/>',
+  'hourglass':'<path d="M8 4h12v5l-4 5 4 5v5H8v-5l4-5-4-5z" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linejoin="round"/>',
+  'cycle':'<path d="M5 14a9 9 0 0115-6l2 2M23 5v5h-5M23 14a9 9 0 01-15 6l-2-2M5 23v-5h5" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>',
+  'pin':'<path d="M14 24s8-7 8-13a8 8 0 10-16 0c0 6 8 13 8 13z" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linejoin="round"/><circle cx="14" cy="11" r="2.6" stroke="currentColor" stroke-width="1.5" fill="none"/>',
+  'bars':'<path d="M5 23V13M11 23V5M17 23v-7M23 23H3" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round"/>',
+  'slides':'<rect x="3" y="5" width="22" height="15" rx="2" stroke="currentColor" stroke-width="1.5" fill="none"/><path d="M10 24h8M14 20v4M12 10l5 2.5-5 2.5z" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>'
 };
 const PRODUCT_MOMENTS={
   artiplay:{
@@ -1476,7 +1459,107 @@ const PRODUCT_MOMENTS={
     ],
     mobile:'Parents and coaches carry it in their pocket — check-ins, payment reminders and progress updates, wherever they are.'
   },
-  artistock:{eyebrow:'ArtiStock',statement:'Know your stock. Know your real cost.',lede:'The full moment for ArtiStock — dashboard, transfers and reporting — is next in line.'},
+  artifield:{
+    eyebrow:'ArtiField',
+    statement:'The control tower for a construction project.',
+    lede:"Schedule, cost and materials in one place — with the engine watching for delays, clashes and shortages before they reach the site.",
+    dash:'<svg viewBox="0 0 700 300" xmlns="http://www.w3.org/2000/svg"><rect width="700" height="300" fill="var(--graphite2)"/><rect width="700" height="46" fill="var(--obsidian)"/><circle cx="28" cy="23" r="7" fill="var(--bronze)"/><rect x="46" y="18" width="120" height="10" rx="3" fill="var(--line-dark2)"/><circle cx="660" cy="23" r="9" fill="var(--bronze-light)"/><rect x="24" y="68" width="150" height="26" rx="13" fill="rgba(199,138,77,.16)"/><text x="99" y="86" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#f0ede6">Building A</text><rect x="24" y="112" width="70" height="7" rx="2" fill="var(--line-dark2)"/><rect x="110" y="109" width="110" height="12" rx="4" fill="var(--bronze)"/><rect x="24" y="138" width="90" height="7" rx="2" fill="var(--line-dark2)"/><rect x="140" y="135" width="130" height="12" rx="4" fill="var(--bronze-light)"/><rect x="24" y="164" width="60" height="7" rx="2" fill="var(--line-dark2)"/><rect x="180" y="161" width="100" height="12" rx="4" fill="rgba(199,138,77,.4)"/><line x1="200" y1="100" x2="200" y2="182" stroke="var(--bronze-light)" stroke-dasharray="3 3"/><rect x="330" y="68" width="346" height="120" rx="10" fill="var(--obsidian)" stroke="var(--line-dark2)"/><polyline points="350,172 410,166 470,148 530,132 590,116 656,100" fill="none" stroke="var(--line-dark2)" stroke-width="2"/><polyline points="350,172 410,168 470,155 530,142 590,132" fill="none" stroke="var(--bronze-light)" stroke-width="2.4"/><text x="350" y="88" font-family="Inter,sans-serif" font-size="10" fill="var(--mist2)">Planned vs actual</text><rect x="24" y="206" width="200" height="74" rx="10" fill="var(--obsidian)" stroke="var(--line-dark2)"/><text x="40" y="228" font-family="Inter,sans-serif" font-size="10" fill="var(--mist2)">Schedule (SPI)</text><text x="40" y="260" font-family="Fraunces,serif" font-size="22" fill="#f5f2ec">0.94</text><rect x="250" y="206" width="200" height="74" rx="10" fill="var(--obsidian)" stroke="var(--line-dark2)"/><text x="266" y="228" font-family="Inter,sans-serif" font-size="10" fill="var(--mist2)">Cost (CPI)</text><text x="266" y="260" font-family="Fraunces,serif" font-size="22" fill="#f5f2ec">1.02</text><rect x="476" y="206" width="200" height="74" rx="10" fill="var(--obsidian)" stroke="var(--line-dark2)"/><text x="492" y="228" font-family="Inter,sans-serif" font-size="10" fill="var(--mist2)">Supply risks</text><text x="492" y="260" font-family="Fraunces,serif" font-size="22" fill="#f5f2ec">2 items</text></svg>',
+    features:[
+      {label:'Schedule',desc:'Consolidated Gantt with baseline compare, focus modes and delay impact.',icon:'gantt'},
+      {label:'S-Curves',desc:'Planned vs actual — master, per building, cost, manpower and materials.',icon:'curve'},
+      {label:'Cost',desc:'Budget vs actual with CPI and forecast at completion, per building.',icon:'card'},
+      {label:'Materials',desc:'Stock on hand against lead time — shortages flagged before they stall work.',icon:'box'},
+      {label:'Clash detection',desc:'Sequence and same-floor overlaps caught before trades collide.',icon:'alert'}
+    ],
+    mobile:'Site teams log progress updates from the field — each entry is checked against the plan before it reaches the numbers.'
+  },
+  artislide:{
+    eyebrow:'ArtiSlide',
+    statement:'Move from a static deck to something interactive.',
+    lede:"A full-screen, story-driven product presentation — every slide reveals itself step by step, every detail opens on tap, and the pitch ends with a live estimate and a lead form that reaches you directly.",
+    dash:'<svg viewBox="0 0 700 300" xmlns="http://www.w3.org/2000/svg"><rect width="700" height="300" fill="var(--graphite2)"/><rect width="700" height="4" fill="var(--line-dark2)"/><rect width="250" height="4" fill="var(--bronze-light)"/><text x="40" y="60" font-family="Inter,sans-serif" font-size="10" fill="var(--bronze-light)">THE REALITY</text><text x="40" y="104" font-family="Fraunces,serif" font-size="30" fill="#f5f2ec">How does your business</text><text x="40" y="140" font-family="Fraunces,serif" font-size="30" fill="#f5f2ec">actually run today?</text><rect x="40" y="176" width="180" height="70" rx="12" fill="var(--obsidian)" stroke="var(--line-dark2)"/><circle cx="64" cy="200" r="10" fill="var(--bronze)"/><rect x="82" y="195" width="100" height="7" rx="2" fill="var(--line-dark2)"/><rect x="82" y="208" width="70" height="6" rx="2" fill="var(--line-dark2)"/><rect x="236" y="176" width="180" height="70" rx="12" fill="var(--obsidian)" stroke="var(--line-dark2)"/><circle cx="260" cy="200" r="10" fill="var(--bronze-light)"/><rect x="278" y="195" width="100" height="7" rx="2" fill="var(--line-dark2)"/><rect x="278" y="208" width="70" height="6" rx="2" fill="var(--line-dark2)"/><rect x="432" y="176" width="180" height="70" rx="12" fill="var(--obsidian)" stroke="var(--line-dark2)"/><circle cx="456" cy="200" r="10" fill="var(--bronze)"/><rect x="474" y="195" width="100" height="7" rx="2" fill="var(--line-dark2)"/><rect x="474" y="208" width="70" height="6" rx="2" fill="var(--line-dark2)"/><circle cx="660" cy="34" r="20" fill="var(--bronze-light)"/><path d="M654 26l9 8-9 8" stroke="var(--obsidian)" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+    features:[
+      {label:'Step-by-step reveal',desc:'Each slide builds in stages — one tap or arrow press reveals the next detail.',icon:'slides'},
+      {label:'Tap for detail',desc:'Cards and features open floating panels, so the story never leaves the slide.',icon:'bolt'},
+      {label:'Animated flow',desc:'Show how tools connect with a signal that travels node to node.',icon:'cycle'},
+      {label:'Live impact estimate',desc:'Sliders turn the viewer’s own numbers into a value-recovered figure.',icon:'bars'},
+      {label:'Lead capture',desc:'The pitch ends in a form that sends the inquiry straight to your team.',icon:'check'}
+    ],
+    mobile:'Works on phone and desktop — swipe or scroll between slides, with haptic feedback on every tap.'
+  },
+  owlbound:{
+    eyebrow:'OWLBOUND',
+    statement:'How far can you fly?',
+    lede:"An endless night-sky flyer built on the ArtiPlay platform — one tap to flap, every run scored, and a reward economy that keeps players coming back.",
+    dash:'<svg viewBox="0 0 700 300" xmlns="http://www.w3.org/2000/svg"><rect width="700" height="300" fill="var(--graphite2)"/><rect width="700" height="46" fill="var(--obsidian)"/><circle cx="28" cy="23" r="7" fill="var(--bronze)"/><rect x="46" y="18" width="110" height="10" rx="3" fill="var(--line-dark2)"/><rect x="560" y="15" width="52" height="16" rx="8" fill="rgba(199,138,77,.25)"/><rect x="620" y="15" width="52" height="16" rx="8" fill="rgba(199,138,77,.14)"/><text x="350" y="118" text-anchor="middle" font-family="Fraunces,serif" font-size="56" fill="#f5f2ec">42</text><rect x="120" y="150" width="46" height="150" rx="3" fill="var(--obsidian)" stroke="var(--line-dark2)"/><rect x="120" y="46" width="46" height="60" rx="3" fill="var(--obsidian)" stroke="var(--line-dark2)"/><rect x="470" y="46" width="46" height="110" rx="3" fill="var(--obsidian)" stroke="var(--line-dark2)"/><rect x="470" y="210" width="46" height="90" rx="3" fill="var(--obsidian)" stroke="var(--line-dark2)"/><circle cx="300" cy="190" r="20" fill="var(--bronze-light)"/><circle cx="293" cy="185" r="5" fill="var(--obsidian)"/><circle cx="308" cy="185" r="5" fill="var(--obsidian)"/><circle cx="380" cy="160" r="9" fill="var(--bronze)"/><circle cx="410" cy="200" r="9" fill="var(--bronze)"/><rect x="24" y="252" width="150" height="30" rx="15" fill="rgba(199,138,77,.16)"/><text x="99" y="272" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#f0ede6">Next milestone: 50</text></svg>',
+    features:[
+      {label:'Endless runs',desc:'One-tap flight through pipes that get harder as the score climbs.',icon:'bolt'},
+      {label:'Day &amp; night',desc:'The sky cycles through dusk, day and dawn, with weather and themes to unlock.',icon:'moon'},
+      {label:'Power-ups',desc:'Magnet, slow-motion and shield pickups change every run.',icon:'shield'},
+      {label:'IBEX &amp; Gems',desc:'Collect coins mid-run, then spend them on revives, skins and trails.',icon:'coin'},
+      {label:'Milestones',desc:'Permanent unlocks plus daily rewards, with a leaderboard to chase.',icon:'trophy'}
+    ],
+    mobile:'Built for the phone — tap to fly, with haptics and sound, and progress that follows the player once they save it with an email.'
+  },
+  artistock:{
+    eyebrow:'ArtiStock',
+    statement:'Know your stock. Know your real cost.',
+    lede:"Every receipt, sale, production run and count lands on one connected ledger — so on-hand and cost stay true without a single spreadsheet reconciliation.",
+    dash:'<svg viewBox="0 0 700 300" xmlns="http://www.w3.org/2000/svg"><rect width="700" height="300" fill="var(--graphite2)"/><rect width="700" height="46" fill="var(--obsidian)"/><circle cx="28" cy="23" r="7" fill="var(--bronze)"/><rect x="46" y="18" width="120" height="10" rx="3" fill="var(--line-dark2)"/><circle cx="660" cy="23" r="9" fill="var(--bronze-light)"/><rect x="24" y="68" width="150" height="26" rx="13" fill="rgba(199,138,77,.16)"/><text x="99" y="86" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#f0ede6">Stock In: Flour +50 kg</text><rect x="24" y="116" width="230" height="86" rx="10" fill="var(--obsidian)" stroke="var(--line-dark2)"/><text x="40" y="138" font-family="Inter,sans-serif" font-size="10" fill="var(--mist2)">On hand</text><text x="40" y="172" font-family="Fraunces,serif" font-size="24" fill="#f5f2ec">170 kg</text><text x="40" y="192" font-family="Inter,sans-serif" font-size="10" fill="var(--mist)">was 120 kg</text><rect x="270" y="116" width="200" height="86" rx="10" fill="var(--obsidian)" stroke="var(--line-dark2)"/><text x="286" y="138" font-family="Inter,sans-serif" font-size="10" fill="var(--mist2)">Weighted-avg cost</text><text x="286" y="172" font-family="Fraunces,serif" font-size="24" fill="#f5f2ec">₱60.06</text><text x="286" y="192" font-family="Inter,sans-serif" font-size="10" fill="var(--mist)">was ₱58.00</text><rect x="486" y="116" width="190" height="86" rx="10" fill="var(--obsidian)" stroke="var(--line-dark2)"/><text x="502" y="138" font-family="Inter,sans-serif" font-size="10" fill="var(--mist2)">Stock value</text><text x="502" y="172" font-family="Fraunces,serif" font-size="24" fill="#f5f2ec">₱10,210.20</text><rect class="bar" x="24" y="250" width="18" height="30" rx="2" fill="var(--bronze)"/><rect x="52" y="234" width="18" height="46" rx="2" fill="var(--bronze-light)"/><rect x="80" y="220" width="18" height="60" rx="2" fill="var(--bronze)"/><rect x="108" y="238" width="18" height="42" rx="2" fill="var(--bronze-light)"/><text x="150" y="268" font-family="Inter,sans-serif" font-size="10" fill="var(--mist2)">Valuation and COGS updated</text></svg>',
+    features:[
+      {label:'Real-time stock',desc:'Stock in, out, transfers and sales update one ledger as they happen.',icon:'box'},
+      {label:'Weighted-average costing',desc:'Every receipt and production run recalculates unit cost automatically.',icon:'coin'},
+      {label:'Batches &amp; expiry',desc:'Track batches per item, with the oldest-expiring stock used first.',icon:'hourglass'},
+      {label:'Purchasing &amp; production',desc:'POs, recipes and production runs flow straight into stock and cost.',icon:'cycle'},
+      {label:'Multi-location',desc:'Warehouses and branches in one system, with transfers as real movements.',icon:'pin'},
+      {label:'Reports &amp; audit log',desc:'Valuation, aging and margins, with a full trail of who did what.',icon:'bars'}
+    ]
+  },
+  artidrive:{
+    eyebrow:'ArtiDrive',
+    statement:'Your AI vehicle companion.',
+    lede:"Health, maintenance, fuel and expenses for every vehicle in one app — with Gold, the built-in AI companion, flagging what needs attention before it becomes a repair.",
+    dash:'<svg viewBox="0 0 700 300" xmlns="http://www.w3.org/2000/svg"><rect width="700" height="300" fill="var(--graphite2)"/><rect width="700" height="46" fill="var(--obsidian)"/><circle cx="28" cy="23" r="7" fill="var(--bronze)"/><rect x="46" y="18" width="120" height="10" rx="3" fill="var(--line-dark2)"/><circle cx="660" cy="23" r="9" fill="var(--bronze-light)"/><rect x="24" y="64" width="190" height="26" rx="13" fill="rgba(199,138,77,.16)"/><text x="119" y="82" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#f0ede6">Montero Sport · Healthy</text><circle cx="88" cy="170" r="42" fill="none" stroke="var(--line-dark2)" stroke-width="9"/><circle cx="88" cy="170" r="42" fill="none" stroke="var(--bronze-light)" stroke-width="9" stroke-linecap="round" stroke-dasharray="253 264" transform="rotate(-90 88 170)"/><text x="88" y="177" text-anchor="middle" font-family="Fraunces,serif" font-size="22" fill="#f5f2ec">96</text><text x="88" y="238" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="var(--mist2)">Health score</text><rect x="190" y="120" width="150" height="90" rx="10" fill="var(--obsidian)" stroke="var(--line-dark2)"/><text x="206" y="142" font-family="Inter,sans-serif" font-size="10" fill="var(--mist2)">Battery</text><text x="206" y="172" font-family="Fraunces,serif" font-size="22" fill="#f5f2ec">84%</text><text x="206" y="192" font-family="Inter,sans-serif" font-size="10" fill="var(--mist)">Low risk</text><rect x="356" y="120" width="150" height="90" rx="10" fill="var(--obsidian)" stroke="var(--line-dark2)"/><text x="372" y="142" font-family="Inter,sans-serif" font-size="10" fill="var(--mist2)">Next oil change</text><text x="372" y="172" font-family="Fraunces,serif" font-size="22" fill="#f5f2ec">21 days</text><text x="372" y="192" font-family="Inter,sans-serif" font-size="10" fill="var(--mist)">around 86,320 km</text><rect x="522" y="120" width="154" height="90" rx="10" fill="var(--obsidian)" stroke="var(--line-dark2)"/><text x="538" y="142" font-family="Inter,sans-serif" font-size="10" fill="var(--mist2)">Brake pads</text><text x="538" y="172" font-family="Fraunces,serif" font-size="22" fill="#f5f2ec">72%</text><text x="538" y="192" font-family="Inter,sans-serif" font-size="10" fill="var(--mist)">Monitor</text><rect x="190" y="226" width="300" height="50" rx="14" fill="rgba(199,138,77,.12)" stroke="var(--line-dark2)"/><text x="206" y="246" font-family="Inter,sans-serif" font-size="10" fill="var(--bronze-light)">Gold</text><text x="206" y="264" font-family="Inter,sans-serif" font-size="11" fill="#f0ede6">Brakes are the only system to monitor.</text><rect x="506" y="232" width="170" height="38" rx="19" fill="rgba(199,138,77,.16)"/><text x="591" y="255" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#f0ede6">Scan odometer</text></svg>',
+    features:[
+      {label:'Health score',desc:'Battery, oil, tires, brakes, coolant and more roll into one live score, with anything that needs a look flagged.',icon:'shield'},
+      {label:'Battery intelligence',desc:'Charge level, standby estimate and a nudge to drive before the battery drops.',icon:'battery'},
+      {label:'PMS &amp; reminders',desc:'Next oil change by mileage and date, plus registration and insurance reminders.',icon:'wrench'},
+      {label:'Gold AI',desc:"Ask anything about the car — analyze, diagnose, plan and forecast, in plain language.",icon:'spark'},
+      {label:'Scan &amp; log',desc:'Scan the OR/CR, the odometer or a receipt — fuel, service and expenses fill themselves in.',icon:'camera'},
+      {label:'Multi-vehicle garage',desc:'Every vehicle, its mileage and maintenance in one garage — switch with a tap.',icon:'wheel'}
+    ],
+    mobile:'Built phone-first — swipe through setup, scan the dashboard to update mileage, and earn Ibex Points for keeping the car on schedule.'
+  },
+  artihome:{
+    eyebrow:'ArtiHome',
+    statement:'Your AI home companion.',
+    lede:"Maintenance, utilities, expenses and documents for every property in one app — with Gold, the built-in AI companion, flagging what needs attention before it becomes a repair.",
+    dash:'<svg viewBox="0 0 700 300" xmlns="http://www.w3.org/2000/svg"><rect width="700" height="300" fill="var(--graphite2)"/><rect width="700" height="46" fill="var(--obsidian)"/><circle cx="28" cy="23" r="7" fill="var(--bronze)"/><rect x="46" y="18" width="120" height="10" rx="3" fill="var(--line-dark2)"/><circle cx="660" cy="23" r="9" fill="var(--bronze-light)"/><rect x="24" y="64" width="190" height="26" rx="13" fill="rgba(199,138,77,.16)"/><text x="119" y="82" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#f0ede6">Circulo Verde · Healthy</text><circle cx="88" cy="170" r="42" fill="none" stroke="var(--line-dark2)" stroke-width="9"/><circle cx="88" cy="170" r="42" fill="none" stroke="var(--bronze-light)" stroke-width="9" stroke-linecap="round" stroke-dasharray="248 264" transform="rotate(-90 88 170)"/><text x="88" y="177" text-anchor="middle" font-family="Fraunces,serif" font-size="22" fill="#f5f2ec">94</text><text x="88" y="238" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="var(--mist2)">Care score</text><rect x="190" y="120" width="150" height="90" rx="10" fill="var(--obsidian)" stroke="var(--line-dark2)"/><text x="206" y="142" font-family="Inter,sans-serif" font-size="10" fill="var(--mist2)">Aircon service</text><text x="206" y="172" font-family="Fraunces,serif" font-size="22" fill="#f5f2ec">12 days</text><text x="206" y="192" font-family="Inter,sans-serif" font-size="10" fill="var(--mist)">Next due</text><rect x="356" y="120" width="150" height="90" rx="10" fill="var(--obsidian)" stroke="var(--line-dark2)"/><text x="372" y="142" font-family="Inter,sans-serif" font-size="10" fill="var(--mist2)">This month</text><text x="372" y="172" font-family="Fraunces,serif" font-size="22" fill="#f5f2ec">₱18,420</text><text x="372" y="192" font-family="Inter,sans-serif" font-size="10" fill="var(--mist)">Electricity up 9%</text><rect x="522" y="120" width="154" height="90" rx="10" fill="var(--obsidian)" stroke="var(--line-dark2)"/><text x="538" y="142" font-family="Inter,sans-serif" font-size="10" fill="var(--mist2)">Plumbing</text><text x="538" y="172" font-family="Fraunces,serif" font-size="22" fill="#f5f2ec">Monitor</text><text x="538" y="192" font-family="Inter,sans-serif" font-size="10" fill="var(--mist)">Minor leak reported</text><rect x="190" y="226" width="300" height="50" rx="14" fill="rgba(199,138,77,.12)" stroke="var(--line-dark2)"/><text x="206" y="246" font-family="Inter,sans-serif" font-size="10" fill="var(--bronze-light)">Gold</text><text x="206" y="264" font-family="Inter,sans-serif" font-size="11" fill="#f0ede6">Aircon service is due in 12 days.</text><rect x="506" y="232" width="170" height="38" rx="19" fill="rgba(199,138,77,.16)"/><text x="591" y="255" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#f0ede6">Scan title / deed</text></svg>',
+    features:[
+      {label:'Home Care Score',desc:'Aircon, electrical, plumbing, roof, fire safety and more roll into one score, with anything to watch flagged.',icon:'shield'},
+      {label:'Maintenance &amp; reminders',desc:"Service intervals tracked per system, with reminders before aircon, pest control or cleaning is due.",icon:'wrench'},
+      {label:'Expenses &amp; utilities',desc:'Utilities, maintenance and household spend by month, quarter or year — with trends like rising electricity.',icon:'bars'},
+      {label:'Document vault',desc:'Title, home insurance, warranties and receipts in one place, with renewals flagged before they expire.',icon:'folder'},
+      {label:'Gold AI',desc:'Ask what needs attention, diagnose an issue, plan maintenance and forecast expenses, in plain language.',icon:'spark'},
+      {label:'Multi-property',desc:'Condo, family home and rentals under one account — switch between properties with a tap.',icon:'home'}
+    ],
+    mobile:'Built phone-first — scan a title or deed to set up a property, log expenses from a receipt photo, and get reminders before anything is due.'
+  },
+  athna:{
+    eyebrow:'ATH•NA',
+    statement:'Your identity, encoded.',
+    lede:"A personalized digital card with a scannable key at its center — your name, position and a unique ID, turned into a card people can scan, save and book a meeting from.",
+    dash:'<svg viewBox="0 0 700 300" xmlns="http://www.w3.org/2000/svg"><rect width="700" height="300" fill="var(--graphite2)"/><rect width="700" height="46" fill="var(--obsidian)"/><circle cx="28" cy="23" r="7" fill="var(--bronze)"/><rect x="46" y="18" width="120" height="10" rx="3" fill="var(--line-dark2)"/><circle cx="660" cy="23" r="9" fill="var(--bronze-light)"/><rect x="60" y="62" width="140" height="224" rx="14" fill="var(--obsidian)" stroke="var(--line-dark2)"/><circle cx="130" cy="84" r="8" fill="none" stroke="var(--bronze-light)" stroke-width="1.4"/><text x="130" y="110" text-anchor="middle" font-family="Fraunces,serif" font-size="11" fill="#f5f2ec">ATH•NA</text><circle cx="130" cy="170" r="42" fill="none" stroke="var(--bronze)" stroke-width="4"/><circle cx="130" cy="170" r="32" fill="var(--graphite2)"/><rect x="112" y="152" width="12" height="12" rx="2" fill="none" stroke="var(--bronze-light)" stroke-width="1.6"/><rect x="136" y="152" width="12" height="12" rx="2" fill="none" stroke="var(--bronze-light)" stroke-width="1.6"/><rect x="112" y="176" width="12" height="12" rx="2" fill="none" stroke="var(--bronze-light)" stroke-width="1.6"/><rect x="138" y="178" width="4" height="4" fill="var(--bronze-light)"/><rect x="146" y="178" width="4" height="4" fill="var(--bronze-light)"/><rect x="138" y="186" width="4" height="4" fill="var(--bronze-light)"/><rect x="76" y="250" width="108" height="26" rx="13" fill="none" stroke="var(--bronze)" stroke-width="1"/><text x="130" y="267" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#f0ede6">YOUR NAME</text><rect x="250" y="70" width="190" height="38" rx="19" fill="rgba(199,138,77,.16)"/><circle cx="272" cy="89" r="6" fill="var(--bronze-light)"/><text x="290" y="93" font-family="Inter,sans-serif" font-size="11" fill="#f0ede6">Scan</text><rect x="250" y="118" width="190" height="38" rx="19" fill="rgba(199,138,77,.16)"/><circle cx="272" cy="137" r="6" fill="var(--bronze-light)"/><text x="290" y="141" font-family="Inter,sans-serif" font-size="11" fill="#f0ede6">Save contact</text><rect x="250" y="166" width="190" height="38" rx="19" fill="rgba(199,138,77,.16)"/><circle cx="272" cy="185" r="6" fill="var(--bronze-light)"/><text x="290" y="189" font-family="Inter,sans-serif" font-size="11" fill="#f0ede6">Book meeting</text><rect x="250" y="232" width="190" height="44" rx="14" fill="rgba(199,138,77,.12)" stroke="var(--line-dark2)"/><text x="345" y="259" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#f0ede6">Tap the card to flip it</text><rect x="470" y="70" width="206" height="100" rx="10" fill="var(--obsidian)" stroke="var(--line-dark2)"/><text x="486" y="92" font-family="Inter,sans-serif" font-size="10" fill="var(--mist2)">ATH ID</text><text x="486" y="124" font-family="Fraunces,serif" font-size="22" fill="#f5f2ec">ATH-000001</text><text x="486" y="148" font-family="Inter,sans-serif" font-size="10" fill="var(--mist)">Card No. 0001</text><rect x="470" y="186" width="206" height="90" rx="10" fill="var(--obsidian)" stroke="var(--line-dark2)"/><text x="486" y="208" font-family="Inter,sans-serif" font-size="10" fill="var(--mist2)">Registry</text><text x="486" y="240" font-family="Fraunces,serif" font-size="22" fill="#f5f2ec">Synced</text><text x="486" y="260" font-family="Inter,sans-serif" font-size="10" fill="var(--mist)">Number and link recorded</text></svg>',
+    features:[
+      {label:'Personalized card',desc:'Name, position and brand on a front and back that flips with a tap.',icon:'card'},
+      {label:'Scannable key',desc:'A QR link sits at the center of the key emblem — one scan opens the card.',icon:'qr'},
+      {label:'Save contact',desc:'One tap on the card saves the details straight to the phone.',icon:'circle-user'},
+      {label:'Book a meeting',desc:'Anyone who scans the card can book time right from it.',icon:'calendar'},
+      {label:'Unique ATH ID',desc:'IDs are auto-formatted as ATH-XXXXXX and duplicates are blocked.',icon:'shield'},
+      {label:'Numbered registry',desc:'Every card gets a sequence number and is logged to a sheet with its link.',icon:'bars'}
+    ],
+    mobile:'Made for the phone — tap the card to flip it, scan the key to open the link, and share it wherever you meet.'
+  },
   artisnack:{eyebrow:'ArtiSnack',statement:'Every sale, synced the second it happens.',lede:'The full moment for ArtiSnack is next in line.'},
   bht:{eyebrow:'Business Health Toolkit',statement:'One honest number, from every source you have.',lede:'The full moment for Business Health Toolkit is next in line.'},
   vexai:{eyebrow:'VEX AI',statement:"The work that shouldn't need a person — automated.",lede:'The full moment for VEX AI is next in line.'}
@@ -1574,6 +1657,80 @@ const TALK_CATALOG = {
         {id:'recon',     label:'Multi-source Reconciliation',   note:'One honest number, every source',    price:20000},
         {id:'reports',   label:'Automated Financial Reports',   note:'Scheduled, no manual pulls',         price:14000},
         {id:'forecast',  label:'Cash Flow Forecasting',         note:'Look-ahead projections',             price:16000},
+      ],
+      hasLocations:false
+    },
+    {
+      id:'artifield', name:'ArtiField', tagline:'Construction project control',
+      base:{ label:'Base project control setup', price:45000 },
+      modules:[
+        {id:'schedule',  label:'Schedule Control & Gantt',      note:'Baselines, focus modes, delay impact', price:18000},
+        {id:'scurves',   label:'S-Curves & SPI',                note:'Master, per-building, cost, manpower', price:16000},
+        {id:'cost',      label:'Cost & EVM Tracking',           note:'CPI, EAC, profit per building',        price:15000},
+        {id:'materials', label:'Materials & Shortage Forecast', note:'Days of supply vs lead time',          price:14000},
+        {id:'vexdocs',   label:'Vex Document Import',           note:'Schedules & reports into structured data', price:20000},
+      ],
+      hasLocations:false
+    },
+    {
+      id:'owlbound', name:'OWLBOUND', tagline:'Games & player engagement',
+      base:{ label:'Base game build & branding', price:60000 },
+      modules:[
+        {id:'economy',   label:'Coin & Gem Economy',        note:'Earn, spend and exchange in-game currency', price:18000},
+        {id:'shop',      label:'Cosmetics Shop',            note:'Skins, themes and trail effects',           price:16000},
+        {id:'milestones',label:'Milestones & Daily Rewards',note:'Unlocks that bring players back',           price:14000},
+        {id:'accounts',  label:'Player Accounts & Leaderboard', note:'Save progress, rank the best runs',     price:15000},
+        {id:'feedback',  label:'In-game Feedback Rewards',  note:'Player feedback sent straight to you',      price:8000},
+      ],
+      hasLocations:false
+    },
+    {
+      id:'artislide', name:'ArtiSlide', tagline:'Interactive presentations',
+      base:{ label:'Base presentation build & branding', price:30000 },
+      modules:[
+        {id:'reveal',   label:'Step-by-step Slide Engine',   note:'Progressive reveal, tap and swipe',       price:12000},
+        {id:'flow',     label:'Animated Flow Diagrams',      note:'Signal travelling between nodes',         price:10000},
+        {id:'calc',     label:'Impact Calculator',           note:'Sliders that estimate value recovered',   price:14000},
+        {id:'leads',    label:'Lead Capture & Follow-up',    note:'Form sent straight to your team',         price:12000},
+        {id:'gate',     label:'Email Gate & Notifications',  note:'Visitor capture and live announcements',  price:8000},
+      ],
+      hasLocations:false
+    },
+    {
+      id:'artidrive', name:'ArtiDrive', tagline:'Vehicle care & maintenance',
+      base:{ label:'Base app setup & branding', price:40000 },
+      modules:[
+        {id:'health',    label:'Vehicle Health & PMS Tracking', note:'Systems, intervals & predictions',   price:14000},
+        {id:'battery',   label:'Battery Intelligence',          note:'Standby & charge insights',          price:12000},
+        {id:'scan',      label:'OR/CR & Dashboard Scanning',    note:'Vex extraction from photos',         price:18000},
+        {id:'gold',      label:'Gold AI Assistant',             note:'Ask, analyze, plan & forecast',      price:20000},
+        {id:'rewards',   label:'Rewards & Points Program',      note:'Earn and redeem perks',              price:15000},
+      ],
+      hasLocations:false
+    },
+    {
+      id:'artihome', name:'ArtiHome', tagline:'Home care & maintenance',
+      base:{ label:'Base app setup & branding', price:40000 },
+      modules:[
+        {id:'carescore', label:'Home Care Score & Systems',    note:'Aircon, plumbing, electrical & more', price:14000},
+        {id:'reminders', label:'Maintenance & Reminders',      note:'Service intervals and due dates',     price:10000},
+        {id:'expenses',  label:'Expense & Utility Insights',   note:'Monthly, quarterly & yearly trends',  price:12000},
+        {id:'docs',      label:'Document Vault',               note:'Title, insurance, warranties',        price:10000},
+        {id:'deedscan',  label:'Title / Deed Scanning',        note:'Vex extraction from documents',       price:18000},
+        {id:'gold',      label:'Gold AI Assistant',            note:'Ask, analyze, plan & forecast',       price:20000},
+        {id:'multiprop', label:'Multi-property Management',    note:'Several properties, one account',     price:12000},
+      ],
+      hasLocations:false
+    },
+    {
+      id:'athna', name:'ATH•NA', tagline:'Digital identity cards',
+      base:{ label:'Base card system & branding', price:35000 },
+      modules:[
+        {id:'design',   label:'Custom Card Design',           note:'Front & back in your brand',        price:12000},
+        {id:'qrlink',   label:'QR Link Generation',           note:'Unique link per card',              price:8000},
+        {id:'actions',  label:'Save Contact & Book Meeting',  note:'One-tap actions on the card',       price:10000},
+        {id:'registry', label:'Card Registry & Sheet Sync',   note:'Numbered cards, live log',          price:12000},
+        {id:'bulk',     label:'Bulk Card Issuance',           note:'Issue cards for a whole team',      price:15000},
       ],
       hasLocations:false
     },
