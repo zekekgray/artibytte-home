@@ -647,13 +647,15 @@ footer{padding:96px 0 32px;border-top:1px solid var(--line-dark)}
 .orb-btn{width:60px;height:60px;border-radius:50%;background:var(--vex-blue);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;border:none;box-shadow:0 10px 28px rgba(0,0,0,.4);transition:.25s;flex:none;position:relative}
 .orb-btn:hover{background:var(--vex-blue);filter:brightness(1.25);transform:translateY(-2px) scale(1.04)}
 .orb-btn svg{width:38px;height:38px}
-.orb-btn .orb-dot{position:absolute;top:2px;right:2px;width:12px;height:12px;border-radius:50%;background:#e5493f;border:2px solid var(--obsidian)}
+/* === START: VEX NO ALERT DOT EDIT === */
+/* no notification dot on the orb: VEX has no unread state, so nothing should signal "urgent" */
+/* === END: VEX NO ALERT DOT EDIT === */
 /* === START: VEX ASSISTIVE ICON EDIT === */
 .vex-assistive-button{
   width:58px;height:58px;padding:0;border:none;border-radius:50%;
   background:var(--vex-blue);color:#fff;
   display:flex;align-items:center;justify-content:center;
-  cursor:pointer;opacity:.6;
+  cursor:pointer;/* === START: VEX IDLE OPACITY EDIT === */opacity:.82;/* === END: VEX IDLE OPACITY EDIT === */
   /* === START: VEX RING LIGHT === */
   box-shadow:
     0 4px 14px rgba(0,0,0,.35),
@@ -673,8 +675,7 @@ body:has(.talkpanel.open) .vex-assistive-button{
   transition:transform .15s ease,opacity .15s ease 0s,filter .15s ease,box-shadow .2s ease;
 }
 /* === END: VEX IDLE DIM === */
-.vex-assistive-button:active{transform:scale(.92)}
-.vex-assistive-button svg{width:30px;height:30px}
+.vex-assistive-button:active{transform:scale(.92);transition:transform .11s ease}.vex-assistive-button svg{width:30px;height:30px}
 /* === END: VEX ASSISTIVE ICON EDIT === */
 .orb-wrap.hide{display:none}
 /* === START: DRAGGABLE ORB — surgical patch === */
@@ -685,8 +686,7 @@ body:has(.talkpanel.open) .vex-assistive-button{
 /* === END: DRAGGABLE ORB — surgical patch === */
 
 /* === START: ORB HIDDEN UNTIL USER TYPES === */
-.orb-wrap{opacity:0;pointer-events:none;transition:opacity .3s ease}
-.orb-wrap.orb-visible{opacity:1;pointer-events:auto}
+.orb-wrap{opacity:0;pointer-events:none;transition:opacity .35s ease}.orb-wrap.orb-visible{opacity:1;pointer-events:auto}
 
 .orb-hint{
   background:var(--graphite);
@@ -700,14 +700,14 @@ body:has(.talkpanel.open) .vex-assistive-button{
   opacity:0;
   transform:translateX(-8px);
   pointer-events:none;
-  transition:opacity .3s ease,transform .3s ease;
+  transition:opacity .25s ease,transform .25s ease;
 }
 .orb-hint.show{opacity:1;transform:translateX(0)}
 /* === END: ORB HIDDEN UNTIL USER TYPES === */
 
-.talkpanel{position:fixed;z-index:700;bottom:104px;right:28px;width:392px;max-width:calc(100vw - 32px);max-height:min(660px,calc(100vh - 140px));background:var(--graphite);border:1px solid var(--line-dark2);border-radius:22px;box-shadow:0 24px 70px rgba(0,0,0,.55);display:flex;flex-direction:column;overflow:hidden;opacity:0;transform:translateY(18px) scale(.97);pointer-events:none;transition:opacity .28s cubic-bezier(.2,.8,.2,1),transform .28s cubic-bezier(.2,.8,.2,1),width .22s ease,max-height .22s ease}
+.talkpanel{position:fixed;z-index:700;bottom:104px;right:28px;width:392px;max-width:calc(100vw - 32px);max-height:min(660px,calc(100vh - 140px));background:var(--graphite);border:1px solid var(--line-dark2);border-radius:22px;box-shadow:0 24px 70px rgba(0,0,0,.55);display:flex;flex-direction:column;overflow:hidden;/* === START: VEX PANEL OPEN MOTION EDIT === */opacity:0;transform:translateY(10px) scale(.985);pointer-events:none;transition:opacity .26s cubic-bezier(.22,1,.36,1),transform .26s cubic-bezier(.22,1,.36,1),width .22s ease,max-height .22s ease}/* === END: VEX PANEL OPEN MOTION EDIT === */
 .talkpanel.anchor-left{right:auto;left:28px}
-.talkpanel.no-anim{transition:opacity .28s cubic-bezier(.2,.8,.2,1),transform .28s cubic-bezier(.2,.8,.2,1)!important}
+.talkpanel.no-anim{transition:opacity .26s cubic-bezier(.22,1,.36,1),transform .26s cubic-bezier(.22,1,.36,1)!important}
 .talkpanel.open{opacity:1;transform:translateY(0) scale(1);pointer-events:auto}
 @media(max-width:480px){.talkpanel{right:16px;bottom:96px;width:calc(100vw - 32px)}.talkpanel.anchor-left{left:16px}}
 .tp-head{padding:18px 20px;border-bottom:1px solid var(--line-dark);display:flex;justify-content:space-between;align-items:center;flex:none;background:linear-gradient(180deg,rgba(199,138,77,.08),transparent)}
@@ -716,32 +716,55 @@ body:has(.talkpanel.open) .vex-assistive-button{
 .tp-head .tp-htext-col{display:flex;flex-direction:column;gap:2px}
 .tp-head .tp-title{font-family:var(--serif);font-size:16.5px;color:#f5f2ec;font-weight:500}
 .tp-head .tp-sub{font-size:11.5px;color:var(--mist)}
-.tp-close{background:transparent;border:1px solid var(--line-dark2);color:var(--mist2);cursor:pointer;font-size:12px;padding:6px 11px;border-radius:999px;transition:.2s;flex:none}
+/* === START: VEX CLOSE ICON EDIT === */
+.tp-close{background:transparent;border:1px solid var(--line-dark2);color:var(--mist2);cursor:pointer;font-family:var(--sans);font-size:20px;font-weight:300;line-height:1;width:34px;height:34px;padding:0 0 2px;display:flex;align-items:center;justify-content:center;border-radius:50%;transition:.2s;flex:none}
+/* === END: VEX CLOSE ICON EDIT === */
 .tp-close:hover{border-color:var(--bronze);color:var(--bronze-light)}
 .tp-body{flex:1;overflow-y:auto;padding:20px}
 .tp-body::-webkit-scrollbar{width:6px}
 .tp-body::-webkit-scrollbar-thumb{background:var(--line-dark2);border-radius:3px}
 .tp-foot{padding:14px 20px 18px;border-top:1px solid var(--line-dark);flex:none}
 
-.tp-msg{background:var(--graphite2);border-radius:14px;padding:13px 15px;font-size:13.5px;color:var(--mist2);line-height:1.6;margin-bottom:16px;max-width:92%}
+/* === START: VEX ENTRANCE SEQUENCE EDIT === */
+/* 0ms shell (existing transition) → 80ms header → 140ms first block → 220ms options/rest. Blocks only, no typewriter. */
+@keyframes tpBlockIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.talkpanel.entering .tp-head,
+.talkpanel.entering .tp-body > *,
+.talkpanel.entering .tp-foot{animation:tpBlockIn .32s cubic-bezier(.22,1,.36,1) both}
+.talkpanel.entering .tp-head{animation-delay:80ms}
+.talkpanel.entering .tp-body > :nth-child(1){animation-delay:140ms}
+.talkpanel.entering .tp-body > :nth-child(n+2){animation-delay:220ms}
+.talkpanel.entering .tp-foot{animation-delay:220ms}
+@media (prefers-reduced-motion:reduce){
+  .talkpanel.entering .tp-head,
+  .talkpanel.entering .tp-body > *,
+  .talkpanel.entering .tp-foot{animation:none}
+}
+/* === END: VEX ENTRANCE SEQUENCE EDIT === */
+/* === START: VEX STEP TRANSITION EDIT === */
+@keyframes tpStepFade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+.tp-body.tp-step-anim{animation:tpStepFade .2s cubic-bezier(.22,1,.36,1)}
+/* === END: VEX STEP TRANSITION EDIT === */.tp-msg{background:var(--graphite2);border-radius:14px;padding:13px 15px;font-size:13.5px;color:var(--mist2);line-height:1.6;margin-bottom:16px;max-width:92%}
 .tp-msg strong{color:#f0ede6}
 .tp-msg .tp-eyebrow{display:block;font-family:var(--serif);font-style:italic;color:var(--bronze-light);font-size:12.5px;margin-bottom:6px}
 .tp-msg.user{background:rgba(199,138,77,.16);border:1px solid rgba(199,138,77,.35);margin-left:auto;color:#f5f2ec}
 
 .tp-options{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
-.tp-opt{text-align:left;background:transparent;border:1px solid var(--line-dark2);color:#f0ede6;padding:12px 14px;border-radius:11px;font-size:13.5px;cursor:pointer;transition:.2s;font-family:var(--sans)}
-.tp-opt:hover{border-color:var(--bronze);background:rgba(199,138,77,.08);color:var(--bronze-light)}
+.tp-opt{text-align:left;background:transparent;border:1px solid var(--line-dark2);color:#f0ede6;padding:12px 14px;border-radius:11px;font-size:13.5px;cursor:pointer;transition:.15s;font-family:var(--sans)}.tp-opt:hover{border-color:var(--bronze);background:rgba(199,138,77,.08);color:var(--bronze-light)}
 .tp-opt .tp-opt-sub{display:block;font-size:11.5px;color:var(--mist);margin-top:2px}
 .tp-opt:hover .tp-opt-sub{color:var(--bronze-light);opacity:.8}
 
-.tp-module{display:flex;justify-content:space-between;align-items:center;gap:10px;border:1px solid var(--line-dark2);border-radius:11px;padding:12px 14px;margin-bottom:8px;cursor:pointer;transition:.2s}
+.tp-module{display:flex;justify-content:space-between;align-items:center;gap:10px;border:1px solid var(--line-dark2);border-radius:11px;padding:12px 14px;margin-bottom:8px;cursor:pointer;transition:.14s}
 .tp-module:hover{background:rgba(255,255,255,.02)}
 .tp-module.checked{border-color:var(--bronze);background:rgba(199,138,77,.08)}
 .tp-module .tm-left{display:flex;align-items:center;gap:11px;min-width:0}
-.tp-module .tm-box{width:18px;height:18px;border-radius:5px;border:1.4px solid var(--line-dark2);flex:none;display:flex;align-items:center;justify-content:center;background:transparent;transition:.2s}
+.tp-module .tm-box{width:18px;height:18px;border-radius:5px;border:1.4px solid var(--line-dark2);flex:none;display:flex;align-items:center;justify-content:center;background:transparent;transition:background .08s ease,border-color .08s ease}
 .tp-module.checked .tm-box{background:var(--bronze);border-color:var(--bronze)}
-.tp-module .tm-box svg{width:11px;height:11px;opacity:0}
-.tp-module.checked .tm-box svg{opacity:1}
+/* === START: VEX MODULE MICRO-INTERACTION EDIT === */
+.tp-module .tm-box svg{width:11px;height:11px;opacity:0;transform:scale(.6);transition:opacity .12s ease,transform .12s ease}
+.tp-module.checked .tm-box svg{opacity:1;transform:none}
+.tp-module:focus-visible{outline:none;border-color:var(--bronze-light);box-shadow:0 0 0 2px rgba(199,138,77,.35)}
+/* === END: VEX MODULE MICRO-INTERACTION EDIT === */
 .tp-module .tm-text{min-width:0}
 .tp-module .tm-label{font-size:13px;color:#f0ede6;display:block}
 .tp-module .tm-note{font-size:11px;color:var(--mist);display:block;margin-top:1px}
@@ -759,6 +782,10 @@ body:has(.talkpanel.open) .vex-assistive-button{
 .tp-line span:last-child{color:#f0ede6;font-weight:600;white-space:nowrap}
 .tp-total{display:flex;justify-content:space-between;align-items:baseline;padding-top:14px;margin-top:4px}
 .tp-total .tt-label{font-size:12.5px;color:var(--mist);letter-spacing:.2px}
+/* === START: VEX INSTANT TOTALS EDIT === */
+/* business numbers update immediately: no transition, no count-up */
+.tp-total .tt-value,#tpRunningTotal{transition:none}
+/* === END: VEX INSTANT TOTALS EDIT === */
 .tp-total .tt-value{font-family:var(--serif);font-size:21px;color:var(--bronze-light)}
 .tp-disclaimer{font-size:11.5px;color:var(--mist);font-style:italic;margin-top:14px;line-height:1.55;font-family:var(--serif)}
 .tp-discount-note{font-size:12px;color:var(--mist2);background:rgba(199,138,77,.08);border:1px solid var(--line-dark2);border-radius:10px;padding:11px 13px;margin-top:14px;line-height:1.55}
@@ -770,17 +797,32 @@ body:has(.talkpanel.open) .vex-assistive-button{
 .tp-field input:focus,.tp-field textarea:focus{border-color:var(--bronze)}
 .tp-field textarea{min-height:64px}
 
+/* === START: VEX FIELD VALIDATION EDIT === */
+.tp-field.invalid input,.tp-field.invalid textarea{border-color:#d9776b}
+.tp-field.invalid input:focus,.tp-field.invalid textarea:focus{border-color:#e39a8f}
+.tp-field .tp-error{max-height:0;opacity:0;overflow:hidden;font-size:11.5px;line-height:1.4;color:#e39a8f;margin-top:0;transition:opacity .18s ease,max-height .18s ease,margin-top .18s ease}
+.tp-field.invalid .tp-error{max-height:40px;opacity:1;margin-top:6px}
+/* === END: VEX FIELD VALIDATION EDIT === */
 .tp-btnrow{display:flex;gap:10px;margin-top:6px}
-.tp-btn{flex:1;padding:12px;border-radius:999px;font-size:13px;font-weight:600;cursor:pointer;border:none;transition:.2s;font-family:var(--sans)}
+.tp-btn{flex:1;padding:12px;border-radius:999px;font-size:13px;font-weight:600;cursor:pointer;border:none;transition:.15s;font-family:var(--sans)}
 .tp-btn.primary{background:var(--bronze);color:#100b06}
 .tp-btn.primary:hover{background:var(--bronze-light)}
 .tp-btn.ghost{background:transparent;border:1px solid var(--line-dark2);color:#f0ede6}
 .tp-btn.ghost:hover{border-color:var(--bronze);color:var(--bronze-light)}
-.tp-progress{display:flex;gap:5px;margin-bottom:16px}
+.tp-btn:active{transform:scale(.97);transition:transform .1s ease}
+/* === START: VEX SEND STATE EDIT === */
+.tp-btn:disabled{opacity:.65;cursor:default}
+.tp-btn.primary:disabled:hover{background:var(--bronze)}
+.tp-btn.ghost:disabled:hover{border-color:var(--line-dark2);color:#f0ede6}
+/* === END: VEX SEND STATE EDIT === */
+.tp-progress-wrap{margin-bottom:18px}
+.tp-progress-label{margin-top:8px;font-size:11px;color:var(--mist);letter-spacing:.2px}
+.tp-progress{display:flex;gap:5px;margin-bottom:0}
 .tp-progress span{height:3px;flex:1;background:var(--line-dark2);border-radius:2px;overflow:hidden}
 .tp-progress span i{display:block;height:100%;width:0;background:var(--bronze);transition:width .3s ease}
 .tp-progress span.done i{width:100%}
-.tp-success{text-align:center;padding:14px 6px}
+@keyframes tpSuccessIn{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:none}}
+.tp-success{text-align:center;padding:14px 6px;animation:tpSuccessIn .3s cubic-bezier(.22,1,.36,1)}
 .tp-success .ts-icon{width:46px;height:46px;border-radius:50%;background:rgba(199,138,77,.15);display:flex;align-items:center;justify-content:center;margin:0 auto 16px}
 .tp-success .ts-icon svg{width:22px;height:22px;color:var(--bronze-light)}
 .tp-success h4{font-family:var(--serif);font-size:18px;color:#f5f2ec;margin-bottom:8px}
@@ -1204,7 +1246,7 @@ body:has(.talkpanel.open) .vex-assistive-button{
       <div class="col"><h5>Company</h5>
         <a href="#foundation">About</a>
         <a href="mailto:hello@artibytte.co">Contact</a>
-        <button type="button" id="footerCtaStart" class="footlink">Start a conversation</button>
+        <button type="button" id="footerCtaStart" class="footlink">Get an estimate</button>
       </div>
     </div>
     <div class="footbottom">
@@ -1224,8 +1266,7 @@ body:has(.talkpanel.open) .vex-assistive-button{
 <!-- TALK TO artibytte — guided quote widget -->
 <div class="orb-wrap" id="orbWrap" data-vex="true">
   <!-- === START: VEX ICON-ONLY TRIGGER === -->
-  <button class="orb-btn vex-assistive-button" id="orbBtn" type="button" aria-label="Open VEX" aria-haspopup="dialog">
-  <!-- === END: VEX ICON-ONLY TRIGGER === -->
+  <button class="orb-btn vex-assistive-button" id="orbBtn" type="button" aria-label="Open VEX" aria-haspopup="dialog">  <!-- === END: VEX ICON-ONLY TRIGGER === -->
     <!-- === START: VEX ASSISTIVE ICON EDIT === -->
     <svg viewBox="240 247 545 548" fill="none" aria-hidden="true">
       <defs>
@@ -1240,18 +1281,21 @@ body:has(.talkpanel.open) .vex-assistive-button{
     </svg>
     <!-- === END: VEX ASSISTIVE ICON EDIT === -->
   </button>
-  <span class="orb-hint" id="orbHint">Let's start conversing →</span>
+  <span class="orb-hint" id="orbHint">Get a quick estimate →</span>
 </div>
 
 <div class="talkpanel" id="talkPanel" aria-hidden="true" data-vex="true">
   <div class="tp-head">
     <div class="tp-htext">
       <div class="tp-htext-col">
-      <span class="tp-title">Talk to VEX</span>
-      <span class="tp-sub" id="tpSub">Let's rough out an estimate</span>
-      </div>
+      <!-- === START: VEX HONEST LABEL EDIT === -->
+<span class="tp-title">VEX</span>
+<!-- === END: VEX HONEST LABEL EDIT === -->
+      <span class="tp-sub" id="tpSub">Let's figure out what you need</span>      </div>
     </div>
-    <button class="tp-close" id="tpClose">✕ Close</button>
+    <!-- === START: VEX CLOSE ICON EDIT === -->
+<button class="tp-close" id="tpClose" type="button" aria-label="Close VEX">×</button>
+<!-- === END: VEX CLOSE ICON EDIT === -->
   </div>
   <div class="tp-body" id="tpBody"></div>
   <div class="tp-foot" id="tpFoot"></div>
@@ -1393,15 +1437,30 @@ function escapeHtml(str){
 }
 
 const orbHint=document.getElementById('orbHint');
-function hideOrbHint(){ if(orbHint) orbHint.classList.remove('show'); }
+/* === START: VEX HINT CANCEL EDIT === */
+function hideOrbHint(){
+  clearTimeout(revealOrbForTyping._t); // submit/open during the 400ms delay must not resurrect the hint
+  if(orbHint) orbHint.classList.remove('show');
+}
+/* === END: VEX HINT CANCEL EDIT === */
 function revealOrbForTyping(){
   if(!orbWrap.classList.contains('orb-visible')){
     orbWrap.classList.add('orb-visible');
     if(orbHint){
-      orbHint.textContent="Let's start conversing →";
-      requestAnimationFrame(()=>orbHint.classList.add('show'));
-      clearTimeout(revealOrbForTyping._t);
-      revealOrbForTyping._t=setTimeout(hideOrbHint,4500);
+      orbHint.textContent="Let's figure out what you need →";
+      /* === START: VEX HINT TIMING EDIT === */
+      /* orb appears → 400ms → hint → 2.8s → fade → never auto-returns this session */
+      let hintSeen=false;
+      try{ hintSeen=sessionStorage.getItem('vexHintSeen')==='1'; }catch(e){}
+      if(!hintSeen){
+        try{ sessionStorage.setItem('vexHintSeen','1'); }catch(e){}
+        clearTimeout(revealOrbForTyping._t);
+        revealOrbForTyping._t=setTimeout(()=>{
+          orbHint.classList.add('show');
+          revealOrbForTyping._t=setTimeout(hideOrbHint,2800);
+        },400);
+      }
+      /* === END: VEX HINT TIMING EDIT === */
     }
   }
 }
@@ -1775,9 +1834,44 @@ const TALK_CATALOG = {
 
 function tpPeso(n){ return TALK_CATALOG.currency + Math.round(n).toLocaleString('en-PH'); }
 
-let tpState = { step:'welcome', industryId:null, selectedModules:new Set(), locations:1 };
+/* === START: VEX FORM STABILITY EDIT === */
+/* contact step = "this is a form": panel + orb stay put.
+   Only a real viewport change (keyboard >120px, rotation >80px) may re-dock. */
+let vexFormBase=null, vexFormT=null;
+function vexFormShouldFreeze(){
+  if(!talkPanel.classList.contains('open') || tpState.step!=='contact'){ vexFormBase=null; return false; }
+  const vp=VexViewport.get();
+  if(!vexFormBase){ vexFormBase={w:vp.width,h:vp.height}; return true; }
+  const real = Math.abs(vp.width-vexFormBase.w)>80 || Math.abs(vp.height-vexFormBase.h)>120;
+  if(!real) return true;
+  clearTimeout(vexFormT);
+  vexFormT=setTimeout(()=>{ vexFormBase=null; },350); // settle, then re-freeze at the new size
+  return false;
+}
+/* === END: VEX FORM STABILITY EDIT === */
 
-const orbWrap=document.getElementById('orbWrap');
+/* === START: VEX KEYBOARD POLICY EDIT === */
+let vexKeyboardOpen = false;
+function vexHandleKeyboardTransition(isOpening){
+  if(!talkPanel.classList.contains('open')) return;
+  // no dramatic resize/reflow animation during the keyboard transition
+  talkPanel.classList.add('no-anim');
+  clearTimeout(vexHandleKeyboardTransition._t);
+  vexHandleKeyboardTransition._t=setTimeout(()=>{ talkPanel.classList.remove('no-anim'); },400);
+
+  tpPositionPanel();
+  VexPanelSizer.apply();
+
+  if(isOpening && tpState.step==='contact'){
+    const active=document.activeElement;
+    if(active && talkPanel.contains(active) && (active.tagName==='INPUT'||active.tagName==='TEXTAREA')){
+      requestAnimationFrame(()=>active.scrollIntoView({block:'center',behavior:'smooth'}));
+    }
+  }
+}
+/* === END: VEX KEYBOARD POLICY EDIT === */
+
+let tpState = { step:'welcome', industryId:null, selectedModules:new Set(), locations:1, contactName:'', contactCompany:'', contactEmail:'', contactNotes:'' };const orbWrap=document.getElementById('orbWrap');
 const orbBtn=document.getElementById('orbBtn');
 const talkPanel=document.getElementById('talkPanel');
 const tpClose=document.getElementById('tpClose');
@@ -1790,10 +1884,12 @@ function tpClamp(v,min,max){ return Math.max(min, Math.min(v,max)); }
 
 function tpPositionPanel(){
   if(!orbWrap || !talkPanel) return;
+  if(orbDragging) return; // drag in progress: panel stays frozen until pointerup
   const orbRect = orbWrap.getBoundingClientRect();
   const { width, maxHeight } = VexPanelSizer.computeSize();
   const margin = 16, gap = 12;
-  const vw = window.innerWidth, vh = window.innerHeight;
+  const viewport = VexViewport.get(); // visualViewport-aware — shrinks correctly when the iOS keyboard opens
+  const vw = viewport.width, vh = viewport.height;
 
   /* === START: VEX MODAL DOCKING — huwag mag-overlap sa sticky header === */
   const headerEl = document.getElementById('siteHeader');
@@ -1831,29 +1927,74 @@ function tpPositionPanel(){
   talkPanel.style.right = 'auto';
   talkPanel.style.bottom = 'auto';
   talkPanel.style.maxHeight = cappedHeight+'px';
+  /* === START: VEX PANEL ORIGIN EDIT === */
+  /* scale/translate radiate from the orb's center, so the panel unfolds out of it */
+  talkPanel.style.transformOrigin = (orbRect.left+orbRect.width/2-left)+'px '+(orbRect.top+orbRect.height/2-top)+'px';
+  /* === END: VEX PANEL ORIGIN EDIT === */
   talkPanel.classList.remove('anchor-left');
 }
 /* === END: VEX MODAL DOCKING — panel always attaches to the orb, never separates === */
 
+/* === START: VEX OUTSIDE-CLICK INTENT EDIT === */
+let vexOpenedAt=0;
+/* === END: VEX OUTSIDE-CLICK INTENT EDIT === */
+/* === START: VEX ENTRANCE SEQUENCE EDIT === */
+let vexEnterT=null;
+function vexPlayEntrance(){
+  clearTimeout(vexEnterT);
+  talkPanel.classList.remove('entering');
+  void talkPanel.offsetWidth; // restart the animations on a quick close → reopen
+  talkPanel.classList.add('entering');
+  vexEnterT=setTimeout(()=>talkPanel.classList.remove('entering'),700); // last block ends ~540ms
+}
+/* === END: VEX ENTRANCE SEQUENCE EDIT === */
 function tpOpen(){
+  vexMarkSeen();
+  vexOpenedAt=Date.now();
+  clearTimeout(tpCloseFn._t);
+  talkPanel.style.transition=''; // guarantee the full .26s open timing, even right after a fast close
+  if(!talkPanel.classList.contains('open')) vexPlayEntrance(); // not when tpOpen is re-called on an already-open panel
   tpPositionPanel();
   talkPanel.classList.add('open');
   talkPanel.setAttribute('aria-hidden','false');
   if(tpState.step==='welcome' && !tpBody.innerHTML.trim()) tpRender();
+  else tpFocusStep();
   VexSpatialEngine.recalculate({force:true});
 }
 function tpCloseFn(){
+  clearTimeout(vexEnterT);
+  talkPanel.classList.remove('entering');
+  talkPanel.style.transition='opacity .22s cubic-bezier(.22,1,.36,1), transform .22s cubic-bezier(.22,1,.36,1), width .22s ease, max-height .22s ease';
   talkPanel.classList.remove('open');
   talkPanel.setAttribute('aria-hidden','true');
+  clearTimeout(tpCloseFn._t);
+  tpCloseFn._t=setTimeout(()=>{ talkPanel.style.transition=''; },240); // restore the .26s open transition after the faster close finishes
+  // "leaves → quiet again": release any lingering focus state inside VEX so no active/responsive
+  // styling (focus-visible ring, button hover) persists after the panel is gone.
+  if(document.activeElement && talkPanel.contains(document.activeElement)){
+    document.activeElement.blur();
+  }
   VexSpatialEngine.recalculate({force:true});
 }
 tpClose.addEventListener('click',tpCloseFn);
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape' && talkPanel.classList.contains('open')){
+    e.stopPropagation();
+    tpCloseFn();
+    orbBtn.focus();
+  }
+});
 
 /* close panel when clicking anywhere outside it (and outside the orb) */
 document.addEventListener('click',function(e){
   if(!talkPanel.classList.contains('open')) return;
   if(orbDragging || orbMoved) return; // don't close right after a drag
-  const clickedInsidePanel = talkPanel.contains(e.target);
+  /* === START: VEX OUTSIDE-CLICK INTENT EDIT === */
+  if(Date.now()-vexOpenedAt<400) return;   // the click that opened it can't also close it
+  if(tpState.step==='contact') return;     // form in progress: only ✕ Close dismisses
+  /* === END: VEX OUTSIDE-CLICK INTENT EDIT === */
+  if(tpState.step==='contact') return; // stray outside click shouldn't dismiss the form
+  const clickedInsidePanel = e.composedPath().includes(talkPanel); // survives innerHTML rebuilds
   const clickedOrb = orbWrap.contains(e.target);
   if(!clickedInsidePanel && !clickedOrb){
     tpCloseFn();
@@ -1937,7 +2078,9 @@ const VexFocusTracker = (function(){
 const VexDoNotDisturb = (function(){
   const activeReasons = new Set();
   let pendingRecalc = false;
-  const TYPING_IDLE_MS = 1200;
+  /* === START: VEX TYPING IDLE EDIT === */
+const TYPING_IDLE_MS = 1800; // covers think-pauses between keystrokes
+/* === END: VEX TYPING IDLE EDIT === */
   const READING_DWELL_MS = 1500;
   let typingTimer=null, readingTimer=null;
 
@@ -1974,6 +2117,17 @@ const VexDoNotDisturb = (function(){
     document.addEventListener('input', onType, {passive:true});
     document.addEventListener('keydown', onType, {passive:true});
   }
+  /* === START: VEX INPUT FOCUS LOCK EDIT === */
+  /* stronger rule than the typing timer: while a text field has focus, VEX stays put */
+  function initInputFocusWatch(){
+    document.addEventListener('focusin', (e)=>{ if(isTextInput(e.target)) lock('input-focus'); });
+    document.addEventListener('focusout', ()=>{
+      setTimeout(()=>{
+        if(!isTextInput(document.activeElement)) unlock('input-focus');
+      }, 50); // wait for focus to land on the next element before releasing
+    });
+  }
+  /* === END: VEX INPUT FOCUS LOCK EDIT === */
   function initSelectionWatch(){
     document.addEventListener('selectionchange', ()=>{
       const sel=window.getSelection();
@@ -2008,6 +2162,7 @@ const VexDoNotDisturb = (function(){
 
   function init(){
     initTypingWatch();
+    initInputFocusWatch();
     initSelectionWatch();
     initVideoWatch();
     initModalFocusWatch();
@@ -2242,9 +2397,11 @@ const VexUIBrain = (function(){
     const rapid = isChangingRapidly();
     const shouldAnimate = animate && !rapid;
 
+    /* === START: VEX FADE FIX EDIT === */
     orbWrap.style.transition = shouldAnimate
-      ? 'left .28s cubic-bezier(.2,.8,.2,1), top .28s cubic-bezier(.2,.8,.2,1)'
-      : 'none';
+      ? 'left .28s cubic-bezier(.2,.8,.2,1), top .28s cubic-bezier(.2,.8,.2,1), opacity .8s ease'
+      : 'opacity .8s ease';
+    /* === END: VEX FADE FIX EDIT === */
     orbWrap.style.left=pos.left+'px';
     orbWrap.style.top=pos.top+'px';
     orbWrap.style.right='auto';
@@ -2252,6 +2409,7 @@ const VexUIBrain = (function(){
     currentSide=side;
   }
   function reposition(force){
+    if(vexFormShouldFreeze()) return; // contact form = spatially stable
     if(userPinned) return;
     if(!force && typeof VexDoNotDisturb!=='undefined' && VexDoNotDisturb.isLocked()){
       VexDoNotDisturb.queueRecalc(); // recalculate lang pagkatapos ma-unlock
@@ -2358,22 +2516,27 @@ const VexScreenObserver = (function(){
   }
 
   /* visualViewport watch: mobile keyboard, zoom, at pan — mas reliable kaysa window.resize lang */
-  function initViewportWatch(){
+   function initViewportWatch(){
     if(!window.visualViewport) return;
     window.visualViewport.addEventListener('resize', ()=>{
       const heightDrop = lastViewportHeight - window.visualViewport.height;
-      if(heightDrop > 120){ // malaking pagbaba ng height = malamang keyboard
+      if(heightDrop > 120){ // malaking pagbaba ng height = keyboard opening
+        vexKeyboardOpen=true;
+        vexHandleKeyboardTransition(true);
         dispatch('keyboard-appeared');
+      } else if(heightDrop < -120){ // malaking pagtaas = keyboard closing
+        vexKeyboardOpen=false;
+        vexHandleKeyboardTransition(false);
+        dispatch('viewport-resized');
       } else {
         dispatch('viewport-resized'); // pwede ring zoom
       }
       lastViewportHeight = window.visualViewport.height;
     });
     window.visualViewport.addEventListener('scroll', ()=>{
-      dispatch('viewport-scrolled'); // pan habang naka-zoom
+      if(!vexKeyboardOpen) dispatch('viewport-scrolled'); // ignore keyboard-driven scroll jitter on iOS
     }, {passive:true});
   }
-
   /* ---- MUTATION OBSERVER: dynamically generated UI detection ---- */
   const MODAL_LIKE_SELECTOR = '[role="dialog"],[role="alertdialog"],dialog,.modal,.drawer,.sidebar,.side-nav,.cookie,.cookie-banner,.consent';
 
@@ -2475,6 +2638,7 @@ const VexSpatialEngine = {
   /* ANG SENTRAL NA PINTUAN — lahat ng reposition requests dumadaan dito */
   recalculate(opts){
     opts = opts || {};
+    if(vexFormShouldFreeze()) return; // contact form: no re-dock, no resize, no animation
     if(opts.force) VexUIBrain.reposition(true);
     else VexUIBrain.repositionIfNeeded();
     VexPanelSizer.apply();
@@ -2529,9 +2693,9 @@ function orbPointerMove(e){
   orbWrap.style.right='auto';
   orbWrap.style.bottom='auto';
 
-  /* === START: VEX MODAL DOCKING — live tracking habang naka-drag === */
-  if(talkPanel.classList.contains('open')) tpPositionPanel();
-  /* === END: VEX MODAL DOCKING — live tracking habang naka-drag === */
+  /* === START: VEX DRAG FREEZE EDIT === */
+  /* panel does NOT chase the orb while dragging; it snaps once, on pointerup */
+  /* === END: VEX DRAG FREEZE EDIT === */
 }
 
 function orbPointerUp(e){
@@ -2597,6 +2761,7 @@ const VexPanelSizer = (function(){
   }
 
   function apply(){
+    if(vexFormShouldFreeze()) return; // form open: no live resize
     const el=document.getElementById('talkPanel');
     if(!el) return;
     const {width, maxHeight}=computeSize();
@@ -2627,6 +2792,7 @@ VexScreenObserver.init();
 
 /* === START: VEX MODAL DOCKING — direct fallback listeners (bukod sa throttled engine) === */
 function tpFollowIfOpen(){
+  if(vexFormShouldFreeze()) return; // no re-docking while typing in the form
   if(talkPanel.classList.contains('open')) tpPositionPanel();
 }
 window.addEventListener('scroll', tpFollowIfOpen, {passive:true});
@@ -2660,40 +2826,69 @@ function tpComputeQuote(){
   return {lines,total};
 }
 
+function tpProgressHtml(activeStep){
+  const steps=['Business','Scope','Estimate','Contact'];
+  const bars=steps.map((label,i)=>{
+    const done = i < activeStep-1;
+    return `<span class="${done?'done':''}"><i></i></span>`;
+  }).join('');
+  return `<div class="tp-progress-wrap">
+    <div class="tp-progress">${bars}</div>
+    <div class="tp-progress-label">${activeStep} of ${steps.length} · ${steps[activeStep-1]}</div>
+  </div>`;
+}
+
+function tpFocusStep(){
+  requestAnimationFrame(()=>{
+    const first=tpBody.querySelector('button, [href], input, textarea, select, [tabindex="0"]');
+    if(first) first.focus();
+    else tpClose.focus();
+  });
+}
+
 function tpRender(){
-  if(tpState.step==='welcome') return tpRenderWelcome();
-  if(tpState.step==='industry') return tpRenderIndustry();
-  if(tpState.step==='modules') return tpRenderModules();
-  if(tpState.step==='quote') return tpRenderQuote();
-  if(tpState.step==='contact') return tpRenderContact();
-  if(tpState.step==='success') return tpRenderSuccess();
+  const skipAnim = talkPanel.classList.contains('entering'); // the initial open already animates via the entrance sequence
+  if(tpState.step==='welcome') tpRenderWelcome();
+  else if(tpState.step==='industry') tpRenderIndustry();
+  else if(tpState.step==='modules') tpRenderModules();
+  else if(tpState.step==='quote') tpRenderQuote();
+  else if(tpState.step==='contact') tpRenderContact();
+  else if(tpState.step==='success') tpRenderSuccess();
+  if(!skipAnim){
+    tpBody.classList.remove('tp-step-anim');
+    void tpBody.offsetWidth;
+    tpBody.classList.add('tp-step-anim');
+  }
+  tpFocusStep();
 }
 
 function tpRenderWelcome(){
-  tpSub.textContent="Let's rough out an estimate";
+  tpSub.textContent="Let's figure out what you need";
   tpBody.innerHTML=`
-    <div class="tp-msg"><span class="tp-eyebrow">Talk to VEX</span>Hi! Want a preliminary estimate for the system your business needs? Just a few questions, then you'll see an itemized breakdown right away.</div>
+    <div class="tp-msg"><span class="tp-eyebrow">VEX</span>Hi! Let's figure out what your business needs — a few quick questions, then you'll see an indicative range right away.</div>
     <div class="tp-options">
-      <button class="tp-opt" data-action="start">Yes, let's do it<span class="tp-opt-sub">Takes about 2 minutes</span></button>
-      <button class="tp-opt" data-action="goto-contact-direct">I'd rather talk directly<span class="tp-opt-sub">Skip the estimate</span></button>
+      <button class="tp-opt" data-action="start">Yes, let's do it<span class="tp-opt-sub">A few quick questions</span></button>      <button class="tp-opt" data-action="goto-contact-direct">I'd rather talk directly<span class="tp-opt-sub">Skip the estimate</span></button>
     </div>`;
   tpFoot.innerHTML='';
 }
 
 function tpRenderIndustry(){
-  tpSub.textContent='Step 1 — What industry?';
+  tpSub.textContent='What are you looking for?';
   const opts=TALK_CATALOG.industries.map(i=>
     `<button class="tp-opt" data-industry="${i.id}">${i.name}<span class="tp-opt-sub">${i.tagline}</span></button>`
   ).join('');
   let echoHtml='';
   if(heroInquiryText){
     echoHtml=`<div class="tp-msg user">${escapeHtml(heroInquiryText)}</div>`;
-    heroInquiryText=''; // shown once, consumed
+    /* === START: KEEP HERO INQUIRY EDIT === */
+tpState.inquiry=heroInquiryText; // keep it so it reaches the contact form
+/* === END: KEEP HERO INQUIRY EDIT === */
+heroInquiryText=''; // shown once, consumed
   }
-  tpBody.innerHTML=`
+   tpBody.innerHTML=`
+    ${tpProgressHtml(1)}
     ${echoHtml}
-    <div class="tp-msg">Thanks for reaching out! What kind of business or product are you looking for?</div>
-    <div class="tp-options">
+    <div class="tp-msg">Thanks for reaching out! What kind of business or product are you looking for?</div>    <div class="tp-options">
       ${opts}
       <button class="tp-opt" data-industry="other">${TALK_CATALOG.other.name}<span class="tp-opt-sub">${TALK_CATALOG.other.tagline}</span></button>
     </div>`;
@@ -2702,10 +2897,10 @@ function tpRenderIndustry(){
 
 function tpRenderModules(){
   const ind=tpIndustry();
-  tpSub.textContent=`Step 2 — ${ind.name} modules`;
+ tpSub.textContent=`${ind.name} modules`;
   const modHtml=ind.modules.map(m=>{
     const checked=tpState.selectedModules.has(m.id);
-    return `<div class="tp-module${checked?' checked':''}" data-module="${m.id}">
+    return `<div class="tp-module${checked?' checked':''}" data-module="${m.id}" role="checkbox" tabindex="0" aria-checked="${checked}">
       <div class="tm-left">
         <div class="tm-box"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#100b06" stroke-width="1.6" fill="none"/></svg></div>
         <div class="tm-text"><span class="tm-label">${m.label}</span><span class="tm-note">${m.note}</span></div>
@@ -2723,9 +2918,9 @@ function tpRenderModules(){
       </div>
     </div>`:'';
 /* === START: VEX COPY EDIT — modules intro === */
-  tpBody.innerHTML=`
-    <div class="tp-msg">Base setup (<strong>${tpPeso(ind.base.price)}</strong>) is always included. Pick the modules that sound closest to what you need — we'll refine the exact scope together on a call:</div>
-    ${modHtml}
+ tpBody.innerHTML=`
+    ${tpProgressHtml(2)}
+    <div class="tp-msg">Base setup (<strong>${tpPeso(ind.base.price)}</strong>) is always included. Pick the modules that sound closest to what you need — we'll refine the exact scope together on a call:</div>    ${modHtml}
     ${locHtml}`;
 /* === END: VEX COPY EDIT — modules intro === */
 /* === START: VEX COPY EDIT — modules footer CTA === */
@@ -2742,19 +2937,18 @@ function tpRenderModules(){
 
 function tpRenderQuote(){
   const ind=tpIndustry();
-  tpSub.textContent='Step 3 — Itemized estimate';
-  const {lines,total}=tpComputeQuote();
+  tpSub.textContent='Indicative range';  const {lines,total}=tpComputeQuote();
   const lineHtml=lines.map(l=>`<div class="tp-line"><span>${l.label}</span><span>${tpPeso(l.price)}</span></div>`).join('');
 /* === START: VEX COPY EDIT — quote screen reframed as discovery starting point === */
-  tpBody.innerHTML=`
-    <div class="tp-msg"><span class="tp-eyebrow">${ind.name}</span>Here's a rough starting range based on what you picked — think of it as a conversation starter, not a final number:</div>
-    ${lineHtml}
+   tpBody.innerHTML=`
+    ${tpProgressHtml(3)}
+    <div class="tp-msg"><span class="tp-eyebrow">${ind.name}</span>Here's a rough starting range based on what you picked — think of it as a conversation starter, not a final number:</div>    ${lineHtml}
     <div class="tp-total"><span class="tt-label">Indicative range</span><span class="tt-value">${tpPeso(total)}</span></div>
-    <p class="tp-disclaimer">Every engagement starts with a short discovery call — actual scope, pricing and timeline get set there, based on how your business actually runs.</p>`;
+    <p class="tp-disclaimer">Want to discuss it? The real scope, pricing and timeline get set together, based on how your business actually runs.</p>`;
   tpFoot.innerHTML=`
     <div class="tp-btnrow">
       <button class="tp-btn ghost" data-action="back-modules">Back</button>
-      <button class="tp-btn primary" data-action="request-quote">Book a discovery call</button>
+      <button class="tp-btn primary" data-action="request-quote">Let's discuss it</button>
     </div>
     <div class="tp-btnrow" style="margin-top:8px">
       <button class="tp-btn ghost" data-action="restart" style="flex:1">Start over</button>
@@ -2764,14 +2958,12 @@ function tpRenderQuote(){
 
 function tpRenderContact(){
   const ind=tpIndustry();
-  tpSub.textContent='Final step — contact details';
-  tpBody.innerHTML=`
-    <div class="tp-msg">${ind?`We've got your estimate for <strong>${ind.name}</strong>. `:'Thanks for reaching out. '}Leave your details so we can follow up.</div>
-    <div class="tp-field"><label>Name</label><input id="tpName" type="text" placeholder="Juan Dela Cruz"></div>
-    <div class="tp-field"><label>Company / Business</label><input id="tpCompany" type="text" placeholder="Company name"></div>
-    <div class="tp-field"><label>Email</label><input id="tpEmail" type="email" placeholder="you@company.com"></div>
-    <div class="tp-field"><label>Additional details (optional)</label><textarea id="tpNotes" placeholder="Any specifics, timeline, or questions"></textarea></div>`;
-  tpFoot.innerHTML=`
+   tpSub.textContent='Contact details';  tpBody.innerHTML=`
+    ${tpProgressHtml(4)}
+    <div class="tp-msg">${ind?`We've got your estimate for <strong>${ind.name}</strong>. `:'Thanks for reaching out. '}Leave your details so we can follow up.</div>   <div class="tp-field"><label for="tpName">Name</label><input id="tpName" type="text" autocomplete="name" aria-required="true" aria-describedby="tpNameErr" placeholder="Juan Dela Cruz" value="${escapeHtml(tpState.contactName||'')}"><p class="tp-error" id="tpNameErr" role="alert"></p></div>
+    <div class="tp-field"><label>Company / Business</label><input id="tpCompany" type="text" placeholder="Company name" value="${escapeHtml(tpState.contactCompany||'')}"></div>
+    <div class="tp-field"><label for="tpEmail">Email</label><input id="tpEmail" type="email" autocomplete="email" aria-required="true" aria-describedby="tpEmailErr" placeholder="you@company.com" value="${escapeHtml(tpState.contactEmail||'')}"><p class="tp-error" id="tpEmailErr" role="alert"></p></div>
+    <div class="tp-field"><label>Additional details (optional)</label><textarea id="tpNotes" placeholder="Any specifics, timeline, or questions">${escapeHtml(tpState.contactNotes||tpState.inquiry||'')}</textarea></div>`;  tpFoot.innerHTML=`
     <div class="tp-btnrow">
       <button class="tp-btn ghost" data-action="${ind?'back-quote':'restart'}">Back</button>
       <button class="tp-btn primary" data-action="submit-quote">Send</button>
@@ -2779,25 +2971,49 @@ function tpRenderContact(){
 }
 
 function tpRenderSuccess(){
-  tpSub.textContent='Thank you!';
+  tpSub.textContent='One step left';
   tpBody.innerHTML=`
     <div class="tp-success">
       <div class="ts-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M4 12l5 5L20 6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      <h4>We've received your request</h4>
-      <p>Our team will follow up on your email with the validated quote — including any discount or adjustment.</p>
+      <h4>Almost done — send the email to reach us</h4>
+      <p>Your email app should have opened with the details pre-filled, but <strong>we haven't received anything yet</strong>. Nothing reaches ARTIBYTTE until you actually press send in that email app. If it didn't open, email us directly at <a href="mailto:hello@artibytte.co" style="color:var(--bronze-light)">hello@artibytte.co</a>.</p>
     </div>`;
-  tpFoot.innerHTML=`<div class="tp-btnrow"><button class="tp-btn ghost" style="flex:1" data-action="restart">Close</button></div>`;
+  tpFoot.innerHTML=`<div class="tp-btnrow"><button class="tp-btn ghost" data-action="restart">Start over</button><button class="tp-btn primary" data-action="reopen-mail">Open email again</button></div>`;
 }
 
+/* === START: VEX FIELD VALIDATION EDIT === */
+/* returns true when the field is valid; msg='' clears the error */
+function vexSetFieldError(id,msg){
+  const input=document.getElementById(id);
+  if(!input) return true;
+  const field=input.closest('.tp-field');
+  const err=field&&field.querySelector('.tp-error');
+  const bad=!!msg;
+  if(field) field.classList.toggle('invalid',bad);
+  if(err) err.textContent=msg||'';
+  input.setAttribute('aria-invalid',bad?'true':'false');
+  return !bad;
+}
+/* === END: VEX FIELD VALIDATION EDIT === */
 function tpSubmit(){
   const name=(document.getElementById('tpName')||{}).value||'';
   const company=(document.getElementById('tpCompany')||{}).value||'';
   const email=(document.getElementById('tpEmail')||{}).value||'';
   const notes=(document.getElementById('tpNotes')||{}).value||'';
-  if(!name||!email){
-    alert('Please enter your name and email before sending.');
+  /* === START: VEX FIELD VALIDATION EDIT === */
+  const nameOk=vexSetFieldError('tpName', name.trim() ? '' : 'Please enter your name.');
+  /* === START: VEX EMAIL VALIDITY EDIT === */
+  const emailEl=document.getElementById('tpEmail');
+  const emailMsg=!email.trim() ? 'Please enter your email address.'
+    : ((emailEl && !emailEl.checkValidity()) || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim()))
+      ? 'Please enter a valid email address.' : '';
+  /* === END: VEX EMAIL VALIDITY EDIT === */
+  const emailOk=vexSetFieldError('tpEmail', emailMsg);
+  if(!nameOk || !emailOk){
+    document.getElementById(!nameOk ? 'tpName' : 'tpEmail').focus(); // first invalid field
     return;
   }
+  /* === END: VEX FIELD VALIDATION EDIT === */
   const ind=tpIndustry();
   let body=`Name: ${name}\nCompany: ${company}\nEmail: ${email}\n`;
   if(ind){
@@ -2810,11 +3026,34 @@ function tpSubmit(){
   }
   if(notes) body+=`\nNotes:\n${notes}\n`;
   const subject=`Quote Request — ${ind?ind.name:'General'} — ${company||name}`;
-  window.location.href=`mailto:hello@artibytte.co?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-  tpState.step='success';
-  tpRender();
+  /* === START: VEX SEND STATE EDIT === */
+  const mailto=`mailto:hello@artibytte.co?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  tpState.mailto=mailto; // kept for "Open email again"
+  const sendBtn=tpFoot.querySelector('[data-action="submit-quote"]');
+  const backBtn=tpFoot.querySelector('[data-action="back-quote"],[data-action="restart"]');
+  if(sendBtn){ sendBtn.disabled=true; sendBtn.textContent='Opening your email client…'; sendBtn.setAttribute('aria-busy','true'); }
+  if(backBtn) backBtn.disabled=true;
+  window.location.href=mailto;
+  setTimeout(()=>{
+    if(tpState.step!=='contact') return; // user restarted meanwhile
+    tpState.step='success';
+    tpRender();
+  },1200);
+  /* === END: VEX SEND STATE EDIT === */
 }
 
+/* === START: VEX MODULE IN-PLACE TOGGLE EDIT === */
+/* updates only the clicked row + the running total; no innerHTML rebuild, so focus and scroll stay put */
+function tpToggleModule(el, id){
+  if(tpState.selectedModules.has(id)) tpState.selectedModules.delete(id);
+  else tpState.selectedModules.add(id);
+  if(!el || !el.isConnected){ tpRenderModules(); return; } // safety fallback
+  const on=tpState.selectedModules.has(id);
+  el.classList.toggle('checked',on);
+  el.setAttribute('aria-checked',on?'true':'false');
+  tpRefreshModulesFooter(); // total updates in the same tick, no animation
+}
+/* === END: VEX MODULE IN-PLACE TOGGLE EDIT === */
 /* event delegation for all clicks inside the panel */
 function tpHandleClick(e){
   const opt=e.target.closest('[data-action],[data-industry],[data-module]');
@@ -2822,13 +3061,13 @@ function tpHandleClick(e){
 
   if(opt.dataset.action==='start'){ tpState.step='industry'; tpRender(); return; }
   if(opt.dataset.action==='goto-contact-direct'){ tpState.industryId=null; tpState.step='contact'; tpRender(); return; }
-  if(opt.dataset.action==='restart'){ tpState={step:'welcome',industryId:null,selectedModules:new Set(),locations:1}; tpRender(); return; }
-  if(opt.dataset.action==='back-industry'){ tpState.step='industry'; tpRender(); return; }
+ if(opt.dataset.action==='restart'){ tpState={step:'welcome',industryId:null,selectedModules:new Set(),locations:1,contactName:'',contactCompany:'',contactEmail:'',contactNotes:''}; tpRender(); return; }  if(opt.dataset.action==='back-industry'){ tpState.step='industry'; tpRender(); return; }
   if(opt.dataset.action==='back-modules'){ tpState.step='modules'; tpRender(); return; }
   if(opt.dataset.action==='back-quote'){ tpState.step='quote'; tpRender(); return; }
   if(opt.dataset.action==='to-quote'){ tpState.step='quote'; tpRender(); return; }
   if(opt.dataset.action==='request-quote'){ tpState.step='contact'; tpRender(); return; }
   if(opt.dataset.action==='submit-quote'){ tpSubmit(); return; }
+  if(opt.dataset.action==='reopen-mail'){ if(tpState.mailto) window.location.href=tpState.mailto; return; }
   if(opt.dataset.action==='loc-inc'){ tpState.locations=Math.min(50,tpState.locations+1); tpRefreshModulesFooter(); return; }
   if(opt.dataset.action==='loc-dec'){ tpState.locations=Math.max(1,tpState.locations-1); tpRefreshModulesFooter(); return; }
 
@@ -2847,9 +3086,7 @@ function tpHandleClick(e){
   }
 
   if(opt.dataset.module){
-    if(tpState.selectedModules.has(opt.dataset.module)) tpState.selectedModules.delete(opt.dataset.module);
-    else tpState.selectedModules.add(opt.dataset.module);
-    tpRenderModules();
+    tpToggleModule(opt, opt.dataset.module);
     return;
   }
 }
@@ -2860,7 +3097,38 @@ function tpRefreshModulesFooter(){
   if(rt) rt.textContent=tpPeso(tpComputeQuote().total);
 }
 tpBody.addEventListener('click',tpHandleClick);
+/* === START: VEX FIELD VALIDATION EDIT === */
+tpBody.addEventListener('input',function(e){
+  if(e.target.closest && e.target.closest('.tp-field.invalid')) vexSetFieldError(e.target.id,'');
+  if(e.target.id==='tpName') tpState.contactName=e.target.value;
+  else if(e.target.id==='tpCompany') tpState.contactCompany=e.target.value;
+  else if(e.target.id==='tpEmail') tpState.contactEmail=e.target.value;
+  else if(e.target.id==='tpNotes') tpState.contactNotes=e.target.value;
+});/* === END: VEX FIELD VALIDATION EDIT === */
+/* === START: VEX MODULE KEYBOARD EDIT === */
+tpBody.addEventListener('keydown',function(e){
+  if(e.key!==' ' && e.key!=='Enter') return;
+  const row=e.target.closest('.tp-module');
+  if(!row || e.target!==row) return;
+  e.preventDefault(); // Space would otherwise scroll the panel
+  tpToggleModule(row, row.dataset.module);
+});
+/* === END: VEX MODULE KEYBOARD EDIT === */
 tpFoot.addEventListener('click',tpHandleClick);
+
+/* === START: VEX DELAYED DISCOVERY EDIT === */
+/* idle → quiet fade-in after 5s (no hint, no pulse); typing still reveals immediately;
+   once the user interacts with VEX, it's visible right away for the rest of the session */
+const VEX_SEEN_KEY='vexSeen';
+function vexMarkSeen(){ try{ sessionStorage.setItem(VEX_SEEN_KEY,'1'); }catch(e){} }
+function vexWasSeen(){ try{ return sessionStorage.getItem(VEX_SEEN_KEY)==='1'; }catch(e){ return false; } }
+function vexQuietReveal(){ orbWrap.classList.add('orb-visible'); }
+(function(){
+  if(vexWasSeen()){ vexQuietReveal(); return; }
+  setTimeout(vexQuietReveal, 5000);
+})();
+orbWrap.addEventListener('pointerdown', vexMarkSeen); // drag counts as interaction too
+/* === END: VEX DELAYED DISCOVERY EDIT === */
 </script>
 </body>
 </html>
