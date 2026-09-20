@@ -43,7 +43,8 @@
   --sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;scrollbar-gutter:stable}
+:root{--sbw:0px;--vw:calc(100vw - var(--sbw))}   /* --vw = totoong lapad ng viewport na walang scrollbar */
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation-duration:.001ms!important;transition-duration:.001ms!important}}
 body{
   background:var(--obsidian);color:var(--mist2);font-family:var(--sans);
@@ -1007,6 +1008,8 @@ form .btn{margin-top:8px}
 .cview .cv-item:last-child{border-bottom:1px solid var(--line-dark)}
 .cview .cv-gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:18px;margin-top:32px}
 .cview .cv-gallery:empty{display:none}
+.cview .cv-gallery.loading:empty{display:grid}
+.cview .cv-gallery.loading:empty::before,.cview .cv-gallery.loading:empty::after{content:"";aspect-ratio:4/3;border-radius:14px;border:1px solid var(--line-dark);background:var(--graphite2)}
 .cview .cv-gallery.empty{display:none}
 .cview .cv-gallery figure{margin:0;border-radius:14px;overflow:hidden;border:1px solid var(--line-dark);background:var(--graphite2)}
 .cview .cv-gallery img,.cview .cv-gallery video{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;background:var(--obsidian)}
@@ -1344,7 +1347,8 @@ html.showcase-on .hero::before{animation-play-state:paused!important}
   -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
   transition:border-color .2s,background .2s,color .2s;
 }
-#siteShowcase .ss-gallery{margin-left:12px}
+#siteShowcase .ss-gallery{margin-left:auto}
+@media(min-width:701px){#siteShowcase .ss-actions{right:48px}}
 #siteShowcase .ss-gallery svg,
 #siteShowcase .ss-continue svg{flex:none}
 #siteShowcase .ss-lbl{max-width:0;opacity:0;overflow:hidden;white-space:nowrap;transition:max-width .3s cubic-bezier(.2,.8,.2,1),opacity .2s,margin .3s}
@@ -1368,6 +1372,26 @@ html.showcase-on .hero::before{animation-play-state:paused!important}
 #siteShowcase .ss-slide.is-product .ss-stage{top:46%}
 /* === END: SHOWCASE PHOTO-ONLY === */
 
+/* === START: MEDIA CONTAINER INTELLIGENCE === */
+.mf{position:relative;width:100%;overflow:hidden;background:#0b0c0f;isolation:isolate}
+.mf[data-usage="fullscreen"],.mf[data-usage="background"]{position:absolute;inset:0;height:100%}
+.mf[data-usage="card"]{aspect-ratio:4/3}
+.mf[data-usage="hero"]{aspect-ratio:16/9}
+/* === FULL-BLEED: edge → edge, lumalabas sa .wrap, naka-center sa viewport === */
+.mf[data-usage="bleed"],.mf[data-usage="bleed-screen"]{width:var(--vw);max-width:none;margin-left:calc(50% - var(--vw)/2)}
+.mf[data-usage="bleed"]{aspect-ratio:var(--bleed-ratio,21/9)}
+.mf[data-usage="bleed-screen"]{height:100vh;height:100svh;min-height:480px}
+@media(max-width:860px){.mf[data-usage="bleed"]{aspect-ratio:var(--bleed-ratio-m,4/5)}}
+.mf[data-usage="background"]{z-index:-1}   /* nasa likod ng text ng section */
+[data-bleed-host]{isolation:isolate}       /* sa section na may sariling background: para hindi lumusot sa ilalim ng background */
+.mf > .mf-media{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;max-width:none!important;max-height:none!important;aspect-ratio:auto!important;margin:0!important;display:block!important;z-index:1;object-fit:cover!important;opacity:0;transition:opacity .35s ease}
+.mf.is-ready > .mf-media{opacity:1}
+.mf[data-fit="contain"] > .mf-media{object-fit:contain!important}
+.mf > .mf-bg{position:absolute;left:-8%;top:-8%;width:116%;height:116%;object-fit:cover;z-index:0;opacity:0;filter:blur(26px) saturate(1.2) brightness(.55);transition:opacity .35s ease;pointer-events:none}
+.mf[data-fit="contain"] > .mf-bg{opacity:1}
+@media(prefers-reduced-motion:reduce){.mf > .mf-media,.mf > .mf-bg{transition:none}}
+/* === END: MEDIA CONTAINER INTELLIGENCE === */
+
 /* handoff progress line: tells the visitor the site is coming */
 #siteShowcase.open.auto .ss-panel::after{content:"";position:absolute;left:0;bottom:0;height:2px;width:100%;background:var(--bronze-light);transform-origin:left;animation:ssBar 1.6s linear forwards;z-index:4}
 @keyframes ssBar{from{transform:scaleX(0)}to{transform:scaleX(1)}}
@@ -1377,6 +1401,17 @@ html.showcase-on .hero::before{animation-play-state:paused!important}
 .hero h1{animation-duration:.6s;animation-delay:.06s}
 .hero .actions{animation-duration:.6s;animation-delay:.14s}
 .hero-product{animation-duration:.6s;animation-delay:.2s}
+
+/* === FULLSCREEN MEDIA VIEWER === */
+.cv-gallery figure,.m-dash,[data-fullscreen]{cursor:zoom-in}
+#fsViewer{position:fixed;inset:0;z-index:10000;background:#050608;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .3s ease,visibility .3s ease}
+#fsViewer.open{opacity:1;visibility:visible;pointer-events:auto}
+#fsViewer .fs-stage{position:absolute;inset:0;overflow:hidden}
+#fsViewer .fs-svg{position:absolute;inset:0;display:flex;align-items:center;justify-content:center}
+#fsViewer .fs-svg svg{display:block;border-radius:14px;box-shadow:0 30px 90px rgba(0,0,0,.6)}
+#fsViewer .fs-close{position:absolute;z-index:3;top:calc(18px + env(safe-area-inset-top,0px));right:calc(18px + env(safe-area-inset-right,0px));width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,.22);background:rgba(8,9,11,.55);color:#f5f2ec;font-size:20px;line-height:1;cursor:pointer;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);transition:border-color .2s,color .2s}
+#fsViewer .fs-close:hover,#fsViewer .fs-close:focus-visible{border-color:var(--bronze-light);color:var(--bronze-light);outline:none}
+.mf[data-usage="viewer"]{position:absolute;inset:0;height:100%}
 </style>
 <script>
 /* set before first paint so nothing starts behind the overlay; failsafe releases if the showcase never opens */
@@ -2481,6 +2516,468 @@ setTimeout(function(){
 })();
 /* === END: HERO SKY v2 === */
 
+/* === START: MEDIA CONTAINER INTELLIGENCE === */
+const MediaFit=(function(){
+  /* usage -> gaano kalaki ang pwedeng maputol (0-1) bago mag-switch sa "contain + blurred backdrop" */
+  const POLICY={
+    fullscreen:{maxLoss:.22,focus:'50% 35%'},
+    viewer:{maxLoss:.15,focus:'50% 40%'},
+    bleed:{maxLoss:1,focus:'50% 40%'},
+    'bleed-screen':{maxLoss:1,focus:'50% 40%'},
+    hero:      {maxLoss:.28,focus:'50% 40%'},
+    card:      {maxLoss:.35,focus:'50% 40%'},
+    background:{maxLoss:1,  focus:'50% 50%'}      /* decorative: laging cover */
+  };
+  const DEVICE_ADJ={mobile:-.04,tablet:0,desktop:.03};   /* maliit na screen = mas iniingatan ang buong subject */
+  const RULES=[
+    {sel:'#siteShowcase .ss-media',usage:'fullscreen'},
+    {sel:'.cv-gallery img,.cv-gallery video',usage:'card'},
+    {sel:'[data-media-fit]',usage:null}                 /* <img data-media-fit="hero|card|fullscreen|background"> */
+  ];
+  const ALL_SEL=RULES.map(r=>r.sel).join(',');
+  /* === FIT MODES ===
+     COVER          = laging cover: puno ang frame, walang blank space (may crop)
+     CONTAIN        = laging buo ang frame (blurred backdrop ang pumupuno sa gilid, hindi blank)
+     SMART-COVER    = DEFAULT. Cover, maliban kung sobra ang mawawala (lampas sa coverMax) -> contain
+     SMART-CONTAIN  = Buo ang frame, maliban kung halos magkapareho na ang hugis (hanggang containMin) -> cover
+                      (para walang manipis na guhit sa gilid) */
+  const MODES=['cover','contain','smart-cover','smart-contain'];
+  const CFG={
+    defaultMode:'smart-cover',
+    byUsage:{bleed:'cover','bleed-screen':'cover'},        /* hal. {card:'cover', hero:'smart-contain'} */
+    /* === FOCAL POINT: filename (lowercase) -> {x,y} sa % ng larawan. "Protektahan ang bahaging ito kapag na-crop." === */
+    video:{
+      poster:{},              /* filename (lowercase) -> poster, hal. {'showcase.artiplay.mp4':'showcase.artiplay.poster.jpg'} (relative sa folder ng video) o data-poster sa mismong <video> */
+      pauseOffscreen:true     /* i-pause kapag wala sa screen / tab hidden / overlay sarado */
+    },
+    safe:{
+      margin:.06,           /* hangin sa loob ng frame (fraction ng lapad/taas) sa paligid ng safe area */
+      maxShrink:.2,         /* pinakamalaking pagliit mula cover para magkasya ang safe area (may blurred fill sa gilid); lampas dito = buong larawan */
+      focalBox:{w:18,h:24}, /* default na safe area sa paligid ng focal point kapag walang explicit na safe; null = i-off */
+      byFile:{}             /* hal. {'feature.1.jpg':[{x:30,y:14,w:22,h:30},{x:68,y:80,w:24,h:10}]}  (x,y = top-left, sa % ng larawan) */
+    },
+    ratio:{ byFile:{} },      /* reserve ratio per file (lowercase), hal. {'feature.3.jpg':'3/4'} */
+    squareMax:.6,             /* square na source (o frame) vs ibang hugis: hanggang ganito ang crop bago mag-contain */
+    landscapeToPortraitMax:.82,   /* landscape sa portrait na frame (mobile): mag-cover/crop hanggang ganito kalaki bago mag-contain */
+    portraitToLandscapeMax:.75,   /* portrait sa landscape na frame: mag-cover/zoom hanggang ganito kalaki ang crop bago mag-contain */
+    focalPoint:{
+      'showcase.artiplay.jpg':{x:50,y:50},
+      'feature.1.jpg':{x:38,y:42},
+      'showcase.artistock.jpg':{x:50,y:50}
+    },
+    byFile:{},         /* hal. {'showcase.artistock.jpg':'smart-contain'}  (lowercase ang filename) */
+    limits:{           /* coverMax = pinakamalaking crop na tanggap sa smart-cover; containMin = hanggang saan mag-cover pa rin ang smart-contain */
+      fullscreen:{coverMax:.45,containMin:.12},
+      viewer:    {coverMax:.15,containMin:.05},
+      hero:      {coverMax:.45,containMin:.10},
+      card:      {coverMax:.50,containMin:.12},
+      background:{coverMax:1,  containMin:1}
+    }
+  };
+  /* pinipili ang mode: data-fit-mode sa mismong media > CFG.byFile > data-fit-mode sa parent > CFG.byUsage > CFG.defaultMode */
+  function modeFor(el,usage){
+    const file=((el.currentSrc||el.src||'').split('?')[0].split('/').pop()||'').toLowerCase();
+    const host=el.closest?el.closest('[data-fit-mode]'):null;
+    const m=String(el.dataset.fitMode||CFG.byFile[file]||(host&&host.dataset.fitMode)||CFG.byUsage[usage]||CFG.defaultMode).toLowerCase();
+    return MODES.indexOf(m)>-1?m:'smart-cover';
+  }
+  const wraps=new Set();
+  let ro=null;
+
+  const orient=r=>r<.9?'portrait':(r>1.1?'landscape':'square');
+  const deviceClass=()=>{const w=window.innerWidth;return w<700?'mobile':(w<1100?'tablet':'desktop');};
+  const natural=el=>el.tagName==='VIDEO'?{w:el.videoWidth,h:el.videoHeight}:{w:el.naturalWidth,h:el.naturalHeight};
+
+  /* blurred backdrop: maliit na snapshot ng mismong media (canvas), para hindi black bars ang letterbox */
+  function paintBackdrop(wrap){
+    const st=wrap._mf, el=st.el, n=natural(el);
+    if(!n.w||!n.h) return;
+    let c=st.canvas;
+    if(!c){
+      c=st.canvas=document.createElement('canvas');
+      c.className='mf-bg'; c.setAttribute('aria-hidden','true');
+      wrap.insertBefore(c,el);
+    }
+    const w=48, h=Math.max(8,Math.round(w*n.h/n.w));
+    if(c.width!==w||c.height!==h){ c.width=w; c.height=h; }
+    try{ c.getContext('2d').drawImage(el,0,0,w,h); }catch(e){}
+  }
+
+  /* ang "utak": source ratio vs container ratio vs usage vs device -> cover o contain */
+  function apply(wrap){
+    if(!wrap.isConnected){ wraps.delete(wrap); if(ro) ro.unobserve(wrap); return; }
+    const st=wrap._mf; if(!st) return;
+    const el=st.el, n=natural(el), r=wrap.getBoundingClientRect();
+    if(!n.w||!n.h||!r.width||!r.height) return;            /* wala pang laman o nakatago: hintayin */
+    const sr=n.w/n.h, br=r.width/r.height;
+    const usage=wrap.dataset.usage, pol=POLICY[usage]||POLICY.card, dev=deviceClass();
+    const loss=1-Math.min(sr,br)/Math.max(sr,br);          /* 0 = magkapareho ang hugis; 0.5 = kalahati ang mawawala kapag cover */
+    const limit=pol.maxLoss+(usage==='background'?0:(DEVICE_ADJ[dev]||0));
+    const mode=modeFor(el,usage);
+    const lim=CFG.limits[usage]||CFG.limits.card;
+    const adj=usage==='background'?0:(DEVICE_ADJ[dev]||0);
+    let fit;
+    if(mode==='cover') fit='cover';
+    else if(mode==='contain') fit='contain';
+    else if(mode==='smart-contain') fit=loss<=Math.max(0,lim.containMin+adj)?'cover':'contain';
+    else{
+      /* magkabilang direksyon: portrait→landscape at landscape→portrait may sariling limit; lahat ng iba, coverMax pa rin */
+      const so=orient(sr), bo=orient(br);
+      const cross=(so===bo||usage==='viewer')?lim.coverMax:(so==='portrait'&&bo==='landscape'?CFG.portraitToLandscapeMax:(so==='landscape'&&bo==='portrait'?CFG.landscapeToPortraitMax:CFG.squareMax));
+      fit=loss<=cross+adj?'cover':'contain';
+    }        /* smart-cover (default) */
+    wrap.dataset.mode=mode;
+    /* mas mataas ang source kaysa box -> vertical crop -> ingatan ang taas (mukha/subject); kung hindi, center */
+    const fp=focalFor(el);
+    if(fp && fit==='cover'){
+      /* itatapat ang focal point sa gitna ng frame hangga't pinapayagan ng crop; hindi lalampas sa gilid ng larawan */
+      const s=Math.max(r.width/n.w, r.height/n.h);
+      const ox=n.w*s-r.width, oy=n.h*s-r.height;
+      const px=ox>0.5?Math.min(1,Math.max(0,(fp.x/100*n.w*s-r.width/2)/ox))*100:50;
+      const py=oy>0.5?Math.min(1,Math.max(0,(fp.y/100*n.h*s-r.height/2)/oy))*100:50;
+      el.style.objectPosition=px.toFixed(2)+'% '+py.toFixed(2)+'%';
+    }else{
+      el.style.objectPosition=el.dataset.focus||(sr<br?pol.focus:'50% 50%');
+    }
+    wrap.dataset.orient=orient(sr);
+    wrap.dataset.boxOrient=orient(br);
+    wrap.dataset.device=dev;
+    wrap.dataset.viewport=window.innerWidth>=window.innerHeight?'landscape':'portrait';
+    /* === SAFE MARGINS: cover -> safe-cover (liliit nang sapat) -> contain === */
+    el.style.transform=''; el.style.transformOrigin=''; st.safe=null;
+    const safeBox=(mode==='contain'||(usage==='viewer'&&fit==='contain'))?null:safeFor(el);
+    if(safeBox){
+      const bw=wrap.clientWidth, bh=wrap.clientHeight;
+      const sc=Math.max(bw/n.w,bh/n.h), sn=Math.min(bw/n.w,bh/n.h);
+      const mg=CFG.safe.margin;
+      const sFit=Math.min(bw*(1-2*mg)/(safeBox.w*n.w), bh*(1-2*mg)/(safeBox.h*n.h));   /* pinakamalaking scale na kasya ang safe area + margin */
+      let s;
+      if(sFit>=sc) s=sc;                                                                /* ligtas ang cover */
+      else if(sFit>=sc*(1-CFG.safe.maxShrink)) s=Math.max(sFit,sn);                     /* liliitin nang sapat lang */
+      else s=sn;                                                                        /* masyadong malaki ang subject: buong larawan */
+      const W=n.w*s, H=n.h*s;
+      const place=(frame,size,c)=>size>=frame?Math.min(0,Math.max(frame-size,frame/2-c*size)):(frame-size)/2;   /* safe area sa gitna; hindi lalampas sa gilid ng larawan */
+      const L=place(bw,W,safeBox.x+safeBox.w/2), T=place(bh,H,safeBox.y+safeBox.h/2);
+      if(s>=sc-1e-6){
+        fit='cover';
+        const px=(bw-W)!==0?L/(bw-W):.5, py=(bh-H)!==0?T/(bh-H):.5;
+        el.style.objectPosition=(px*100).toFixed(2)+'% '+(py*100).toFixed(2)+'%';
+      }else{
+        fit='contain';
+        el.style.objectPosition='50% 50%';
+        if(s>sn+1e-6){
+          const k=s/sn, dw=n.w*sn, dh=n.h*sn;
+          const tx=L-k*((bw-dw)/2), ty=T-k*((bh-dh)/2);
+          el.style.transformOrigin='0 0';
+          el.style.transform='translate('+tx.toFixed(2)+'px,'+ty.toFixed(2)+'px) scale('+k.toFixed(4)+')';
+        }
+      }
+      st.safe={scale:+(s/sc).toFixed(3)};
+    }
+    wrap.dataset.fit=fit;
+    wrap.style.setProperty('--src-ratio',sr.toFixed(3));
+    wrap.style.setProperty('--box-ratio',br.toFixed(3));
+    st.loss=loss;
+    if(fit==='contain') paintBackdrop(wrap);
+    wrap.classList.add('is-ready');
+  }
+
+  /* === FOCAL POINT helper: data-focal="38,42" (sa mismong media o sa parent) > CFG.focalPoint[file] === */
+  function focalFor(el){
+    const file=((el.currentSrc||el.src||'').split('?')[0].split('/').pop()||'').toLowerCase();
+    const host=el.closest?el.closest('[data-focal]'):null;
+    const raw=el.dataset.focal||(host&&host.dataset.focal);
+    let fp=CFG.focalPoint[file];
+    if(raw){ const p=String(raw).split(','); fp={x:parseFloat(p[0]),y:parseFloat(p[1])}; }
+    if(!fp||!isFinite(fp.x)||!isFinite(fp.y)) return null;
+    return {x:Math.min(100,Math.max(0,fp.x)), y:Math.min(100,Math.max(0,fp.y))};
+  }
+
+  /* === VIDEO INTELLIGENCE === */
+  const rmq=window.matchMedia?window.matchMedia('(prefers-reduced-motion: reduce)'):{matches:false};
+  const vids=new Set();
+  let vio=null;
+
+  function hostOpen(el){
+    const pm=el.closest('.pmoment'); if(pm && !pm.classList.contains('open')) return false;
+    const sc=el.closest('#siteShowcase'); if(sc && !sc.classList.contains('open')) return false;
+    return true;
+  }
+  /* isang lugar ang nagpapasya: play lang kapag motion OK + tab visible + overlay bukas + nasa screen */
+  function syncVideo(el){
+    if(!el.isConnected){ vids.delete(el); if(vio) vio.unobserve(el); return; }
+    const want=!rmq.matches && document.visibilityState==='visible' && hostOpen(el) && el._vis!==false;
+    if(want){ if(el.paused){ const p=el.play(); if(p&&p.catch) p.catch(()=>{}); } }
+    else if(!el.paused) el.pause();
+  }
+  function syncAll(){ vids.forEach(syncVideo); }
+  function watchVisibility(el){
+    if(!CFG.video.pauseOffscreen || !('IntersectionObserver' in window)) return;
+    if(!vio) vio=new IntersectionObserver(es=>es.forEach(e=>{ e.target._vis=e.isIntersecting; syncVideo(e.target); }),{threshold:.25});
+    vio.observe(el);
+  }
+  function posterFor(el){
+    const src=(el.currentSrc||el.getAttribute('src')||el.src||'').split('?')[0];
+    const file=(src.split('/').pop()||'').toLowerCase();
+    const p=el.dataset.poster||CFG.video.poster[file];
+    if(!p) return '';
+    return /^(https?:)?\/\/|^\/|^data:/.test(p)?p:src.slice(0,src.lastIndexOf('/')+1)+p;
+  }
+  /* attributes + preload strategy: tawagin BAGO i-set ang src kung JS-created */
+  function prepareVideo(el,opts){
+    if(!el||el.tagName!=='VIDEO'||el._mfPrep) return el;
+    el._mfPrep=true; opts=opts||{};
+    el.muted=true; el.defaultMuted=true; el.setAttribute('muted','');            /* property + attribute: kailangan ng iOS/Safari */
+    el.loop=el.dataset.loop!=='false';
+    el.playsInline=true; el.setAttribute('playsinline',''); el.setAttribute('webkit-playsinline','');
+    el.controls=false; el.disablePictureInPicture=true; el.setAttribute('disableremoteplayback','');
+    if(!el.hasAttribute('preload')){
+      const c=navigator.connection||{};
+      const lean=!!c.saveData||/2g/.test(c.effectiveType||'')||rmq.matches;     /* metadata pa rin, hindi none: kailangan ang sukat para sa crop */
+      el.preload=el.dataset.preload||((lean||(!opts.first&&deviceClass()==='mobile'))?'metadata':'auto');
+    }
+    return el;
+  }
+  function startVideo(el){
+    if(el._mfStarted) return; el._mfStarted=true;
+    prepareVideo(el);
+    const poster=posterFor(el); if(poster&&!el.getAttribute('poster')) el.poster=poster;
+    if(rmq.matches && !poster){                                                  /* reduced-motion na walang poster: ipakita ang unang frame */
+      const still=()=>{ try{ el.currentTime=.05; }catch(e){} };
+      if(el.readyState>=1) still(); else el.addEventListener('loadedmetadata',still,{once:true});
+    }
+    vids.add(el); watchVisibility(el); syncVideo(el);
+  }
+  /* GIF sa reduced-motion: best-effort na static frame (same-origin lang; cross-origin = hindi ma-freeze) */
+  function freezeGifIfReduced(el){
+    if(!rmq.matches||!/\.gif$/i.test((el.currentSrc||el.src||'').split('?')[0])) return;
+    try{
+      const c=document.createElement('canvas'); c.width=el.naturalWidth; c.height=el.naturalHeight;
+      c.getContext('2d').drawImage(el,0,0);
+      el.src=c.toDataURL('image/png');
+    }catch(e){}
+  }
+  document.addEventListener('visibilitychange',syncAll);
+  if(rmq.addEventListener) rmq.addEventListener('change',syncAll);
+  ['pointerdown','touchstart','keydown'].forEach(ev=>document.addEventListener(ev,syncAll,{passive:true}));   /* iOS Low Power Mode: ulitin ang play() sa unang gesture */
+  new MutationObserver(ms=>{ if(ms.some(m=>m.target.id==='pmoment'||m.target.id==='siteShowcase')) syncAll(); })
+    .observe(document.documentElement,{attributes:true,attributeFilter:['class'],subtree:true});
+  /* === END VIDEO INTELLIGENCE === */
+
+  /* === NO LAYOUT SHIFT: i-reserve ang espasyo BAGO mag-load ===
+     priority: data-ratio ("16/9", "16:9" o 1.777) > width/height attributes > CFG.ratio.byFile > default ng usage (CSS: card 4/3, hero 16/9)
+     ang frame ay may sariling ratio; ang media ay cover/contain sa loob, kaya walang tatalon pagdating ng file. */
+  function parseRatio(v){
+    if(v==null||v==='') return 0;
+    const s=String(v).replace(/\s+/g,'');
+    const p=s.split(/[\/:]/);
+    const n=p.length===2?parseFloat(p[0])/parseFloat(p[1]):parseFloat(s);
+    return isFinite(n)&&n>0?n:0;
+  }
+  function reserveSpace(wrap,el,usage){
+    if(usage==='fullscreen'||usage==='background') return;   /* absolute-fill: hindi apektado ang flow */
+    const file=((el.currentSrc||el.getAttribute('src')||el.src||'').split('?')[0].split('/').pop()||'').toLowerCase();
+    const host=el.closest?el.closest('[data-ratio]'):null;
+    let r=parseRatio(el.dataset.ratio)||parseRatio(host&&host.dataset.ratio);
+    if(!r){ const w=parseFloat(el.getAttribute('width')), h=parseFloat(el.getAttribute('height')); if(w>0&&h>0) r=w/h; }
+    if(!r) r=parseRatio(CFG.ratio.byFile[file]);
+    if(r) wrap.style.aspectRatio=String(r);
+  }
+
+  /* === FULL-BLEED: sukatin ang scrollbar para eksakto ang edge → edge (kasama ang 100vw ang scrollbar) === */
+  function setSbw(){
+    const d=document.documentElement;
+    d.style.setProperty('--sbw',Math.max(0,window.innerWidth-d.clientWidth)+'px');
+  }
+  setSbw();
+  window.addEventListener('resize',setSbw);
+  window.addEventListener('orientationchange',setSbw);
+  if(window.ResizeObserver) new ResizeObserver(setSbw).observe(document.documentElement);
+
+  /* === SAFE MARGINS: data-safe="x,y,w,h" (% ng larawan, top-left) — pwedeng marami: "x,y,w,h; x,y,w,h"; data-safe="off" = i-disable === */
+  function safeFor(el){
+    const file=((el.currentSrc||el.getAttribute('src')||el.src||'').split('?')[0].split('/').pop()||'').toLowerCase();
+    const host=el.closest?el.closest('[data-safe]'):null;
+    const raw=el.dataset.safe!=null?el.dataset.safe:(host&&host.dataset.safe);
+    if(raw==='off') return null;
+    let boxes=[];
+    if(raw){
+      String(raw).split(';').forEach(t=>{
+        const p=t.split(',').map(parseFloat);
+        if(p.length>=4&&p.every(isFinite)) boxes.push({x:p[0],y:p[1],w:p[2],h:p[3]});
+      });
+    }else if(CFG.safe.byFile[file]) boxes=[].concat(CFG.safe.byFile[file]);
+    if(!boxes.length){
+      const fp=focalFor(el), fb=CFG.safe.focalBox;               /* walang explicit na safe: focal point + default na laki */
+      if(fp&&fb) boxes=[{x:fp.x-fb.w/2,y:fp.y-fb.h/2,w:fb.w,h:fb.h}];
+    }
+    if(!boxes.length) return null;
+    let x0=1,y0=1,x1=0,y1=0;                                     /* pagsamahin ang lahat ng kahon, % -> 0..1, nasa loob ng larawan */
+    boxes.forEach(b=>{ x0=Math.min(x0,b.x/100); y0=Math.min(y0,b.y/100); x1=Math.max(x1,(b.x+b.w)/100); y1=Math.max(y1,(b.y+b.h)/100); });
+    x0=Math.max(0,x0); y0=Math.max(0,y0); x1=Math.min(1,x1); y1=Math.min(1,y1);
+    return (x1>x0&&y1>y0)?{x:x0,y:y0,w:x1-x0,h:y1-y0}:null;
+  }
+
+  function mount(el,usage){
+    if(!el||el._mfWrap||(el.closest&&el.closest('.mf'))) return;
+    const parent=el.parentNode; if(!parent) return;
+    if(!POLICY[usage]) usage='card';
+    const wrap=document.createElement('div');
+    wrap.className='mf'; wrap.dataset.usage=usage; reserveSpace(wrap,el,usage);
+    parent.insertBefore(wrap,el);
+    wrap.appendChild(el);
+    el.classList.add('mf-media');
+    const st=wrap._mf={el:el,canvas:null,last:0,loss:0};
+    el._mfWrap=wrap;
+    wraps.add(wrap);
+    if(ro) ro.observe(wrap);
+    const go=()=>apply(wrap);
+    if(el.tagName==='VIDEO'){
+      if(el.readyState>=1) go(); else el.addEventListener('loadedmetadata',go,{once:true});
+      el.addEventListener('loadeddata',go,{once:true});
+      el.addEventListener('timeupdate',()=>{                /* sumusunod ang backdrop sa kulay ng video (~1x/sec) */
+        const t=performance.now();
+        if(wrap.dataset.fit==='contain' && t-st.last>900){ st.last=t; paintBackdrop(wrap); }
+      });
+      startVideo(el);   /* nagpa-pause ang video kapag na-move sa DOM */
+    }else{
+      const goImg=()=>{ go(); freezeGifIfReduced(el); };
+      if(el.complete&&el.naturalWidth) goImg(); else el.addEventListener('load',goImg,{once:true});
+    }
+    setTimeout(()=>wrap.classList.add('is-ready'),3000);    /* failsafe: hindi mananatiling invisible */
+  }
+
+  function usageFor(el){
+    for(const r of RULES){ if(el.matches(r.sel)) return r.usage||el.dataset.mediaFit||'card'; }
+    return null;
+  }
+  function scan(root){
+    if(!root||root.nodeType!==1) return;
+    const list=[];
+    if(root.matches(ALL_SEL)) list.push(root);
+    root.querySelectorAll(ALL_SEL).forEach(n=>list.push(n));
+    list.forEach(el=>{
+      if(el.tagName!=='IMG'&&el.tagName!=='VIDEO') return;
+      const u=usageFor(el); if(u) mount(el,u);
+    });
+  }
+
+  if(window.ResizeObserver) ro=new ResizeObserver(es=>es.forEach(e=>apply(e.target)));
+  let raf=0;
+  const reapplyAll=()=>{ cancelAnimationFrame(raf); raf=requestAnimationFrame(()=>wraps.forEach(w=>apply(w))); };
+  window.addEventListener('resize',reapplyAll);
+  window.addEventListener('orientationchange',reapplyAll);
+
+  const mo=new MutationObserver(ms=>ms.forEach(m=>m.addedNodes.forEach(scan)));
+  function start(){ scan(document.body); mo.observe(document.body,{childList:true,subtree:true}); }
+  if(document.body) start(); else document.addEventListener('DOMContentLoaded',start);
+
+  /* debug: console.table(MediaFit.report()) */
+  function report(){
+    return [...wraps].filter(w=>w.isConnected&&w._mf).map(w=>({
+      file:((w._mf.el.currentSrc||w._mf.el.src||'').split('/').pop()),
+      usage:w.dataset.usage,
+      source:(w.dataset.orient||'?')+' '+(w.style.getPropertyValue('--src-ratio')||'?'),
+      container:(w.dataset.boxOrient||'?')+' '+(w.style.getPropertyValue('--box-ratio')||'?'),
+      device:w.dataset.device||'?',
+      mode:w.dataset.mode||'?',
+      fit:w.dataset.fit||'?',
+      cropIfCover:Math.round((w._mf.loss||0)*100)+'%',
+      safe:w._mf.safe?('scale '+w._mf.safe.scale):'-'
+    }));
+  }
+  return {mount:mount,scan:scan,report:report,POLICY:POLICY,config:CFG,MODES:MODES,prepareVideo:prepareVideo};
+})();
+/* === END: MEDIA CONTAINER INTELLIGENCE === */
+
+/* === FULLSCREEN MEDIA VIEWER: bagong render calculation (viewport + source ratio + focal/safe), hindi pinalaking CSS box === */
+const FSViewer=(function(){
+  const SEL='.cv-gallery figure,.m-dash,[data-fullscreen]';
+  let root=null,stage=null,closeBtn=null,opener=null,prevOverflow='',closeT=null,ro=null;
+
+  function ensure(){
+    if(root) return;
+    root=document.createElement('div');
+    root.id='fsViewer';
+    root.setAttribute('role','dialog'); root.setAttribute('aria-modal','true');
+    root.setAttribute('aria-label','Fullscreen media'); root.setAttribute('aria-hidden','true');
+    root.innerHTML='<div class="fs-stage"></div><button class="fs-close" type="button" aria-label="Close fullscreen">×</button>';
+    document.body.appendChild(root);
+    stage=root.querySelector('.fs-stage'); closeBtn=root.querySelector('.fs-close');
+    root.addEventListener('click',close);                        /* kahit saan i-click = sara */
+  }
+
+  /* SVG product preview: hindi kailanman kino-crop; contain sa viewport na may safe margin, kinukuwenta mula sa viewBox ratio */
+  function fitSvg(box,svg){
+    const vb=svg.viewBox&&svg.viewBox.baseVal;
+    const ratio=(vb&&vb.width&&vb.height)?vb.width/vb.height:16/9;
+    const W=box.clientWidth, H=box.clientHeight;
+    const mg=Math.round(Math.min(W,H)*(((MediaFit.config.safe||{}).margin)||.06));
+    const w=Math.max(120,Math.min(W-2*mg,(H-2*mg)*ratio));
+    svg.removeAttribute('width'); svg.removeAttribute('height');
+    svg.style.width=Math.round(w)+'px'; svg.style.height=Math.round(w/ratio)+'px';
+  }
+
+  function open(t){
+    const media=t.matches('img,video')?t:t.querySelector('video,img');
+    const svg=media?null:(t.matches('svg')?t:t.querySelector('svg'));
+    if(!media&&!svg) return;
+    ensure(); clearTimeout(closeT);
+    if(ro){ ro.disconnect(); ro=null; }
+    stage.innerHTML='';
+    if(media){
+      const src=media.currentSrc||media.src; if(!src) return;
+      const el=document.createElement(media.tagName==='VIDEO'?'video':'img');
+      el.setAttribute('data-media-fit','viewer');                /* MediaFit ang magkukuwenta para sa viewport frame */
+      ['focal','safe'].forEach(k=>{ const h=media.closest('[data-'+k+']'); if(h) el.dataset[k]=h.dataset[k]; });
+      const fm=t.dataset.fsFit||media.dataset.fsFit; if(fm) el.dataset.fitMode=fm;     /* data-fs-fit="cover|contain|smart-cover" */
+      if(media.dataset.poster) el.dataset.poster=media.dataset.poster;
+      if(el.tagName==='IMG'){ el.alt=media.alt||''; el.decoding='async'; }
+      el.src=src;
+      stage.appendChild(el);
+    }else{
+      const box=document.createElement('div'); box.className='fs-svg';
+      const c=svg.cloneNode(true); box.appendChild(c); stage.appendChild(box);
+      const layout=()=>fitSvg(box,c);
+      layout();
+      if(window.ResizeObserver){ ro=new ResizeObserver(layout); ro.observe(box); }
+    }
+    opener=t;
+    prevOverflow=document.body.style.overflow; document.body.style.overflow='hidden';
+    root.setAttribute('aria-hidden','false');
+    root.classList.add('open');
+    closeBtn.focus({preventScroll:true});
+  }
+
+  function close(){
+    if(!root||!root.classList.contains('open')) return;
+    root.classList.remove('open'); root.setAttribute('aria-hidden','true');
+    document.body.style.overflow=prevOverflow;                   /* ibalik sa dati (bukas pa ang product overlay kung galing doon) */
+    if(opener&&opener.focus){ try{ opener.focus({preventScroll:true}); }catch(e){} }
+    clearTimeout(closeT);
+    closeT=setTimeout(()=>{
+      stage.querySelectorAll('video').forEach(v=>{ v.pause(); v.removeAttribute('src'); v.load(); });
+      if(ro){ ro.disconnect(); ro=null; }
+      stage.innerHTML='';
+    },320);
+  }
+
+  document.addEventListener('click',e=>{
+    const t=e.target.closest&&e.target.closest(SEL);
+    if(!t||t.closest('#fsViewer')) return;
+    open(t);
+  });
+  document.addEventListener('keydown',e=>{                       /* capture: Escape ang viewer muna, hindi ang product overlay */
+    if(root&&root.classList.contains('open')){
+      if(e.key==='Escape'){ e.preventDefault(); e.stopPropagation(); close(); }
+      else if(e.key==='Tab'){ e.preventDefault(); closeBtn.focus(); }
+      return;
+    }
+    if((e.key==='Enter'||e.key===' ')&&e.target.matches&&e.target.matches(SEL)&&!e.target.closest('#fsViewer')){ e.preventDefault(); open(e.target); }
+  },true);
+  return {open,close};
+})();
+
 /* header solid + tint on scroll */
 const header=document.getElementById('siteHeader');
 const lightSections=[...document.querySelectorAll('section.light')];
@@ -2924,20 +3421,20 @@ async function galleryProbeSlot(i){
 async function populateGallery(container){
   if(!container) return;
   container.innerHTML='';
-  container.classList.remove('empty');
+  container.classList.remove('empty'); container.classList.add('loading');
 
   const slots=Array.from({length:GALLERY_MAX},(_,idx)=>idx+1);
   const found=await Promise.all(slots.map(galleryProbeSlot));
 
-  let any=false;
+  container.classList.remove('loading'); let any=false;
   found.forEach((item,idx)=>{
     if(!item) return;
     any=true;
-    const fig=document.createElement('figure');
+    const fig=document.createElement('figure'); fig.tabIndex=0; fig.setAttribute('role','button'); fig.setAttribute('aria-label','View fullscreen');
     if(item.type==='image'){
       fig.innerHTML=`<img src="${item.url}" alt="" loading="lazy">`;
     } else {
-      fig.innerHTML=`<video src="${item.url}" muted loop playsinline autoplay></video>`;
+      fig.innerHTML=`<video src="${item.url}" muted loop playsinline preload="metadata"></video>`;
     }
     container.appendChild(fig);
   });
@@ -4616,9 +5113,9 @@ const AUTO_MS=2600;                                   // time per frame before a
       const url=urls[k++];
       if(isVid(file)){
         const v=document.createElement('video');
-        v.className='ss-media'; v.muted=true; v.loop=true; v.autoplay=true; v.preload='auto';
+        v.className='ss-media'; MediaFit.prepareVideo(v,{first:FILES.indexOf(file)===0});
         v.setAttribute('playsinline','');
-        v.onloadeddata=()=>fin(v);
+        v.addEventListener(v.preload==='auto'?'loadeddata':'loadedmetadata',()=>fin(v));
         v.onerror=next;
         v.src=url;
       }else{
@@ -4652,7 +5149,7 @@ const AUTO_MS=2600;                                   // time per frame before a
         d.addEventListener('click',()=>{stopAuto();go(i);});
         actions.insertBefore(d,g);
       }
-      if(el.tagName==='VIDEO') el.play().catch(()=>{});
+      const isVid=f=>/\.(mp4|webm|m4v|mov|ogv)$/i.test(f);
       schedule();
     }
     function flush(){   // sunod-sunod ang labas, ayon sa order ng FILES
@@ -4672,6 +5169,4 @@ const AUTO_MS=2600;                                   // time per frame before a
 </script>
 </body>
 </html>
-</script>
-</body>
-</html>
+
