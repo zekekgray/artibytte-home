@@ -412,7 +412,7 @@ header.swap .navitem .navcurtain{transition:none!important}
    --arc   = sideways drift of the sun across the day (0px = straight up and down)
    --start = where in the loop the page begins (.16 = first glow already showing) */
 .hero{--sky-dur:52s;--start:.16;--tone:1}
-.hero .skyfx{--rise-x:76%;--hz:74%;--rise-h:50vh;--x-span:calc(min(64vw,900px) * .14);position:absolute;inset:0;z-index:-1;overflow:hidden;pointer-events:none}
+.hero .skyfx{--rise-x:76%;--hz:74%;--rise-h:50vh;--arc:calc(min(64vw,900px) * -.28);position:absolute;inset:0;z-index:-1;overflow:hidden;pointer-events:none}
 
 .skyfx .stars,.skyfx .day,.skyfx .air,.skyfx .glow,.skyfx .haze,.skyfx .hline,.skyfx .sun,.skyfx .moon{
   animation-duration:var(--sky-dur);animation-timing-function:linear;animation-iteration-count:infinite;
@@ -469,7 +469,7 @@ header.swap .navitem .navcurtain{transition:none!important}
 .skyfx .glow{
   left:0;right:0;top:0;height:var(--hz);
   background:radial-gradient(ellipse 46% 80% at var(--rise-x) 100%,rgba(255,196,120,.42),rgba(227,178,127,.16) 46%,transparent 78%);
-  animation-name:skHaze,skArc;
+  animation-name:skGlow,skArc;
 }
 
 /* 2 · the sun: anchored to the horizon and clipped by it */
@@ -482,27 +482,21 @@ header.swap .navitem .navcurtain{transition:none!important}
   position:absolute;left:calc(var(--rise-x) - 29px);bottom:0;width:58px;height:58px;border-radius:50%;opacity:0;
   background:radial-gradient(circle,#fff6d6 0,#ffd58a 45%,#f0a24f 100%);
   box-shadow:0 0 50px 16px rgba(255,190,110,.42),0 0 130px 50px rgba(255,150,70,.2);
-  animation-name:skRise;translate:calc(var(--sun-x,0) * var(--x-span)) calc(29px + 29px * var(--sun-sy,1) - var(--sun-lift,0) * (58px + var(--rise-h)));scale:1 var(--sun-sy,1);filter:hue-rotate(calc(-24deg * var(--sun-air,0))) saturate(calc(.8 + 1.1 * var(--sun-air,0))) brightness(calc(1.1 - .1 * var(--sun-air,0))) blur(calc(1.4px * var(--sun-air,0)));
+  animation-name:skRise,skArc;
 }
 
-/* horizon bloom: the "big red sunset sun" comes from the atmosphere, not from resizing the disc */
-.skyfx .sun::after{
-  content:"";position:absolute;inset:-70px;border-radius:50%;pointer-events:none;
-  background:radial-gradient(circle,rgba(255,150,80,.55) 0,rgba(240,100,60,.24) 34%,transparent 68%);
-  opacity:var(--sun-air,0);
-}
 /* 3 · haze: red-orange layer ABOVE the sun, veils the disc at both horizon crossings */
 .skyfx .haze{
   left:0;right:0;top:calc(var(--hz) - 150px);height:150px;
   background:radial-gradient(ellipse 58% 100% at var(--rise-x) 100%,rgba(255,130,80,.5),rgba(214,84,70,.22) 45%,transparent 78%);
-  animation-name:skHaze;translate:calc(var(--sun-x,0) * var(--x-span)) 0;
+  animation-name:skHaze,skArc;
 }
 
 /* 4 · horizon line: luminous seam + bloom (also hides the mask cut) */
 .skyfx .hline{
   left:0;right:0;top:var(--hz);height:1px;
   background:radial-gradient(ellipse 52% 100% at var(--rise-x) 50%,rgba(255,214,160,.95),rgba(255,170,100,.45) 38%,transparent 78%);
-  animation-name:skLine;translate:calc(var(--sun-x,0) * var(--x-span)) 0;
+  animation-name:skLine,skArc;
 }
 .skyfx .hline::before{
   content:"";position:absolute;left:0;right:0;top:-36px;height:72px;
@@ -520,7 +514,7 @@ header.swap .navitem .navcurtain{transition:none!important}
 .skyfx .scrim{position:absolute;inset:0;background:linear-gradient(90deg,rgba(11,12,15,.55),rgba(11,12,15,.18) 55%,transparent)}
 
 /* sideways drift: sun and its light travel together, only while the sun is up */
-/* skArc removed: sun + light drift now come from --sun-x / --sun-lift (solar model in JS) */
+@keyframes skArc{0%,24%{translate:0 0;animation-timing-function:ease-in-out}84%,100%{translate:var(--arc) 0}}
 
 /* SUN — every keyframe uses the same 3 filter functions so the colour interpolates smoothly
    sunrise: big + red · day: small + white-hot · golden hour: amber · sunset: big + red again */
@@ -649,7 +643,7 @@ header.swap .navitem .navcurtain{transition:none!important}
   .skyfx .glow{opacity:.55}
   .skyfx .haze{opacity:.5}
   .skyfx .hline{opacity:.85}
-  .skyfx .sun{opacity:1}
+  .skyfx .sun{opacity:1;transform:translateY(-30px)}
 }
 /* === HERO AMBIENT — the background itself follows the day cycle, very low amplitude ===
    .tone      = colour: warm charcoal → graphite → warm → brown/purple → gone (max alpha ~.2, scaled by --tone)
@@ -1241,26 +1235,6 @@ body:has(.talkpanel.open) .vex-assistive-button{
   .hero-product{width:calc(100% - 52px);margin:40px 26px 0}
 }
 /* === END: HERO PRODUCT UI === */
-/* === START: ATMOSPHERE BY SOLAR ALTITUDE — JS sets --k-* from the sun's altitude; the old %-keyframes are superseded === */
-.skyfx .stars{animation:none;opacity:var(--k-stars,1)}
-.skyfx .day{animation:none;opacity:var(--k-day,0)}
-.skyfx .air{animation:none;opacity:var(--k-air,0);filter:hue-rotate(calc(-20deg * var(--k-dusk,0))) saturate(calc(1 + .35 * var(--k-dusk,0)))}
-.skyfx .glow{animation:none;opacity:var(--k-glow,0);filter:hue-rotate(calc(-20deg * var(--k-dusk,0))) saturate(calc(1 + .3 * var(--k-dusk,0)))}
-.skyfx .haze{animation:none;opacity:var(--k-haze,0)}
-.skyfx .hline{animation:none;opacity:var(--k-hline,0)}
-.skyfx .tone{animation:none;background-color:rgba(var(--k-tr,78),var(--k-tg,52),var(--k-tb,34),calc(var(--k-ta,0) * var(--tone,1)))}
-.hero::before{animation:none;opacity:var(--k-warm,.5)}
-.skyfx .moon{filter:drop-shadow(0 0 12px rgba(225,230,255,.45)) opacity(var(--k-moon,1))}
-/* === END: ATMOSPHERE BY SOLAR ALTITUDE === */
-/* === START: SHOOTING STARS — spawned by JS, gated by --k-stars === */
-.skyfx .meteor{
-  position:absolute;left:0;top:0;height:1.6px;border-radius:2px;
-  transform-origin:100% 50%;               /* the head is the right end; the tail trails behind it */
-  pointer-events:none;opacity:0;will-change:transform,opacity;
-  background:linear-gradient(90deg,rgba(255,255,255,0),rgba(255,255,255,.35) 55%,rgba(255,248,232,.95));
-  filter:drop-shadow(0 0 3px rgba(255,255,255,.7));
-}
-/* === END: SHOOTING STARS === */
 </style>
 </head>
 <body>
@@ -1318,7 +1292,7 @@ body:has(.talkpanel.open) .vex-assistive-button{
       <div class="navcurtain" aria-hidden="true">
         <div class="navcurtain-inner">
           <div>
-            <h5>Specialized products</h5>
+            <h5>ArtiByte Ecosystem</h5>
             <a class="navcurtain-link" href="#products">ArtiPlay — Sports academies</a>
             <a class="navcurtain-link" href="#products">ArtiStock — Inventory &amp; operations</a>
             <a class="navcurtain-link" href="#products">ArtiSnack — Food &amp; retail POS</a>
@@ -1336,7 +1310,51 @@ body:has(.talkpanel.open) .vex-assistive-button{
           </div>
           <div>
             <h5>Built on one foundation</h5>
-            <p>Eleven products today, each shaped entirely around one industry's real workflow.</p>
+            <p>Specialized systems, each shaped around a real-world workflow.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="navitem">
+      <a href="#products">Work</a>
+      <div class="navcurtain" aria-hidden="true">
+        <div class="navcurtain-inner">
+          <div>
+            <h5>What we build</h5>
+            <a class="navcurtain-link" href="#products">Our work</a>
+            <a class="navcurtain-link" href="#products">Product demonstrations</a>
+          </div>
+          <div>
+            <h5>Built for real workflows</h5>
+            <a class="navcurtain-link" href="#products">Explore the ecosystem</a>
+            <a class="navcurtain-link" href="#products">See product capabilities</a>
+          </div>
+          <div>
+            <h5>Proof through the product</h5>
+            <p>Explore the systems themselves and the problems they are designed to solve.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="navitem">
+      <a href="#foundation">Company</a>
+      <div class="navcurtain" aria-hidden="true">
+        <div class="navcurtain-inner">
+          <div>
+            <h5>About ArtiByte</h5>
+            <a class="navcurtain-link" href="#foundation">Our story</a>
+            <a class="navcurtain-link" href="#foundation">Vision &amp; mission</a>
+          </div>
+          <div>
+            <h5>Leadership</h5>
+            <a class="navcurtain-link" href="#foundation">Founder &amp; perspective</a>
+            <a class="navcurtain-link" href="#approach">Our principles</a>
+          </div>
+          <div>
+            <h5>Connect</h5>
+            <a class="navcurtain-link" href="#approach">Work with us</a>
+            <a class="navcurtain-link" href="mailto:hello@artibytte.co">Contact ArtiByte</a>
+            <a class="navcurtain-link" href="#approach">Partnerships</a>
           </div>
         </div>
       </div>
@@ -1649,15 +1667,17 @@ body:has(.talkpanel.open) .vex-assistive-button{
   <div class="wrap">
     <div class="footgrid">
       <div class="col"><h5>Platform</h5>
-        <a href="#foundation">Architecture</a><a href="#approach">Approach</a>
+        <a href="#foundation">The ArtiByte Way</a><a href="#approach">How It Works</a><a href="#foundation">Technology</a><a href="#approach">ArtiOne</a>
       </div>
-      <div class="col"><h5>Products</h5>
+      <div class="col"><h5>Ecosystem</h5>
         <a href="#products">ArtiPlay</a><a href="#products">ArtiStock</a><a href="#products">ArtiSnack</a><a href="#products">Business Health Toolkit</a><a href="#products">VEX AI</a><a href="#products">ArtiField</a><a href="#products">OWLBOUND</a><a href="#products">ArtiSlide</a><a href="#products">ArtiDrive</a><a href="#products">ArtiHome</a><a href="#products">ATH•NA</a>
       </div>
       <div class="col"><h5>Company</h5>
-        <a href="#foundation">About</a>
+        <a href="#foundation">About ArtiByte</a>
+        <a href="#foundation">Founder &amp; Vision</a>
+        <a href="#approach">Partnerships</a>
         <a href="mailto:hello@artibytte.co">Contact</a>
-        <button type="button" id="footerCtaStart" class="footlink">Get an estimate</button>
+        <button type="button" id="footerCtaStart" class="footlink">Work With Us</button>
       </div>
     </div>
     <div class="footbottom">
@@ -1806,142 +1826,6 @@ body:has(.talkpanel.open) .vex-assistive-button{
   }
 })();
 /* === END: HERO SKY v2 === */
-
-/* === START: SOLAR TRAJECTORY — real sun geometry drives the CSS sun === */
-(function(){
-  const SOLAR={
-    lat:14.6,   /* observer latitude, °N (Metro Manila). Change to relocate the sky. */
-    date:null,  /* null = today. Preview a solstice: new Date('2026-06-21') */
-    riseP:.24,  /* loop phase of sunrise — must match skRise / skHaze keyframes */
-    setP:.84    /* loop phase of sunset */
-  };
-  const root=document.querySelector('.skyfx .sky-rise');
-  const clock=document.querySelector('.skyfx .moon');
-  if(!root||!clock) return;
-  const hero=root.closest('.hero');
-  const D2R=Math.PI/180, clamp=(v,a,b)=>Math.min(b,Math.max(a,v));
-
-  /* ---- date → solar declination (Cooper) ---- */
-  const d=SOLAR.date||new Date();
-  const N=Math.round((Date.UTC(d.getFullYear(),d.getMonth(),d.getDate())-Date.UTC(d.getFullYear(),0,0))/864e5);
-  const dec=23.45*D2R*Math.sin(D2R*360*(284+N)/365);
-  const lat=SOLAR.lat*D2R;
-  const sinLat=Math.sin(lat), cosLat=Math.cos(lat), sinDec=Math.sin(dec), cosDec=Math.cos(dec);
-
-  /* ---- half day-arc: hour angle at sunrise (upper limb + standard refraction = -0.833°) ---- */
-  const H0=Math.acos(clamp((Math.sin(-.833*D2R)-sinLat*sinDec)/(cosLat*cosDec),-1,1));
-
-  /* ---- atmospheric refraction (Bennett): true altitude → apparent sin(altitude) ---- */
-  function apparentSinAlt(sinAlt){
-    const h=Math.asin(clamp(sinAlt,-1,1))/D2R;
-    const hh=Math.max(h,-1);                              /* keeps it continuous below the horizon */
-    const R=1/Math.tan((hh+7.31/(hh+4.4))*D2R)/60;        /* arcmin → degrees */
-    return Math.sin((h+R)*D2R);
-  }
-  function refractedDeg(h){ const hh=Math.max(h,-1); return h+1/Math.tan((hh+7.31/(hh+4.4))*D2R)/60; } /* Bennett, degrees */
-  const smooth=(a,b,v)=>{ const t=clamp((v-a)/(b-a),0,1); return t*t*(3-2*t); };
-  const lerp=(a,b,t)=>a+(b-a)*t;
-  function interp(pts,v){
-    if(v<=pts[0][0]) return pts[0][1];
-    for(let i=1;i<pts.length;i++){
-      if(v<=pts[i][0]){ const p0=pts[i-1], p1=pts[i]; return lerp(p0[1],p1[1],(v-p0[0])/(p1[0]-p0[0])); }
-    }
-    return pts[pts.length-1][1];
-  }
-  const ALT={astro:-18,naut:-12,civil:-6,rise:-.833,golden:6,day:20};  /* twilight band edges, degrees (true altitude) */
-  const TONE_A=[[ALT.astro,0],[ALT.naut,.08],[ALT.civil,.16],[ALT.rise,.20],[ALT.golden,.17],[30,.17],[55,.19]];  /* [sun altitude°, tint alpha] */
-  const DAWN=[78,52,34], DUSK=[66,38,52], GOLD=[86,58,30], DAY=[44,46,50];
-  const sky=root.closest('.skyfx');
-  const memo=new Map();                                                /* only touch the DOM when a value actually changed */
-  const put=(el,n,v)=>{ const s=v.toFixed(3); if(memo.get(n)!==s){ memo.set(n,s); el.style.setProperty(n,s); } };
-  const s0=apparentSinAlt(Math.sin(-.833*D2R));            /* apparent altitude at sunrise */
-  const east0=cosDec*Math.sin(H0);                         /* sin(azimuth) at sunrise */
-
-  /* ---- one frame: loop phase → hour angle → altitude/azimuth → CSS vars ---- */
-  function frame(p){
-    const mid=(SOLAR.riseP+SOLAR.setP)/2, half=(SOLAR.setP-SOLAR.riseP)/2;
-    const H=H0*(p-mid)/half;                               /* solar noon at mid; sunrise/sunset land on riseP/setP */
-    const sinAlt=sinLat*sinDec+cosLat*cosDec*Math.cos(H);  /* real solar altitude */
-    const lift=(apparentSinAlt(sinAlt)-s0)/(1-s0);         /* 0 at the horizon, 1 at zenith */
-    const east=-cosDec*Math.sin(H);                        /* sin(azimuth)·cos(altitude): east +, west − */
-    root.style.setProperty('--sun-lift',lift.toFixed(4));
-    const hT=Math.asin(clamp(sinAlt,-1,1))/D2R;            /* true altitude, degrees */
-    const hc=Math.max(refractedDeg(hT),0);                 /* apparent altitude, clamped for the airmass formula */
-    const X=1/(Math.sin(hc*D2R)+.50572*Math.pow(hc+6.07995,-1.6364)); /* Kasten–Young airmass: 1 at zenith, ~38 at horizon */
-    root.style.setProperty('--sun-air',(1-Math.exp(-(X-1)/6)).toFixed(4)); /* 0 zenith → 1 horizon */
-    root.style.setProperty('--sun-sy',clamp((refractedDeg(hT+.265)-refractedDeg(hT-.265))/.53,.5,1).toFixed(4)); /* refraction flattens the disc, never enlarges it */
-    /* ---- atmosphere: every layer is a function of the sun's TRUE altitude hT (degrees) ---- */
-    const dusk=smooth(0,.4,H/H0);                                /* palette only: 0 morning → 1 afternoon */
-    const glow=.95*smooth(-14,-3,hT)*(1-smooth(4,30,hT));        /* twilight + golden-hour scatter */
-    put(sky,'--k-stars',1-smooth(-12,-4,hT));                    /* stars fade through nautical → civil twilight */
-    put(sky,'--k-day',smooth(-6,20,hT));                         /* blue daylight arrives after civil twilight */
-    put(sky,'--k-glow',glow);
-    put(sky,'--k-haze',smooth(-9,-1,hT)*(1-smooth(3,18,hT)));    /* thick low air at the horizon crossing */
-    put(sky,'--k-hline',Math.max(.18*smooth(-6,2,hT),smooth(-8,-2,hT)*(1-smooth(2,25,hT))));
-    put(sky,'--k-air',Math.max(.13*smooth(-4,10,hT),.85*smooth(-16,-2,hT)*(1-smooth(6,40,hT))));
-    put(sky,'--k-moon',1-smooth(-6,6,hT));
-    put(sky,'--k-dusk',dusk);
-    put(hero,'--k-warm',.5+.5*glow);
-    /* background tint: strength and colour from altitude; dawn/dusk palettes differ only near the horizon */
-    const t1=smooth(2,12,hT), t2=smooth(12,30,hT);
-    const rgb=DAWN.map((c,i)=>lerp(lerp(lerp(c,DUSK[i],dusk),GOLD[i],t1),DAY[i],t2));
-    put(sky,'--k-ta',interp(TONE_A,hT));
-    put(sky,'--k-tr',rgb[0]); put(sky,'--k-tg',rgb[1]); put(sky,'--k-tb',rgb[2]);
-    root.style.setProperty('--sun-x',(east-east0).toFixed(4)); /* mirrored on screen: rises right, sets left */
-  }
-
-  /* ---- clock: read the CSS sky loop so everything stays in sync ---- */
-  const cs=getComputedStyle(hero);
-  const START=parseFloat(cs.getPropertyValue('--start'))||0;
-  const DUR=parseFloat(cs.getPropertyValue('--sky-dur'))||52;
-  const t0=performance.now();
-  function phase(){
-    const a=(clock.getAnimations?clock.getAnimations():[]).find(x=>x.animationName==='skMoon');
-    const pr=a&&a.effect&&a.effect.getComputedTiming().progress;
-    return typeof pr==='number'?pr:(START+(performance.now()-t0)/1000/DUR)%1;
-  }
-
-  if(matchMedia('(prefers-reduced-motion: reduce)').matches){ frame(.27); return; } /* still frame: early morning */
-  frame(phase());
-  let raf=0;
-  const tick=()=>{ frame(phase()); raf=requestAnimationFrame(tick); };
-  if('IntersectionObserver' in window){
-    new IntersectionObserver(es=>{ cancelAnimationFrame(raf); if(es[0].isIntersecting) tick(); }).observe(hero);
-  } else tick();
-})();
-/* === END: SOLAR TRAJECTORY === */
-
-/* === START: SHOOTING STARS — only when the sky is dark (driven by --k-stars) === */
-(function(){
-  const sky=document.querySelector('.skyfx');
-  if(!sky||!sky.animate||matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  const scrim=sky.querySelector('.scrim');
-  const rnd=(a,b)=>a+Math.random()*(b-a);
-  const dark=()=>parseFloat(sky.style.getPropertyValue('--k-stars'))||0;
-  function shoot(){
-    const W=sky.clientWidth, H=sky.clientHeight;
-    const d=dark();
-    if(!W||!H||d<.6) return;                              /* nautical twilight or darker only */
-    const a=rnd(22,38)*Math.PI/180;                       /* descent angle below horizontal */
-    const len=rnd(90,180), dist=rnd(280,480), dur=rnd(650,1100);
-    const x0=rnd(.35*W,1.05*W), y0=rnd(0,.32*H);          /* starts high, biased to the right-hand sky */
-    const x1=x0-Math.cos(a)*dist, y1=y0+Math.sin(a)*dist; /* travels down-left */
-    const rot=180-a*180/Math.PI;
-    const el=document.createElement('i');
-    el.className='meteor'; el.style.width=len+'px';
-    sky.insertBefore(el,scrim);
-    const at=(t)=>`translate(${(x0+(x1-x0)*t).toFixed(1)}px,${(y0+(y1-y0)*t).toFixed(1)}px) rotate(${rot.toFixed(1)}deg)`;
-    const peak=.9*d;                                      /* fades with the sky, never brighter than the stars allow */
-    el.animate([
-      {transform:at(0),opacity:0},
-      {transform:at(.15),opacity:peak,offset:.15},
-      {transform:at(.7),opacity:peak,offset:.7},
-      {transform:at(1),opacity:0}
-    ],{duration:dur,easing:'cubic-bezier(.25,.1,.5,1)',fill:'forwards'}).onfinish=()=>el.remove();
-  }
-  (function next(){ setTimeout(()=>{ if(!document.hidden) shoot(); next(); },rnd(4000,11000)); })();
-})();
-/* === END: SHOOTING STARS === */
 
 /* header solid + tint on scroll */
 const header=document.getElementById('siteHeader');
