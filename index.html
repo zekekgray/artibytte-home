@@ -13,6 +13,7 @@
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='192 200 640 640'%3E%3Crect x='192' y='200' width='640' height='640' fill='%23142850'/%3E%3Ccircle cx='505' cy='432' r='185' fill='white'/%3E%3Ccircle cx='697' cy='433' r='75' fill='%23142850'/%3E%3Crect x='240' y='660' width='463' height='50' fill='white'/%3E%3Crect x='240' y='745' width='545' height='50' fill='white'/%3E%3C/svg%3E">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <!-- === END: FAVICON EDIT === -->
+<link rel="preload" as="image" href="gallery/showcase.artiplay.jpg" fetchpriority="high">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,340;0,9..144,440;0,9..144,560;0,9..144,650;1,9..144,440;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -1358,6 +1359,14 @@ html.showcase-on .hero::before{animation-play-state:paused!important}
 #siteShowcase .ss-gallery + .ss-continue{margin-left:0}
 @media(max-width:700px){#siteShowcase .ss-gallery{margin-left:auto}}
 /* === END: SHOWCASE ICON BUTTONS === */
+
+/* === START: SHOWCASE PHOTO-ONLY — no text overlay === */
+#siteShowcase .ss-copy{display:none}
+/* mahinang gradient na lang sa ilalim, para makita pa rin ang dots at buttons */
+#siteShowcase .ss-slide::after{background:linear-gradient(180deg,transparent 72%,rgba(0,0,0,.4))}
+/* wala nang text sa ilalim, kaya i-center ang photo/video ng product frames */
+#siteShowcase .ss-slide.is-product .ss-stage{top:46%}
+/* === END: SHOWCASE PHOTO-ONLY === */
 
 /* handoff progress line: tells the visitor the site is coming */
 #siteShowcase.open.auto .ss-panel::after{content:"";position:absolute;left:0;bottom:0;height:2px;width:100%;background:var(--bronze-light);transform-origin:left;animation:ssBar 1.6s linear forwards;z-index:4}
@@ -4472,6 +4481,7 @@ const AUTO_MS=2600;                                   // time per frame before a
   if(!slides.length) return;
 
   function slideHTML(s){
+    if(s.kind==='real') return `<section class="ss-slide is-real">${mediaHTML(s.item,'ss-media')}</section>`;
     if(s.kind==='product'){
       return `<section class="ss-slide is-product"><div class="ss-stage">${s.dash}</div><div class="ss-copy"><div class="ss-eyebrow">${s.eyebrow}</div><h2>${TAGLINE}</h2></div></section>`;
     }
@@ -4575,8 +4585,93 @@ const AUTO_MS=2600;                                   // time per frame before a
     schedule();
     upgrade().catch(()=>{});
   }
-  setTimeout(init,180);
+  /* === START: ACTUAL MEDIA ONLY — walang simulation/stock, gallery/ files lang === */
+  const FRAMES=['showcase.artiplay','feature.1','showcase.artistock']; // pangalan ng files sa gallery/ (walang extension), sa ganitong order
+  const LOAD_MS=7000;                                                     // hindi hihintayin ang file na lampas dito
+  const withTimeout=(p,ms)=>Promise.race([p,new Promise(r=>setTimeout(()=>r(null),ms))]);
+  async function initReal(){
+    if(SHOW_ONCE){try{if(localStorage.getItem(SEEN_KEY)==='1'){document.documentElement.classList.remove('showcase-on');return;}}catch(e){}}
+    overlay.classList.add('open');overlay.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';
+    const found=(await Promise.all(FRAMES.map(b=>withTimeout(probe(b),LOAD_MS)))).filter(Boolean);
+    if(!found.length){ close(); return; }   // walang actual file: dumiretso sa website
+    slides.length=0;
+    found.forEach(item=>slides.push({kind:'real',item:item}));
+    cur=0;
+    render();
+    schedule();
+  }
+  /* === START: FAST LOAD — 1 request bawat file, lalabas agad pag ready === */
+  const FILES=['showcase.artiplay.jpg','feature.1.jpg','showcase.artistock.jpg']; // EKSAKTONG filename (may extension) sa gallery/; dito rin ang order
+  const LOCAL='gallery/';   // una: galing mismo sa site mo (mabilis). Kapag wala, fallback sa GitHub
+  const WAIT_MS=8000;       // kapag walang lumabas after nito, dideretso na sa website
+  const isVid=f=>/\.(mp4|webm)$/i.test(f);
+
+  function loadFrame(file,done){
+    const urls=[LOCAL+file,RAW+file];
+    let k=0,over=false;
+    const fin=el=>{ if(!over){ over=true; done(el); } };
+    (function next(){
+      if(over) return;
+      if(k>=urls.length){ fin(null); return; }
+      const url=urls[k++];
+      if(isVid(file)){
+        const v=document.createElement('video');
+        v.className='ss-media'; v.muted=true; v.loop=true; v.autoplay=true; v.preload='auto';
+        v.setAttribute('playsinline','');
+        v.onloadeddata=()=>fin(v);
+        v.onerror=next;
+        v.src=url;
+      }else{
+        const im=new Image();
+        im.className='ss-media'; im.alt=''; im.decoding='async';
+        im.onload=()=>fin(im);
+        im.onerror=next;
+        im.src=url;
+      }
+    })();
+  }
+
+  function initFast(){
+    if(SHOW_ONCE){try{if(localStorage.getItem(SEEN_KEY)==='1'){document.documentElement.classList.remove('showcase-on');return;}}catch(e){}}
+    overlay.classList.add('open');overlay.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';
+    slides.length=0; render();   // Gallery + Continue buttons lang muna; dots at frames idadagdag pag ready na
+
+    const results=[],settled=[]; let nextIdx=0,added=0;
+    function addFrame(el){
+      const sec=document.createElement('section');
+      sec.className='ss-slide is-real';
+      sec.appendChild(el);
+      track.appendChild(sec);
+      slides.push({kind:'real'});
+      actions.querySelectorAll('.ss-dot').forEach(d=>d.remove());
+      const g=document.getElementById('ssGallery');
+      for(let i=0;i<slides.length;i++){
+        const d=document.createElement('button');
+        d.type='button'; d.className='ss-dot'+(i===cur?' active':'');
+        d.setAttribute('aria-label','Showcase '+(i+1));
+        d.addEventListener('click',()=>{stopAuto();go(i);});
+        actions.insertBefore(d,g);
+      }
+      if(el.tagName==='VIDEO') el.play().catch(()=>{});
+      schedule();
+    }
+    function flush(){   // sunod-sunod ang labas, ayon sa order ng FILES
+      while(nextIdx<FILES.length && settled[nextIdx]){
+        if(results[nextIdx]){ addFrame(results[nextIdx]); added++; }
+        nextIdx++;
+      }
+      if(nextIdx>=FILES.length && !added) close();   // walang nahanap: dumiretso sa website
+    }
+    FILES.forEach((f,i)=>loadFrame(f,el=>{ results[i]=el; settled[i]=true; flush(); }));
+    setTimeout(()=>{ for(let i=0;i<FILES.length;i++) settled[i]=true; flush(); },WAIT_MS);
+  }
+  setTimeout(initFast,180);
+  /* === END: FAST LOAD === */
+  /* === END: ACTUAL MEDIA ONLY === */
 })();
+</script>
+</body>
+</html>
 </script>
 </body>
 </html>
