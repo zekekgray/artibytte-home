@@ -988,7 +988,7 @@ form .btn{margin-top:8px}
 /* === END: OUR STORY EDIT === */
 
 /* === START: COMPANY PAGES AS OVERLAY EDIT === */
-#story,#founder,#vision,#principles,#work-with-us,#contact,#partnerships,#our-work,#demos,#ecosystems,#capabilities,#systems,#ecosystem-map,#our-approach,#one-foundation{display:none}
+#story,#founder,#vision,#principles,#work-with-us,#contact,#partnerships,#our-work,#built-with-businesses,#demos,#ecosystems,#capabilities,#systems,#ecosystem-map,#our-approach,#one-foundation{display:none}
 .cview{padding-top:28px}
 .cview .story-grid,.cview .founder-grid,.cview .vm-grid,.cview .pr-grid,.cview .wwu-grid,.cview .ct-grid,.cview .pt-grid,.cview .pt-more{grid-template-columns:1fr;gap:36px}
 .cview [class*="-lead"]{position:static}
@@ -1004,6 +1004,14 @@ form .btn{margin-top:8px}
 .cview .cv-list{margin-top:28px}
 .cview .cv-item{display:block;padding:22px 0;border-top:1px solid var(--line-dark)}
 .cview .cv-item:last-child{border-bottom:1px solid var(--line-dark)}
+.cview .cv-gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:18px;margin-top:32px}
+.cview .cv-gallery:empty{display:none}
+.cview .cv-gallery.empty{display:none}
+.cview .cv-gallery figure{margin:0;border-radius:14px;overflow:hidden;border:1px solid var(--line-dark);background:var(--graphite2)}
+.cview .cv-gallery img,.cview .cv-gallery video{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;background:var(--obsidian)}
+.cview .cv-gallery figcaption{padding:14px 16px;font-size:13px;color:var(--mist2);line-height:1.5}
+.cview .cv-gallery figcaption strong{display:block;color:#f0ede6;font-family:var(--serif);font-size:15px;margin-bottom:3px}
+.cview .cv-gallery-empty-note{display:none}
 .cview .cv-item h3{font-family:var(--serif);font-weight:500;font-size:21px;line-height:1.25;color:#f5f2ec;margin-bottom:6px}
 .cview .cv-item p{margin-top:0;font-size:15px}
 .cview a.cv-item:hover h3{color:var(--bronze-light)}
@@ -1377,6 +1385,7 @@ body:has(.talkpanel.open) .vex-assistive-button{
           <div>
             <h5>What we build</h5>
             <a class="navcurtain-link" href="#" data-company="our-work">Our work</a>
+            <a class="navcurtain-link" href="#" data-company="built-with-businesses">Built with businesses</a>
             <a class="navcurtain-link" href="#" data-company="demos">Product demonstrations</a>
           </div>
           <div>
@@ -1907,7 +1916,15 @@ body:has(.talkpanel.open) .vex-assistive-button{
   <p class="cv-close">We're building more than products.</p>
   <p>We're building a connected ecosystem of specialized systems — each designed for its own world, while becoming stronger through the foundation beneath it.</p>
   <p class="cv-close cv-accent" style="margin-top:28px">See what we're building.</p>
-  <a class="btn cv-btn" href="#products" data-close-overlay>Explore ArtiBytte</a>
+  <a class="btn cv-btn" href="#" data-company="built-with-businesses">See it built with real businesses</a>
+</div></section>
+<section id="built-with-businesses"><div class="wrap">
+  <span class="cv-eyebrow">Built with businesses</span>
+  <h2>Real systems. Real people. Real work.</h2>
+  <p class="cv-strong">This is what it looks like on the ground — the businesses, the people, and the systems built around them.</p>
+  <div class="cv-gallery" id="builtGalleryGrid" data-gallery-root></div>
+  <p class="cv-close" style="margin-top:48px">This is what "one foundation, many businesses" looks like in practice.</p>
+  <a class="btn cv-btn" href="javascript:void(0)" data-company="our-approach">Tell us how your business works</a>
 </div></section>
 <section id="demos"><div class="wrap">
   <span class="cv-eyebrow">Product demonstrations</span>
@@ -2220,6 +2237,7 @@ body:has(.talkpanel.open) .vex-assistive-button{
       <div class="col"><h5>Company</h5>
         <a href="#" data-company="story">About ArtiByte</a>
         <a href="#" data-company="founder">Founder &amp; Vision</a>
+       <a href="#" data-company="built-with-businesses">Gallery</a>
         <a href="#" data-company="partnerships">Partnerships</a>
         <a href="#" data-company="contact">Contact</a>
         <a href="#" data-company="work-with-us">Work With Us</a>
@@ -2770,6 +2788,84 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape' && pmoment.classList
 /* === END: PRODUCTS MENU OPENS MOMENTS === */
 
 /* === START: COMPANY PAGES AS OVERLAY EDIT === */
+/* === START: BUILT WITH BUSINESSES — auto-detecting GitHub gallery === */
+/* EDIT ME: point this at your repo's raw folder. Upload files there named
+   feature.1.jpg, feature.2.mp4, feature.3.png, etc — any mix of image or
+   video, any of the extensions listed below, up to feature.50. Numbers can
+   have gaps (feature.1, feature.5, feature.12 is fine); each slot is tried
+   independently and simply skipped if nothing is found. */
+const GALLERY_BASE='https://raw.githubusercontent.com/USERNAME/REPO/main/gallery/';
+const GALLERY_MAX=50;
+const GALLERY_IMAGE_EXTS=['jpg','jpeg','png','webp','gif'];
+const GALLERY_VIDEO_EXTS=['mp4','webm','mov'];
+
+function galleryTryImage(url){
+  return new Promise(resolve=>{
+    const img=new Image();
+    img.onload=()=>resolve(img);
+    img.onerror=()=>resolve(null);
+    img.src=url;
+  });
+}
+function galleryTryVideo(url){
+  return new Promise(resolve=>{
+    const v=document.createElement('video');
+    v.preload='metadata';
+    v.onloadedmetadata=()=>resolve(v);
+    v.onerror=()=>resolve(null);
+    v.src=url;
+  });
+}
+
+/* resolves to {type:'image'|'video', url} or null if slot i has nothing */
+async function galleryProbeSlot(i){
+  const imgChecks=GALLERY_IMAGE_EXTS.map(ext=>{
+    const url=`${GALLERY_BASE}feature.${i}.${ext}`;
+    return galleryTryImage(url).then(res=>res?{type:'image',url}:null);
+  });
+  const vidChecks=GALLERY_VIDEO_EXTS.map(ext=>{
+    const url=`${GALLERY_BASE}feature.${i}.${ext}`;
+    return galleryTryVideo(url).then(res=>res?{type:'video',url}:null);
+  });
+  const results=await Promise.all([...imgChecks,...vidChecks]);
+  return results.find(r=>r) || null;
+}
+
+async function populateGallery(container){
+  if(!container) return;
+  container.innerHTML='';
+  container.classList.remove('empty');
+
+  const slots=Array.from({length:GALLERY_MAX},(_,idx)=>idx+1);
+  const found=await Promise.all(slots.map(galleryProbeSlot));
+
+  let any=false;
+  found.forEach((item,idx)=>{
+    if(!item) return;
+    any=true;
+    const fig=document.createElement('figure');
+    if(item.type==='image'){
+      fig.innerHTML=`<img src="${item.url}" alt="" loading="lazy">`;
+    } else {
+      fig.innerHTML=`<video src="${item.url}" muted loop playsinline autoplay></video>`;
+    }
+    container.appendChild(fig);
+  });
+
+  if(!any){
+    container.classList.add('empty');
+    /* wala pang na-upload — itago ang buong overlay content, hindi lang ang grid.
+       .cview ang totoong wrapper sa loob ng overlay (hindi .wrap — 'yun ay
+       nauubos na sa openCompany() dahil w.innerHTML lang ang kinokopya). */
+    const cview=container.closest('.cview');
+    if(cview) cview.style.display='none';
+  } else {
+    const cview=container.closest('.cview');
+    if(cview) cview.style.display='';
+  }
+}
+/* === END: BUILT WITH BUSINESSES — auto-detecting GitHub gallery === */
+
 function openCompany(id){
   const s=document.getElementById(id);
   const w=s&&s.querySelector('.wrap');
@@ -2779,7 +2875,11 @@ function openCompany(id){
   pmoment.setAttribute('aria-hidden','false');
   pmoment.scrollTop=0;
   document.body.style.overflow='hidden';
+  if(id==='built-with-businesses'){
+    populateGallery(pmomentContent.querySelector('[data-gallery-root]'));
+  }
 }
+/* === END: OPEN COMPANY EDIT === */
 document.addEventListener('click',function(e){
   const a=e.target.closest('[data-company]');
   if(a){ e.preventDefault(); openCompany(a.dataset.company); return; }
