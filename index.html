@@ -970,6 +970,58 @@ section{position:relative}
 .field textarea{min-height:80px}
 form .btn{margin-top:8px}
 
+/* === START: OUR STORY EDIT === */
+#story > .wrap{margin:0;max-width:100%}
+#story{scroll-margin-top:72px;border-top:1px solid var(--line-dark)}
+.story-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:clamp(48px,7vw,110px);align-items:start}
+@media(max-width:900px){.story-grid{grid-template-columns:1fr;gap:48px}}
+.story-lead .story-eyebrow{font-family:var(--serif);font-style:italic;font-size:15px;color:var(--bronze-light);display:block;margin-bottom:22px}
+.story-lead h2{font-family:var(--serif);font-weight:340;letter-spacing:-.03em;line-height:1.12;font-size:clamp(28px,3.4vw,46px);color:#f6f4ef;max-width:560px}
+@media(min-width:901px){.story-lead{position:sticky;top:120px}}
+.story-body p{font-size:16.5px;line-height:1.8;color:var(--mist2);opacity:.75;max-width:560px;margin-top:22px}
+.story-body p:first-child{margin-top:0}
+.story-body .story-pull{font-family:var(--serif);font-style:italic;font-weight:440;font-size:clamp(22px,2.4vw,30px);line-height:1.35;color:var(--bronze-light);opacity:1;margin-top:44px;letter-spacing:-.01em}
+.story-body .story-pull + p{margin-top:36px}
+.story-body .story-strong{font-family:var(--serif);font-size:clamp(20px,2vw,24px);line-height:1.45;color:#f0ede6;opacity:1;margin-top:32px}
+.story-body .story-close{font-family:var(--serif);font-size:clamp(22px,2.4vw,30px);line-height:1.35;letter-spacing:-.01em;color:#f6f4ef;opacity:1;margin-top:56px;padding-top:36px;border-top:1px solid var(--line-dark)}
+.story-body .story-close + .story-close{margin-top:8px;padding-top:0;border-top:none;color:var(--bronze-light);font-style:italic}
+/* === END: OUR STORY EDIT === */
+
+/* === START: COMPANY PAGES AS OVERLAY EDIT === */
+#story,#founder,#vision,#principles,#work-with-us,#contact,#partnerships,#our-work,#demos,#ecosystems,#capabilities,#systems,#ecosystem-map,#our-approach,#one-foundation{display:none}
+.cview{padding-top:28px}
+.cview .story-grid,.cview .founder-grid,.cview .vm-grid,.cview .pr-grid,.cview .wwu-grid,.cview .ct-grid,.cview .pt-grid,.cview .pt-more{grid-template-columns:1fr;gap:36px}
+.cview [class*="-lead"]{position:static}
+.cview .reveal{opacity:1;transform:none}
+.cview h2{max-width:none}
+/* === END: COMPANY PAGES AS OVERLAY EDIT === */
+
+/* === START: COMPANY OVERLAY CONTENT STYLES === */
+.cview .cv-eyebrow,.cview .vm-eyebrow{font-family:var(--serif);font-style:italic;font-size:15px;color:var(--bronze-light);display:block;margin-bottom:16px}
+.cview h2{font-family:var(--serif);font-weight:340;letter-spacing:-.03em;line-height:1.12;font-size:clamp(28px,4vw,44px);color:#f6f4ef;max-width:none}
+.cview p{font-size:16px;line-height:1.75;color:var(--mist2);opacity:.8;margin-top:18px;max-width:620px}
+.cview .cv-strong{font-family:var(--serif);font-size:22px;line-height:1.4;color:#f0ede6;opacity:1}
+.cview .cv-list{margin-top:28px}
+.cview .cv-item{display:block;padding:22px 0;border-top:1px solid var(--line-dark)}
+.cview .cv-item:last-child{border-bottom:1px solid var(--line-dark)}
+.cview .cv-item h3{font-family:var(--serif);font-weight:500;font-size:21px;line-height:1.25;color:#f5f2ec;margin-bottom:6px}
+.cview .cv-item p{margin-top:0;font-size:15px}
+.cview a.cv-item:hover h3{color:var(--bronze-light)}
+
+.cview .cv-close{font-family:var(--serif);font-size:26px;line-height:1.35;color:#f6f4ef;opacity:1;margin-top:28px}
+.cview .cv-accent{color:var(--bronze-light);font-style:italic}
+.cview .cv-btn{margin-top:28px}
+.cview .vm-block + .vm-block{margin-top:56px;padding-top:40px;border-top:1px solid var(--line-dark)}
+.cview .vm-close{font-family:var(--serif);font-style:italic;font-size:20px;color:var(--bronze-light);opacity:1}
+/* === START: CAREERS EDIT === */
+#careers,#careers-roles,#careers-process,#careers-talent{display:none}
+.cview .cv-status{display:inline-block;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--bronze-light);border:1px solid var(--line-dark2);border-radius:999px;padding:6px 14px;margin-top:22px;opacity:1}
+.cview .cv-tags{font-size:12.5px;color:var(--mist);margin-top:8px;opacity:1}
+.cview .cv-btnrow{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+.cview .cv-btnrow .cv-btn{margin-top:0}
+/* === END: CAREERS EDIT === */
+/* === END: COMPANY OVERLAY CONTENT STYLES === */
+
 /* ---------- footer ---------- */
 /* === START: FOOTER LEFT-AXIS EDIT === */
 /* same left axis as hero, products, foundation + rail cards (56px desktop, 26px ≤860px from .wrap padding) */
@@ -1277,12 +1329,13 @@ body:has(.talkpanel.open) .vex-assistive-button{
           <div>
             <h5>One platform</h5>
             <p>One proven foundation, adapted to the way each business actually works.</p>
+            <a class="navcurtain-link" href="#" data-company="one-foundation">One proven foundation</a>
           </div>
           <div>
             <h5>How it works</h5>
-            <a class="navcurtain-link" href="#approach">Tell us how your business works</a>
-            <a class="navcurtain-link" href="#approach">We build the system around it</a>
-            <a class="navcurtain-link" href="#approach">You use it. We keep improving it.</a>
+            <a class="navcurtain-link" href="#" data-company="our-approach">Tell us how your business works</a>
+            <a class="navcurtain-link" href="#" data-company="our-approach">We build the system around it</a>
+            <a class="navcurtain-link" href="#" data-company="our-approach">You use it. We keep improving it.</a>
           </div>
         </div>
       </div>
@@ -1304,6 +1357,7 @@ body:has(.talkpanel.open) .vex-assistive-button{
             <a class="navcurtain-link" href="#products">Business Health Toolkit</a>
             <a class="navcurtain-link" href="#products">VEX AI — Automation</a>
             <a class="navcurtain-link" href="#products">ArtiField — Construction control</a>
+
             <a class="navcurtain-link" href="#products">OWLBOUND — Games &amp; engagement</a>
             <a class="navcurtain-link" href="#products">ArtiSlide — Interactive presentations</a>
             <a class="navcurtain-link" href="#products">ATH•NA — Digital identity cards</a>
@@ -1311,6 +1365,7 @@ body:has(.talkpanel.open) .vex-assistive-button{
           <div>
             <h5>Built on one foundation</h5>
             <p>Specialized systems, each shaped around a real-world workflow.</p>
+            <a class="navcurtain-link" href="#" data-company="ecosystem-map">View the full ecosystem</a>
           </div>
         </div>
       </div>
@@ -1321,17 +1376,18 @@ body:has(.talkpanel.open) .vex-assistive-button{
         <div class="navcurtain-inner">
           <div>
             <h5>What we build</h5>
-            <a class="navcurtain-link" href="#products">Our work</a>
-            <a class="navcurtain-link" href="#products">Product demonstrations</a>
+            <a class="navcurtain-link" href="#" data-company="our-work">Our work</a>
+            <a class="navcurtain-link" href="#" data-company="demos">Product demonstrations</a>
           </div>
           <div>
             <h5>Built for real workflows</h5>
-            <a class="navcurtain-link" href="#products">Explore the ecosystem</a>
-            <a class="navcurtain-link" href="#products">See product capabilities</a>
+            <a class="navcurtain-link" href="#" data-company="ecosystems">Explore the ecosystem</a>
+            <a class="navcurtain-link" href="#" data-company="capabilities">See product capabilities</a>
           </div>
           <div>
             <h5>Proof through the product</h5>
             <p>Explore the systems themselves and the problems they are designed to solve.</p>
+            <a class="navcurtain-link" href="#" data-company="systems">Explore the systems</a>
           </div>
         </div>
       </div>
@@ -1342,19 +1398,41 @@ body:has(.talkpanel.open) .vex-assistive-button{
         <div class="navcurtain-inner">
           <div>
             <h5>About ArtiByte</h5>
-            <a class="navcurtain-link" href="#foundation">Our story</a>
-            <a class="navcurtain-link" href="#foundation">Vision &amp; mission</a>
+            <a class="navcurtain-link" href="#" data-company="story">Our story</a>
+            <a class="navcurtain-link" href="#" data-company="vision">Vision &amp; mission</a>
           </div>
           <div>
             <h5>Leadership</h5>
-            <a class="navcurtain-link" href="#foundation">Founder &amp; perspective</a>
-            <a class="navcurtain-link" href="#approach">Our principles</a>
+            <a class="navcurtain-link" href="#" data-company="founder">Founder &amp; perspective</a>
+            <a class="navcurtain-link" href="#" data-company="principles">Our principles</a>
           </div>
           <div>
             <h5>Connect</h5>
-            <a class="navcurtain-link" href="#approach">Work with us</a>
-            <a class="navcurtain-link" href="mailto:hello@artibytte.co">Contact ArtiByte</a>
-            <a class="navcurtain-link" href="#approach">Partnerships</a>
+            <a class="navcurtain-link" href="#" data-company="work-with-us">Work with us</a>
+            <a class="navcurtain-link" href="#" data-company="contact">Contact ArtiByte</a>
+            <a class="navcurtain-link" href="#" data-company="partnerships">Partnerships</a>
+          </div>
+        </div>
+      </div>
+    </div>
+      <div class="navitem">
+      <a href="#" data-company="careers">Careers</a>
+      <div class="navcurtain" aria-hidden="true">
+        <div class="navcurtain-inner">
+          <div>
+            <h5>Join ArtiBytte</h5>
+            <a class="navcurtain-link" href="#" data-company="careers">Careers at ArtiBytte</a>
+            <a class="navcurtain-link" href="#" data-company="work-with-us">Work with us</a>
+          </div>
+          <div>
+            <h5>Opportunities</h5>
+            <a class="navcurtain-link" href="#" data-company="careers-roles">Open roles</a>
+            <a class="navcurtain-link" href="#" data-company="careers-talent">Join the talent pool</a>
+          </div>
+          <div>
+            <h5>How we hire</h5>
+            <p>Real conversations, real work, and a clear picture of where things stand.</p>
+            <a class="navcurtain-link" href="#" data-company="careers-process">Our hiring process</a>
           </div>
         </div>
       </div>
@@ -1426,8 +1504,8 @@ body:has(.talkpanel.open) .vex-assistive-button{
       <div class="pcard-body">
         <div class="vert">Sports academies</div>
         <h3>ArtiPlay</h3>
-        <p class="promise">Every player, every session, one roster.</p>
-        <a class="penter" href="#" data-moment="artiplay">Enter ArtiPlay <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.4"/></svg></a>
+        <p class="promise">A connected system built for sports academies — bringing players, coaches, staff, operations, and academy workflows into one organized environment.</p>
+        <a class="penter" href="#" data-moment="artiplay">Explore ArtiPlay <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.4"/></svg></a>
       </div>
     </div>
 
@@ -1661,23 +1739,491 @@ body:has(.talkpanel.open) .vex-assistive-button{
   </div>
 </section>
 
+<!-- === START: VISION & MISSION EDIT === -->
+<section class="pad" id="vision">
+  <div class="wrap">
+    <div class="vm-grid">
+      <div class="vm-block reveal">
+        <span class="vm-eyebrow">Vision</span>
+        <h2>To build the intelligence infrastructure behind the next generation of businesses.</h2>
+        <p>ArtiBytte envisions a world where businesses no longer have to rely on disconnected tools, fragmented data, and repetitive systems. We aim to create a connected foundation where technology, data, intelligence, and workflows work together—while remaining specialized to the unique needs of every industry.</p>
+        <p class="vm-close">One foundation. Many businesses. One connected future.</p>
+      </div>
+      <div class="vm-block reveal">
+        <span class="vm-eyebrow">Mission</span>
+        <h2>To design, build, and continuously evolve intelligent software systems that make businesses more connected, capable, and ready for what comes next.</h2>
+        <p>ArtiBytte brings together specialized products, shared intelligence, and a common technology foundation to solve real operational problems—from sports and business operations to emerging industries.</p>
+        <p>We build systems that do more than digitize existing processes. We create technology that connects people, data, decisions, and workflows into one ecosystem—giving every business the tools and intelligence it needs to operate better, adapt faster, and grow with confidence.</p>
+        <p class="vm-close">Build once. Connect everything. Empower every business.</p>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- === END: VISION & MISSION EDIT === -->
+
+<!-- === START: COMPANY SECTIONS (hidden, used by overlay) === -->
+<section id="story"><div class="wrap">
+  <span class="cv-eyebrow">Our story</span>
+  <h2>ArtiBytte started with a simple observation: businesses are becoming more complex, but the technology supporting them is often still disconnected.</h2>
+  <p>Different teams use different tools. Data lives in different places. Processes are repeated. And as a business grows, technology can become something you work around instead of something that works for you.</p>
+  <p class="cv-strong">We believe it can be different.</p>
+  <p>ArtiBytte was built to create specialized software systems designed around how businesses actually work — not forcing every business into the same software, but giving each one the right experience on top of a shared, intelligent foundation.</p>
+  <p>That idea became our starting point:</p>
+  <p class="cv-close cv-accent">One foundation. Many businesses.</p>
+  <p>From sports and retail to food, media, AI, and the industries still ahead, our approach is to build systems that understand the workflows they serve while sharing the intelligence, infrastructure, and technology that make them stronger.</p>
+  <p>We don't believe businesses should have to choose between software that fits their industry and technology that can scale with them.</p>
+  <p class="cv-strong">So we build both.</p>
+  <p>ArtiBytte designs, builds, and stands behind the systems businesses depend on — connecting people, data, workflows, and intelligence into one foundation built for what comes next.</p>
+  <p class="cv-close">We're not just building software.</p>
+  <p class="cv-close cv-accent" style="margin-top:6px">We're building the systems behind the next generation of businesses.</p>
+</div></section>
+
+<section id="founder"><div class="wrap">
+  <span class="cv-eyebrow">Founder &amp; perspective</span>
+  <h2>Building what I believe businesses will need next.</h2>
+  <p>I started ArtiBytte with a simple belief:</p>
+  <p class="cv-strong cv-accent">Technology should adapt to the business — not the other way around.</p>
+  <p>As I worked on different ideas, products, and real business problems, I kept seeing the same pattern. Businesses had the ambition to grow, but the systems supporting them were often fragmented. One tool handled one task, another handled something else, and the connections between them were left for people to figure out.</p>
+  <p class="cv-strong">I saw an opportunity to build something different.</p>
+  <p>Instead of creating software as isolated products, I wanted to build a foundation that could support many specialized businesses — giving each one its own experience while allowing them to benefit from shared intelligence, infrastructure, and technology.</p>
+  <p>That became the thinking behind ArtiBytte.</p>
+  <p>I don't see software as something a business simply buys and uses. It should become part of how the business thinks, operates, and grows.</p>
+  <p>That means building with the real world in mind: the people using the system, the decisions they make, the data they create, and the problems they need solved every day.</p>
+  <p>We're still building toward that vision.</p>
+  <p>But the direction is clear:</p>
+  <p class="cv-strong">Build systems that matter.</p>
+  <p class="cv-strong" style="margin-top:8px">Connect what should be connected.</p>
+  <p class="cv-strong" style="margin-top:8px">Create technology that becomes stronger as businesses grow.</p>
+  <p class="cv-close">That's the perspective behind ArtiBytte.</p>
+  <p class="cv-accent" style="font-family:var(--serif);font-style:italic">— Founder, ArtiBytte</p>
+</div></section>
+
+<section id="principles"><div class="wrap">
+  <span class="cv-eyebrow">What guides us</span>
+  <h2>Our principles</h2>
+  <div class="cv-list">
+    <div class="cv-item"><h3>01 — Build With Purpose</h3><p>We build technology to solve real problems. Every feature, system, and decision should have a reason to exist.</p></div>
+    <div class="cv-item"><h3>02 — Business First</h3><p>Technology serves the business — not the other way around. We start with how people work, what they need, and where they want to go.</p></div>
+    <div class="cv-item"><h3>03 — Simple, Not Limited</h3><p>Complex systems should feel simple to the people using them. We remove unnecessary friction without removing capability.</p></div>
+    <div class="cv-item"><h3>04 — Connected by Design</h3><p>Our systems are built to work together. Data, workflows, people, and intelligence become more valuable when they are connected.</p></div>
+    <div class="cv-item"><h3>05 — Built to Evolve</h3><p>We don't build for a single moment. We build foundations that can adapt as businesses, technologies, and opportunities change.</p></div>
+    <div class="cv-item"><h3>06 — Specialized, Not Isolated</h3><p>Every business deserves software that fits its unique world — while benefiting from the strength of a shared foundation.</p></div>
+    <div class="cv-item"><h3>07 — Own the Outcome</h3><p>We take responsibility for what we build. We don't just deliver software; we stand behind the systems and the value they create.</p></div>
+    <div class="cv-item"><h3>08 — Think Beyond Today</h3><p>We build with the future in mind. Today's solution should create possibilities for what comes next.</p></div>
+  </div>
+  <p class="cv-close">Build with purpose.</p>
+  <p class="cv-close" style="margin-top:4px">Connect intelligently.</p>
+  <p class="cv-close cv-accent" style="margin-top:4px">Evolve continuously.</p>
+</div></section>
+
+<section id="work-with-us"><div class="wrap">
+  <span class="cv-eyebrow">Work with us</span>
+  <h2>Build what comes next.</h2>
+  <p>At ArtiBytte, we're building more than software.</p>
+  <p>We're building the systems that will help businesses operate, connect, and grow in a world where technology is becoming part of everything they do.</p>
+  <p>That takes people who are curious, ambitious, thoughtful, and willing to build things that haven't been built before.</p>
+  <p>Whether you're a developer, designer, product thinker, systems builder, strategist, or someone who sees a better way of doing things, there's a place for you in what we're building.</p>
+  <p class="cv-strong">We value people who:</p>
+  <div class="cv-list">
+    <div class="cv-item"><h3>Think beyond the obvious.</h3><p>Look past the immediate problem and understand what could be possible.</p></div>
+    <div class="cv-item"><h3>Build with intention.</h3><p>Care about the details, the experience, and the reason behind the work.</p></div>
+    <div class="cv-item"><h3>Take ownership.</h3><p>Don't wait to be told what matters. See it, understand it, and take responsibility for the outcome.</p></div>
+    <div class="cv-item"><h3>Keep learning.</h3><p>Technology changes quickly. We believe the people building it should keep evolving too.</p></div>
+    <div class="cv-item"><h3>Build together.</h3><p>Great systems aren't built by isolated individuals. They're built by people who challenge ideas, share knowledge, and make each other better.</p></div>
+  </div>
+  <p>We're still building ArtiBytte — and that's the exciting part.</p>
+  <p>There are systems to create, industries to transform, and ideas that haven't been imagined yet.</p>
+  <p>If you want to help build them, we'd like to hear from you.</p>
+  <p class="cv-close">Build with us.</p>
+  <p class="cv-close cv-accent" style="margin-top:4px">Shape what comes next.</p>
+  <a class="btn cv-btn" href="mailto:hello@artibytte.co?subject=Work%20with%20ArtiBytte">Get in touch</a>
+</div></section>
+
+<section id="contact"><div class="wrap">
+  <span class="cv-eyebrow">Contact ArtiBytte</span>
+  <h2>Let's build something that matters.</h2>
+  <p>Have a business to transform, a system to build, or an idea worth exploring?</p>
+  <p class="cv-strong">We'd like to hear from you.</p>
+  <p>Whether you're looking to bring a new product to life, modernize an existing operation, explore a partnership, or simply start a conversation, ArtiBytte is open to what comes next.</p>
+  <button type="button" class="btn cv-btn" id="contactStart">Start a Conversation</button>
+  <div class="cv-list" style="margin-top:40px">
+    <a class="cv-item" href="mailto:hello@artibytte.co?subject=Business%20%26%20Product"><h3>Business &amp; Product</h3><p>Tell us what you're building, what you're trying to solve, and where you want to go.</p></a>
+    <a class="cv-item" href="mailto:hello@artibytte.co?subject=Partnerships"><h3>Partnerships</h3><p>Explore opportunities to build, integrate, and grow together.</p></a>
+    <a class="cv-item" href="mailto:hello@artibytte.co?subject=Technology%20%26%20Solutions"><h3>Technology &amp; Solutions</h3><p>Looking for a system designed around the way your business actually works? Let's talk.</p></a>
+    <a class="cv-item" href="mailto:hello@artibytte.co?subject=General%20Inquiry"><h3>General Inquiries</h3><p>Have a question, an idea, or simply want to connect? We're listening.</p></a>
+  </div>
+  <p class="cv-close">Your next system could start with a conversation.</p>
+  <p class="cv-close" style="margin-top:4px">Tell us what you're building.</p>
+  <p class="cv-close cv-accent" style="margin-top:4px">We'll explore what's possible.</p>
+</div></section>
+
+<section id="partnerships"><div class="wrap">
+  <span class="cv-eyebrow">Partnerships</span>
+  <h2>Build more together.</h2>
+  <p class="cv-strong">The strongest ideas don't have to be built alone.</p>
+  <p>At ArtiBytte, we believe meaningful partnerships happen when different capabilities, perspectives, and ambitions come together around a shared opportunity.</p>
+  <p>We work with businesses, organizations, technology providers, creators, and people who see an opportunity to build something better.</p>
+  <p class="cv-strong">What we partner on</p>
+  <div class="cv-list">
+    <div class="cv-item"><h3>Product &amp; Technology</h3><p>Build new products, platforms, and systems together.</p></div>
+    <div class="cv-item"><h3>Business Partnerships</h3><p>Create solutions that combine our technology with your expertise, network, or industry knowledge.</p></div>
+    <div class="cv-item"><h3>Strategic Collaborations</h3><p>Explore opportunities where our capabilities can create something neither side could build alone.</p></div>
+    <div class="cv-item"><h3>Ecosystem Partnerships</h3><p>Connect technologies, services, and businesses to create more complete experiences.</p></div>
+  </div>
+  <p class="cv-close">More than a partnership.</p>
+  <p>We look for relationships built on trust, shared value, and a long-term perspective.</p>
+  <p class="cv-strong">You bring the opportunity, expertise, or vision.</p>
+  <p class="cv-strong cv-accent" style="margin-top:6px">We bring the technology, systems, and commitment to build it with you.</p>
+  <p class="cv-close">Let's build what comes next.</p>
+  <p>Have an idea, opportunity, or partnership in mind?</p>
+  <a class="btn cv-btn" href="mailto:hello@artibytte.co?subject=Partnerships">Start the conversation</a>
+</div></section>
+<section id="our-work"><div class="wrap">
+  <span class="cv-eyebrow">Our work</span>
+  <h2>Built for the way businesses work.</h2>
+  <p class="cv-strong">We don't build software for the sake of building software.</p>
+  <p>We build products and systems around real businesses, real workflows, and real opportunities — turning complex operations into experiences that feel simple, connected, and purposeful.</p>
+  <p class="cv-strong">Every project is different.</p>
+  <p>That's why our work is specialized by design, while being strengthened by the same foundation of technology, intelligence, and infrastructure underneath.</p>
+  <p class="cv-close cv-accent">One Foundation. Many Possibilities.</p>
+  <p>From sports and retail to food, media, artificial intelligence, and the industries still ahead, our work explores what becomes possible when specialized software is built as part of a larger connected system.</p>
+  <div class="cv-list">
+    <div class="cv-item"><h3>ArtiPlay</h3><p>The future of sports — connecting the people, operations, and experiences behind modern sports organizations.</p></div>
+    <div class="cv-item"><h3>ArtiStock</h3><p>Technology designed to help businesses manage the complexity of inventory, operations, and growth.</p></div>
+    <div class="cv-item"><h3>ArtiSnack</h3><p>A specialized system built around the unique workflows and needs of food businesses.</p></div>
+    <div class="cv-item"><h3>BHTV</h3><p>A platform designed to bring media, content, and technology together.</p></div>
+    <div class="cv-item"><h3>VEX AI</h3><p>Exploring intelligent systems that extend what businesses and people can accomplish.</p></div>
+  </div>
+  <p class="cv-strong">And this is only the beginning.</p>
+
+  <p class="cv-close" style="margin-top:56px">How we build</p>
+  <div class="cv-list">
+    <div class="cv-item"><h3>Understand the problem.</h3><p>We start with the business, not the technology.</p></div>
+    <div class="cv-item"><h3>Design the experience.</h3><p>We turn complex workflows into systems people can actually use.</p></div>
+    <div class="cv-item"><h3>Build the foundation.</h3><p>We create technology that is reliable, connected, and ready to evolve.</p></div>
+    <div class="cv-item"><h3>Keep improving.</h3><p>Our work doesn't end when a product launches. Systems should grow with the people and businesses they serve.</p></div>
+  </div>
+
+  <p class="cv-close">We're building more than products.</p>
+  <p>We're building a connected ecosystem of specialized systems — each designed for its own world, while becoming stronger through the foundation beneath it.</p>
+  <p class="cv-close cv-accent" style="margin-top:28px">See what we're building.</p>
+  <a class="btn cv-btn" href="#products" data-close-overlay>Explore ArtiBytte</a>
+</div></section>
+<section id="demos"><div class="wrap">
+  <span class="cv-eyebrow">Product demonstrations</span>
+  <h2>See the system in action.</h2>
+  <p class="cv-strong">A product should be understood by experiencing it.</p>
+  <p>Our demonstrations give you a closer look at how ArtiBytte products bring together workflows, data, intelligence, and design into one connected experience.</p>
+  <p>Explore how our systems work, how they fit the businesses they serve, and what becomes possible when technology is built around the way people actually work.</p>
+  <p class="cv-close cv-accent">Explore our products</p>
+  <div class="cv-list">
+    <a class="cv-item" href="#" data-open-moment="artiplay"><h3>ArtiPlay</h3><p>See how a connected platform can bring sports operations, people, and experiences together.</p></a>
+    <a class="cv-item" href="#" data-open-moment="artistock"><h3>ArtiStock</h3><p>Explore how inventory and business operations can become more organized, connected, and actionable.</p></a>
+    <a class="cv-item" href="#" data-open-moment="artisnack"><h3>ArtiSnack</h3><p>See a system designed around the unique workflows of food businesses.</p></a>
+    <a class="cv-item" href="#" data-open-moment="bht"><h3>BHTV</h3><p>Experience how content, media, and technology can come together in one platform.</p></a>
+    <a class="cv-item" href="#" data-open-moment="vexai"><h3>VEX AI</h3><p>Explore intelligent systems designed to extend what businesses and people can accomplish.</p></a>
+  </div>
+  <p class="cv-close">Want to see more?</p>
+  <p>Whether you're exploring a product, considering a solution for your business, or simply curious about what we're building, we'd be happy to show you.</p>
+  <button type="button" class="btn cv-btn" data-demo-request>Request a Demonstration</button>
+  <p class="cv-close" style="margin-top:40px">Tell us what you're interested in.</p>
+  <p class="cv-close cv-accent" style="margin-top:4px">We'll show you what's possible.</p>
+</div></section>
+<section id="ecosystems"><div class="wrap">
+  <span class="cv-eyebrow">Explore the ecosystems</span>
+  <h2>One foundation. Many worlds.</h2>
+  <p class="cv-strong">ArtiBytte is building more than individual products.</p>
+  <p>We're building ecosystems — connected environments where specialized products, people, data, workflows, and intelligence work together around a specific industry.</p>
+  <p>Each ecosystem has its own identity, needs, and way of working.</p>
+  <p>But underneath, they share the same foundation.</p>
+  <p class="cv-close cv-accent">Specialized on the outside. Connected underneath.</p>
+  <div class="cv-list">
+    <a class="cv-item" href="#" data-open-moment="artiplay"><h3>ArtiPlay</h3><p>A sports ecosystem connecting athletes, coaches, academies, staff, operations, and the experiences around them.</p></a>
+    <a class="cv-item" href="#" data-open-moment="artistock"><h3>ArtiStock</h3><p>A business ecosystem built around inventory, operations, products, and the flow of information that keeps businesses moving.</p></a>
+    <a class="cv-item" href="#" data-open-moment="artisnack"><h3>ArtiSnack</h3><p>A food-focused ecosystem designed around the unique workflows of food businesses and the people who operate them.</p></a>
+    <a class="cv-item" href="#" data-open-moment="bht"><h3>BHTV</h3><p>A media ecosystem bringing content, audiences, and technology into a connected experience.</p></a>
+    <a class="cv-item" href="#" data-open-moment="vexai"><h3>VEX AI</h3><p>An intelligence ecosystem exploring how AI can connect with the systems, workflows, and decisions that drive modern businesses.</p></a>
+  </div>
+
+  <p class="cv-close" style="margin-top:56px">Shared intelligence</p>
+  <p>Different industries have different needs.</p>
+  <p>But many of the underlying challenges are connected.</p>
+  <p>That's where our shared foundation becomes powerful — allowing products to benefit from common capabilities across identity, data, infrastructure, billing, AI, and analytics, while remaining specialized for the people who use them.</p>
+  <p class="cv-strong">Different products.</p>
+  <p class="cv-strong" style="margin-top:4px">Different industries.</p>
+  <p class="cv-strong cv-accent" style="margin-top:4px">One connected foundation.</p>
+
+  <p class="cv-close" style="margin-top:56px">The ecosystem grows with you.</p>
+  <p>As new products, capabilities, and industries emerge, they become part of a larger system designed to work together.</p>
+  <p>We're building an environment where every new connection can create more possibilities.</p>
+  <p class="cv-strong">Explore what's already being built.</p>
+  <p class="cv-strong" style="margin-top:4px">Discover what could connect next.</p>
+  <p class="cv-close cv-accent">Welcome to the ArtiBytte ecosystem.</p>
+  <a class="btn cv-btn" href="#products" data-close-overlay>Explore ArtiBytte</a>
+</div></section>
+<section id="capabilities"><div class="wrap">
+  <span class="cv-eyebrow">Product capabilities</span>
+  <h2>See what your business can do with the right system.</h2>
+  <p class="cv-strong">Great software isn't defined by how many features it has.</p>
+  <p>It's defined by what those capabilities allow people and businesses to accomplish.</p>
+  <p>ArtiBytte builds specialized systems with capabilities designed around the workflows they serve — while sharing a foundation that makes them connected, intelligent, and ready to evolve.</p>
+
+  <p class="cv-close cv-accent" style="margin-top:44px">Built around real work</p>
+  <div class="cv-list">
+    <div class="cv-item"><h3>Identity &amp; Access</h3><p>Give the right people the right access, roles, and experiences across the system.</p></div>
+    <div class="cv-item"><h3>Data &amp; Operations</h3><p>Bring the information behind everyday operations into one connected environment.</p></div>
+    <div class="cv-item"><h3>Workflow &amp; Automation</h3><p>Turn repetitive processes into structured workflows that help teams move faster and work with less friction.</p></div>
+    <div class="cv-item"><h3>AI &amp; Intelligence</h3><p>Use intelligent capabilities to surface information, support decisions, and extend what the system can do.</p></div>
+    <div class="cv-item"><h3>Analytics &amp; Insights</h3><p>Turn operational data into information that helps businesses understand what's happening and what comes next.</p></div>
+    <div class="cv-item"><h3>Infrastructure &amp; Reliability</h3><p>Build on technology designed to support growing products, users, and business operations.</p></div>
+    <div class="cv-item"><h3>Billing &amp; Business Services</h3><p>Connect the commercial side of the business to the systems that operate it.</p></div>
+  </div>
+
+  <p class="cv-close" style="margin-top:56px">Specialized capabilities</p>
+  <p>Every ecosystem adds capabilities specific to its industry.</p>
+  <div class="cv-list">
+    <a class="cv-item" href="#" data-open-moment="artiplay"><h3>ArtiPlay</h3><p>Brings together capabilities for sports organizations, athletes, coaches, academies, staff, and operations.</p></a>
+    <a class="cv-item" href="#" data-open-moment="artistock"><h3>ArtiStock</h3><p>Focuses on the systems behind inventory and business operations.</p></a>
+    <a class="cv-item" href="#" data-open-moment="artisnack"><h3>ArtiSnack</h3><p>Designed around the workflows of food businesses.</p></a>
+    <a class="cv-item" href="#" data-open-moment="bht"><h3>BHTV</h3><p>Brings together capabilities around media, content, and audiences.</p></a>
+    <a class="cv-item" href="#" data-open-moment="vexai"><h3>VEX AI</h3><p>Explores intelligent capabilities that can extend across products and business workflows.</p></a>
+  </div>
+
+  <p class="cv-close" style="margin-top:56px">One foundation. Capabilities that grow with you.</p>
+  <p>The goal isn't to give every business the same software.</p>
+  <p>It's to give every business the capabilities it actually needs — built on technology that can keep evolving.</p>
+  <p class="cv-strong">Explore the capabilities.</p>
+  <p class="cv-strong cv-accent" style="margin-top:4px">See what your system could become.</p>
+  <a class="btn cv-btn" href="#products" data-close-overlay>Explore ArtiBytte</a>
+</div></section>
+<section id="systems"><div class="wrap">
+  <span class="cv-eyebrow">Explore the systems</span>
+  <h2>Explore the systems themselves and the problems they are designed to solve.</h2>
+  <p>Go beyond the surface and discover how each ArtiBytte product works, what it is built to solve, and how its capabilities come together around the businesses and people it serves.</p>
+  <p class="cv-strong">Explore the systems.</p>
+  <p class="cv-strong" style="margin-top:4px">Understand the problems.</p>
+  <p class="cv-strong cv-accent" style="margin-top:4px">See what's possible.</p>
+  <div class="cv-list" style="margin-top:36px">
+    <a class="cv-item" href="#" data-open-moment="artiplay"><h3>ArtiPlay</h3><p>Sports academies</p></a>
+    <a class="cv-item" href="#" data-open-moment="artistock"><h3>ArtiStock</h3><p>Inventory &amp; operations</p></a>
+    <a class="cv-item" href="#" data-open-moment="artisnack"><h3>ArtiSnack</h3><p>Food &amp; retail POS</p></a>
+    <a class="cv-item" href="#" data-open-moment="bht"><h3>Business Health Toolkit</h3><p>Business intelligence</p></a>
+    <a class="cv-item" href="#" data-open-moment="vexai"><h3>VEX AI</h3><p>AI automation</p></a>
+    <a class="cv-item" href="#" data-open-moment="artifield"><h3>ArtiField</h3><p>Construction control</p></a>
+    <a class="cv-item" href="#" data-open-moment="owlbound"><h3>OWLBOUND</h3><p>Games &amp; engagement</p></a>
+    <a class="cv-item" href="#" data-open-moment="artislide"><h3>ArtiSlide</h3><p>Interactive presentations</p></a>
+    <a class="cv-item" href="#" data-open-moment="artidrive"><h3>ArtiDrive</h3><p>Vehicle care</p></a>
+    <a class="cv-item" href="#" data-open-moment="artihome"><h3>ArtiHome</h3><p>Home care</p></a>
+    <a class="cv-item" href="#" data-open-moment="athna"><h3>ATH•NA</h3><p>Digital identity</p></a>
+  </div>
+</div></section>
+<section id="ecosystem-map"><div class="wrap">
+  <span class="cv-eyebrow">ArtiBytte ecosystem</span>
+  <h2>Specialized systems. One foundation.</h2>
+  <p class="cv-strong">Explore the systems ArtiBytte is building — each designed around a specific real-world workflow, industry, or experience.</p>
+  <p>Every system in the ecosystem starts from the same question: how does this business, or this person, actually work day to day? The answer shapes the screens, the data, and the automation. Nothing is forced into a generic template, and nothing is built in isolation from the rest.</p>
+
+  <div class="cv-list" style="margin-top:36px">
+    <a class="cv-item" href="#" data-open-moment="artiplay"><h3>ArtiPlay — Sports academies</h3><p>A connected system for running a sports academy. Player rosters, attendance, coach assignments and dues live in one organized environment instead of paper sign-in sheets and scattered spreadsheets. ByteSense, the AI layer, flags no-shows, overdue payments and skill gaps before anyone has to ask. Parents and coaches get check-ins, reminders and progress updates on their phones.</p></a>
+    <a class="cv-item" href="#" data-open-moment="artistock"><h3>ArtiStock — Inventory &amp; operations</h3><p>One connected ledger for stock and cost. Receipts, sales, transfers, production runs and counts all land in the same place, so on-hand quantities and true cost stay accurate without spreadsheet reconciliation. It covers weighted-average costing, batches and expiry, purchase orders, recipes and production, multi-location stock, and a full audit trail of who did what.</p></a>
+    <a class="cv-item" href="#" data-open-moment="artisnack"><h3>ArtiSnack — Food &amp; retail POS</h3><p>A point-of-sale system built around how food and retail businesses actually operate. Every sale syncs to inventory the moment it happens, so stock reflects reality at the counter. It supports digital payments such as GCash and Maya, consolidates multiple branches into one view, and can feed the Business Health Toolkit so the financial picture stays current.</p></a>
+    <a class="cv-item" href="#" data-open-moment="artidrive"><h3>ArtiDrive — Vehicle care &amp; maintenance</h3><p>A vehicle companion that keeps health, maintenance, fuel and expenses for every vehicle in one app. Battery, oil, tires, brakes and coolant roll into a live health score, with anything that needs attention flagged. Reminders cover oil changes, registration and insurance. You can scan the OR/CR, the odometer or a receipt to fill in records automatically. Gold, the built-in AI, answers questions in plain language.</p></a>
+    <a class="cv-item" href="#" data-open-moment="artihome"><h3>ArtiHome — Home care &amp; maintenance</h3><p>The same idea applied to the home. A Home Care Score covers aircon, electrical, plumbing, roof and fire safety. Service reminders arrive before something is due, and expenses and utilities are tracked over time so trends like rising electricity show up early. Titles, insurance, warranties and receipts sit in a document vault, and several properties can live under one account.</p></a>
+    <a class="cv-item" href="#" data-open-moment="bht"><h3>Business Health Toolkit</h3><p>Business intelligence built around one honest number from every source you have. It reconciles data from multiple systems, produces share-ready dashboards for investors and owners, automates recurring financial reports, and looks ahead with cash flow forecasting, so decisions rest on one trusted view.</p></a>
+    <a class="cv-item" href="#" data-open-moment="vexai"><h3>VEX AI — Automation</h3><p>The intelligence layer for work that shouldn't need a person. It extracts data from documents, photos and supplier files, automates rule-based workflows, connects AI models into products, and generates custom reports. The same engine powers scanning and import features across other ArtiBytte systems.</p></a>
+    <a class="cv-item" href="#" data-open-moment="artifield"><h3>ArtiField — Construction control</h3><p>A control tower for construction projects. Schedule, cost and materials sit in one decision engine: a consolidated Gantt with baseline comparison, S-curves for planned versus actual, cost tracking with CPI and forecast at completion, and stock measured against lead time. Sequence and same-floor clashes are caught before trades collide. Site teams log progress from the field, and each entry is checked against the plan.</p></a>
+    <a class="cv-item" href="#" data-open-moment="owlbound"><h3>OWLBOUND — Games &amp; engagement</h3><p>An endless night-sky flyer built for engagement. It is one tap to fly, with every run scored, a day and night cycle, power-ups, and a coin and gem economy for revives, skins and trails. Milestones, daily rewards and a leaderboard give players reasons to come back, and progress follows them once they save it with an email.</p></a>
+    <a class="cv-item" href="#" data-open-moment="artislide"><h3>ArtiSlide — Interactive presentations</h3><p>A move from static decks to interactive, story-driven presentations. Each slide reveals itself step by step, details open on tap, animated flows show how tools connect, and sliders turn the viewer's own numbers into a live impact estimate. The pitch ends in a lead form that reaches your team directly. It works on phone and desktop.</p></a>
+    <a class="cv-item" href="#" data-open-moment="athna"><h3>ATH•NA — Digital identity cards</h3><p>A personalized digital card with a scannable key at its center. Name, position and brand sit on a front and back that flips with a tap, and one scan opens the card. People can save the contact or book a meeting right from it. Every card gets a unique ATH ID and a sequence number, and it is logged to a registry with its link.</p></a>
+  </div>
+
+  <p class="cv-close" style="margin-top:56px">Built on one foundation</p>
+  <p>Each system is shaped around the people, workflows, and problems it is designed to serve — while sharing the technology foundation that connects the ArtiBytte ecosystem.</p>
+  <p>That shared foundation is what lets products stay specialized without starting from zero. Identity and access, data, infrastructure, billing, AI, and analytics are built once and reused, so every new system launches on proven technology, and every improvement to the foundation strengthens the whole ecosystem.</p>
+  <p class="cv-strong">Different systems.</p>
+  <p class="cv-strong" style="margin-top:4px">Different workflows.</p>
+  <p class="cv-strong cv-accent" style="margin-top:4px">One foundation.</p>
+  <a class="btn cv-btn" href="#products" data-close-overlay>Explore ArtiBytte</a>
+</div></section>
+<!-- === START: OUR APPROACH EDIT === -->
+<section id="our-approach"><div class="wrap">
+  <span class="cv-eyebrow">Our approach</span>
+  <h2>Tell us how your business works.</h2>
+  <p class="cv-strong">Every business has its own way of working.</p>
+  <p>Its people. Its processes. Its challenges. Its goals.</p>
+  <p class="cv-strong cv-accent">We start by understanding it.</p>
+  <p class="cv-strong">Then we build the system around it.</p><p>We don't ask your business to adapt to software that was built for someone else. We design technology around the workflows, requirements, and realities of the business it is meant to serve.</p>
+  <div class="cv-list">
+    <div class="cv-item"><h3>Understand</h3><p>We learn how your business operates and where the real opportunities are.</p></div>
+    <div class="cv-item"><h3>Design</h3><p>We translate those workflows into a system designed around the people who use it.</p></div>
+    <div class="cv-item"><h3>Build</h3><p>We turn the design into reliable technology — connected to the foundation behind the ArtiBytte ecosystem.</p></div>
+    <div class="cv-item"><h3>Evolve</h3><p>As your business changes, the system evolves with it.</p></div>
+  </div>
+  <p class="cv-close">Your business is different.</p>
+  <p class="cv-close cv-accent" style="margin-top:4px">Your system should be too.</p>
+  <p class="cv-strong" style="margin-top:40px">Tell us how your business works.</p>
+  <p class="cv-strong cv-accent" style="margin-top:4px">We'll build the system around it.</p>
+  <button type="button" class="btn cv-btn" data-open-vex>Start a Conversation</button>
+</div></section>
+<!-- === END: OUR APPROACH EDIT === -->
+<!-- === START: OUR APPROACH EDIT === -->
+<section id="our-approach"><div class="wrap">
+  <span class="cv-eyebrow">Our approach</span>
+  <h2>Tell us how your business works.</h2>
+  <p class="cv-strong">Every business has its own way of working.</p>
+  <p>Its people. Its processes. Its challenges. Its goals.</p>
+  <p class="cv-strong cv-accent">We start by understanding it.</p>
+  <p class="cv-strong">Then we build the system around it.</p>
+  <p class="cv-strong">You use it.</p>
+  <p class="cv-strong cv-accent" style="margin-top:4px">We keep improving it.</p>
+  <p>Because a business doesn't stay the same — and its system shouldn't have to either.</p>
+  <p>We learn from how the system is used, where new needs emerge, and how the business evolves. Then we continue refining, improving, and expanding the system alongside it.</p>
+  <p class="cv-close" style="margin-top:44px">Understand.</p>
+  <p class="cv-close" style="margin-top:4px">Build.</p>
+  <p class="cv-close" style="margin-top:4px">Use.</p>
+  <p class="cv-close" style="margin-top:4px">Improve.</p>
+  <p class="cv-close cv-accent" style="margin-top:4px">Repeat.</p>
+  <p class="cv-close" style="margin-top:56px">Your business evolves.</p>
+  <p class="cv-close cv-accent" style="margin-top:4px">Your system evolves with it.</p>
+  <button type="button" class="btn cv-btn" data-open-vex>Start a Conversation</button>
+</div></section>
+<!-- === END: OUR APPROACH EDIT === -->
+<!-- === START: ONE FOUNDATION EDIT === -->
+<section id="one-foundation"><div class="wrap">
+  <span class="cv-eyebrow">One platform</span>
+  <h2>One proven foundation.</h2>
+  <p class="cv-strong">One proven foundation, adapted to the way each business actually works.</p>
+  <p>The technology stays connected underneath.</p>
+  <p>The experience, workflows, and capabilities adapt to the business.</p>
+  <p class="cv-close cv-accent" style="margin-top:40px">One foundation.</p>
+  <p class="cv-close" style="margin-top:4px">Built around how you work.</p>
+  <button type="button" class="btn cv-btn" data-open-vex>Start a Conversation</button>
+</div></section>
+<!-- === END: ONE FOUNDATION EDIT === -->
+<!-- === START: CAREERS EDIT === -->
+<section id="careers"><div class="wrap">
+  <span class="cv-eyebrow">Careers</span>
+  <h2>Build the systems behind the next generation of businesses.</h2>
+  <p class="cv-strong">We're building more than software, and we're looking for people who want to build with us.</p>
+  <p>ArtiBytte designs specialized systems for real businesses, all on one shared foundation of technology, data, and intelligence. The work spans industries, from sports academies and inventory to vehicle care, construction control, and AI automation.</p>
+  <p>That means the problems are varied, the ownership is real, and what you build gets used by actual people running actual businesses.</p>
+
+  <p class="cv-close cv-accent" style="margin-top:44px">Why ArtiBytte</p>
+  <div class="cv-list">
+    <div class="cv-item"><h3>Build things that matter</h3><p>Every feature, system, and decision should have a reason to exist. We start from the business problem, not the technology.</p></div>
+    <div class="cv-item"><h3>Work across industries</h3><p>One foundation supports many specialized products, so you learn how different businesses actually operate.</p></div>
+    <div class="cv-item"><h3>Own the outcome</h3><p>We take responsibility for what we build and stand behind the systems and the value they create.</p></div>
+    <div class="cv-item"><h3>Grow with the foundation</h3><p>As the shared technology gets stronger, so does everything built on top of it, and so do the people building it.</p></div>
+  </div>
+
+  <p class="cv-close" style="margin-top:56px">Who we look for</p>
+  <p>Whether you're a developer, designer, product thinker, systems builder, strategist, or someone who sees a better way of doing things, there may be a place for you.</p>
+  <div class="cv-list">
+    <div class="cv-item"><h3>Engineering</h3><p>Front-end, back-end, and integrations that make products reliable, connected, and ready to evolve.</p></div>
+    <div class="cv-item"><h3>Design &amp; Experience</h3><p>Turning complex workflows into systems people can actually use, on the phone and on the desktop.</p></div>
+    <div class="cv-item"><h3>Product &amp; Systems</h3><p>Understanding how a business really works and shaping it into a clear, purposeful system.</p></div>
+    <div class="cv-item"><h3>Data &amp; AI</h3><p>Extraction, automation, analytics, and intelligent features that extend what people can accomplish.</p></div>
+    <div class="cv-item"><h3>Business &amp; Partnerships</h3><p>Working with clients and partners to find where the right system can make a real difference.</p></div>
+  </div>
+
+  <p class="cv-close" style="margin-top:56px">Keep learning. Build together.</p>
+  <p>Technology changes quickly, so we value people who keep evolving and who challenge ideas, share knowledge, and make each other better.</p>
+  <div class="cv-btnrow">
+    <button type="button" class="btn cv-btn" data-company="careers-roles">View open roles</button>
+    <button type="button" class="btn ghost cv-btn" data-company="careers-talent">Join the talent pool</button>
+  </div>
+</div></section>
+
+<section id="careers-roles"><div class="wrap">
+  <span class="cv-eyebrow">Open roles</span>
+  <h2>Where we're hiring.</h2>
+  <span class="cv-status">No open roles listed right now</span>
+  <p class="cv-strong" style="margin-top:22px">We're not advertising specific positions at the moment, but we're always glad to meet people who care about building well.</p>
+  <p>ArtiBytte is growing, and roles open up as new products and clients come in. If you'd like to be considered when something fits, join the talent pool and tell us what you'd like to build.</p>
+
+  <!-- === HOW TO ADD A ROLE ===
+       Copy the block below, paste it just above "Areas we hire in", and edit the text.
+       When a role is filled, delete its block. When none are left, restore the status badge above.
+
+  <a class="cv-item" href="mailto:hello@artibytte.co?subject=Application%20%E2%80%94%20ROLE%20TITLE">
+    <h3>Role title</h3>
+    <p>One or two sentences on what the person will do.</p>
+    <p class="cv-tags">Full-time · Remote / Metro Manila · Engineering</p>
+  </a>
+  === END TEMPLATE === -->
+
+  <p class="cv-close" style="margin-top:44px">Areas we hire in</p>
+  <div class="cv-list">
+    <div class="cv-item"><h3>Engineering</h3><p>Web and mobile products, integrations, and platform reliability.</p></div>
+    <div class="cv-item"><h3>Design &amp; Experience</h3><p>Product design, interaction, and visual systems.</p></div>
+    <div class="cv-item"><h3>Product &amp; Systems</h3><p>Discovery, workflow design, and delivery.</p></div>
+    <div class="cv-item"><h3>Data &amp; AI</h3><p>Automation, extraction, analytics, and AI-powered features.</p></div>
+    <div class="cv-item"><h3>Business &amp; Partnerships</h3><p>Client relationships, partnerships, and growth.</p></div>
+  </div>
+  <div class="cv-btnrow">
+    <button type="button" class="btn cv-btn" data-company="careers-talent">Join the talent pool</button>
+    <button type="button" class="btn ghost cv-btn" data-company="careers-process">How we hire</button>
+  </div>
+</div></section>
+
+<section id="careers-process"><div class="wrap">
+  <span class="cv-eyebrow">How we hire</span>
+  <h2>A clear, human process.</h2>
+  <p class="cv-strong">We'd rather have a real conversation than run a checklist.</p>
+  <p>Hiring at ArtiBytte is about understanding how you think and how you work, and helping you understand how we do. Here's what to expect.</p>
+  <div class="cv-list">
+    <div class="cv-item"><h3>01 — Introduce yourself</h3><p>Send us a short note, along with your portfolio, GitHub, LinkedIn, or anything that shows your work. Tell us what you'd like to build.</p></div>
+    <div class="cv-item"><h3>02 — Have a conversation</h3><p>We talk about your experience, how you approach problems, and what you're looking for. You'll also learn about the products and the foundation behind them.</p></div>
+    <div class="cv-item"><h3>03 — Work through something real</h3><p>Depending on the role, we look at a real problem together, such as a design, a piece of a system, or a workflow. It's about how you think, not a trick question.</p></div>
+    <div class="cv-item"><h3>04 — Decide together</h3><p>We share our decision openly and answer your questions. If it's a fit, we move forward. If not, we'll keep the door open.</p></div>
+  </div>
+  <p class="cv-close">Think beyond the obvious.</p>
+  <p class="cv-close" style="margin-top:4px">Build with intention.</p>
+  <p class="cv-close cv-accent" style="margin-top:4px">Take ownership.</p>
+  <div class="cv-btnrow">
+    <button type="button" class="btn cv-btn" data-company="careers-talent">Join the talent pool</button>
+  </div>
+</div></section>
+
+<section id="careers-talent"><div class="wrap">
+  <span class="cv-eyebrow">Talent pool</span>
+  <h2>Tell us what you'd like to build.</h2>
+  <p class="cv-strong">Don't see a role that fits? Introduce yourself anyway.</p>
+  <p>We keep in touch with people who might be a great fit as ArtiBytte grows. Your note goes straight to our team.</p>
+  <p class="cv-close" style="margin-top:44px">What to include</p>
+  <div class="cv-list">
+    <div class="cv-item"><h3>Who you are</h3><p>Your name and a few lines about your background and what you do best.</p></div>
+    <div class="cv-item"><h3>Where you'd fit</h3><p>Engineering, design, product, data and AI, or business and partnerships.</p></div>
+    <div class="cv-item"><h3>Your work</h3><p>A portfolio, GitHub, LinkedIn, or any links that show what you've built.</p></div>
+    <div class="cv-item"><h3>What you'd like to build</h3><p>The problems that excite you and the kind of work you want to do next.</p></div>
+  </div>
+  <div class="cv-btnrow">
+    <a class="btn cv-btn" href="mailto:hello@artibytte.co?subject=Careers%20%E2%80%94%20Talent%20Pool&body=Name%3A%0AArea%20(Engineering%20%2F%20Design%20%2F%20Product%20%2F%20Data%20%26%20AI%20%2F%20Business)%3A%0ALinks%20(portfolio%2C%20GitHub%2C%20LinkedIn)%3A%0A%0AWhat%20I'd%20like%20to%20build%3A%0A">Introduce yourself</a>
+    <button type="button" class="btn ghost cv-btn" data-company="careers-process">How we hire</button>
+  </div>
+  <p class="cv-close cv-accent" style="margin-top:40px">Build with us. Shape what comes next.</p>
+</div></section>
+<!-- === END: CAREERS EDIT === -->
+<!-- === END: COMPANY SECTIONS === -->
+
 </main>
 
 <footer>
   <div class="wrap">
     <div class="footgrid">
       <div class="col"><h5>Platform</h5>
-        <a href="#foundation">The ArtiByte Way</a><a href="#approach">How It Works</a><a href="#foundation">Technology</a><a href="#approach">ArtiOne</a>
+        <a href="#foundation">The ArtiByte Way</a><a href="#" data-company="our-approach">How It Works</a><a href="#foundation">Technology</a><a href="#approach">ArtiOne</a>
       </div>
       <div class="col"><h5>Ecosystem</h5>
         <a href="#products">ArtiPlay</a><a href="#products">ArtiStock</a><a href="#products">ArtiSnack</a><a href="#products">Business Health Toolkit</a><a href="#products">VEX AI</a><a href="#products">ArtiField</a><a href="#products">OWLBOUND</a><a href="#products">ArtiSlide</a><a href="#products">ArtiDrive</a><a href="#products">ArtiHome</a><a href="#products">ATH•NA</a>
       </div>
       <div class="col"><h5>Company</h5>
-        <a href="#foundation">About ArtiByte</a>
-        <a href="#foundation">Founder &amp; Vision</a>
-        <a href="#approach">Partnerships</a>
-        <a href="mailto:hello@artibytte.co">Contact</a>
-        <button type="button" id="footerCtaStart" class="footlink">Work With Us</button>
+        <a href="#" data-company="story">About ArtiByte</a>
+        <a href="#" data-company="founder">Founder &amp; Vision</a>
+        <a href="#" data-company="partnerships">Partnerships</a>
+        <a href="#" data-company="contact">Contact</a>
+        <a href="#" data-company="work-with-us">Work With Us</a>
+        <a href="#" data-company="careers">Careers</a>
       </div>
     </div>
     <div class="footbottom">
@@ -2210,6 +2756,48 @@ document.querySelectorAll('.penter[data-moment]').forEach(a=>{
 pmomentClose.addEventListener('click',closeMoment);
 pmoment.addEventListener('click',e=>{if(e.target===pmoment) closeMoment();});
 document.addEventListener('keydown',e=>{if(e.key==='Escape' && pmoment.classList.contains('open')) closeMoment();});
+
+/* === START: PRODUCTS MENU OPENS MOMENTS === */
+(function(){
+  const NAV_MOMENTS={'ArtiPlay':'artiplay','ArtiStock':'artistock','ArtiSnack':'artisnack','ArtiDrive':'artidrive','ArtiHome':'artihome','Business Health Toolkit':'bht','VEX AI':'vexai','ArtiField':'artifield','OWLBOUND':'owlbound','ArtiSlide':'artislide','ATH•NA':'athna'};
+  const productsItem=document.querySelectorAll('.navitem')[1];
+  if(!productsItem) return;
+  productsItem.querySelectorAll('.navcurtain-link').forEach(a=>{
+    const id=NAV_MOMENTS[a.textContent.split(' — ')[0].trim()];
+    if(id) a.addEventListener('click',e=>{ e.preventDefault(); openMoment(id); });
+  });
+})();
+/* === END: PRODUCTS MENU OPENS MOMENTS === */
+
+/* === START: COMPANY PAGES AS OVERLAY EDIT === */
+function openCompany(id){
+  const s=document.getElementById(id);
+  const w=s&&s.querySelector('.wrap');
+  if(!w) return;
+  pmomentContent.innerHTML='<div class="cview">'+w.innerHTML+'</div>';
+  pmoment.classList.add('open');
+  pmoment.setAttribute('aria-hidden','false');
+  pmoment.scrollTop=0;
+  document.body.style.overflow='hidden';
+}
+document.addEventListener('click',function(e){
+  const a=e.target.closest('[data-company]');
+  if(a){ e.preventDefault(); openCompany(a.dataset.company); return; }
+  const pm=e.target.closest('.cview [data-open-moment]');
+  if(pm){ e.preventDefault(); openMoment(pm.dataset.openMoment); pmoment.scrollTop=0; return; }
+  if(e.target.closest('.cview [data-demo-request]')){
+    closeMoment();
+    heroInquiryText='I would like to request a product demonstration.';
+    tpOpen();
+    tpState.step='industry';
+    tpRender();
+    return;
+  }
+  if(e.target.closest('.cview #contactStart')){ closeMoment(); tpOpen(); }
+  if(e.target.closest('.cview [data-open-vex]')){ closeMoment(); tpOpen(); }
+  if(e.target.closest('.cview [data-close-overlay]')){ e.preventDefault(); closeMoment(); const p=document.getElementById('products'); if(p) p.scrollIntoView({behavior:'smooth'}); }
+});
+/* === END: COMPANY PAGES AS OVERLAY EDIT === */
 
 /* =====================================================================
    TALK TO artibytte — guided quote widget (v1, no AI, rule-based)
