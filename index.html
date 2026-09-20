@@ -1295,7 +1295,88 @@ body:has(.talkpanel.open) .vex-assistive-button{
   .hero-product{width:calc(100% - 52px);margin:40px 26px 0}
 }
 /* === END: HERO PRODUCT UI === */
+
+/* === START: FLOATING OPENING SHOWCASE — SURGICAL ADDITION === */
+#siteShowcase{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;padding:28px;background:rgba(8,9,11,.78);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .32s ease,visibility .32s ease}
+#siteShowcase.open{opacity:1;visibility:visible;pointer-events:auto}
+#siteShowcase .ss-panel{position:relative;width:min(1120px,94vw);height:min(720px,88vh);overflow:hidden;border:1px solid rgba(255,255,255,.13);border-radius:28px;background:#0d0f12;box-shadow:0 30px 100px rgba(0,0,0,.55);transform:translateY(14px) scale(.985);transition:transform .42s cubic-bezier(.22,1,.36,1)}
+#siteShowcase.open .ss-panel{transform:none}
+#siteShowcase .ss-close{position:absolute;z-index:3;top:18px;right:18px;width:38px;height:38px;border-radius:50%;border:1px solid rgba(255,255,255,.2);background:rgba(8,9,11,.55);color:#f5f2ec;font-size:18px;line-height:1;cursor:pointer;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+#siteShowcase .ss-track{height:100%;display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:none}
+#siteShowcase .ss-track::-webkit-scrollbar{display:none}
+#siteShowcase .ss-slide{position:relative;min-width:100%;height:100%;scroll-snap-align:start;display:flex;align-items:flex-end;padding:48px}
+#siteShowcase .ss-media{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+#siteShowcase .ss-slide::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.08),rgba(0,0,0,.72))}
+#siteShowcase .ss-copy{position:relative;z-index:2;max-width:620px;color:#fff}
+#siteShowcase .ss-eyebrow{font-family:var(--serif);font-style:italic;color:var(--bronze-light);font-size:15px;margin-bottom:12px}
+#siteShowcase .ss-copy h2{font-family:var(--serif);font-weight:340;letter-spacing:-.035em;font-size:clamp(30px,5vw,58px);line-height:1.03;color:#f6f4ef;margin:0}
+#siteShowcase .ss-copy p{margin:14px 0 0;color:rgba(245,242,236,.78);font-size:15px;line-height:1.6;max-width:520px}
+#siteShowcase .ss-actions{position:absolute;z-index:3;left:48px;bottom:34px;display:flex;gap:9px;align-items:center}
+#siteShowcase .ss-dot{width:7px;height:7px;border:0;border-radius:50%;padding:0;background:rgba(255,255,255,.38);cursor:pointer}
+#siteShowcase .ss-dot.active{background:#f0ede6;transform:scale(1.15)}
+#siteShowcase .ss-continue{margin-left:10px;border:1px solid rgba(255,255,255,.22);background:rgba(8,9,11,.5);color:#f5f2ec;border-radius:999px;padding:9px 14px;font-size:12px;cursor:pointer}
+@media(max-width:700px){#siteShowcase{padding:12px}#siteShowcase .ss-panel{width:100%;height:92vh;border-radius:22px}#siteShowcase .ss-slide{padding:30px 24px 74px}#siteShowcase .ss-actions{left:24px;bottom:24px;right:24px}#siteShowcase .ss-continue{margin-left:auto}}
+@media(prefers-reduced-motion:reduce){#siteShowcase,#siteShowcase .ss-panel{transition:none}}
+/* === v2: product ⇄ people showcase === */
+#siteShowcase .ss-slide{padding-bottom:92px}
+#siteShowcase .ss-slide.is-product{background:radial-gradient(900px 520px at 70% 30%,rgba(199,138,77,.16),transparent 65%),#0d0f12}
+#siteShowcase .ss-slide.is-product::after{display:none}
+#siteShowcase .ss-stage{position:absolute;left:50%;top:42%;transform:translate(-50%,-50%);width:min(720px,86%);border:1px solid rgba(255,255,255,.16);border-radius:16px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.55);background:var(--graphite2)}
+#siteShowcase .ss-stage svg,#siteShowcase .ss-stage img,#siteShowcase .ss-stage video{width:100%;height:auto;display:block}
+#siteShowcase .ss-slide.is-product .ss-copy h2{font-size:clamp(22px,3vw,34px);letter-spacing:-.02em}
+/* === END: FLOATING OPENING SHOWCASE — SURGICAL ADDITION === */
+/* === PRE-ENTRY HOLD: hero animations wait until the showcase hands off === */
+html.showcase-on .hero,
+html.showcase-on .hero *,
+html.showcase-on .hero *::before,
+html.showcase-on .hero *::after,
+html.showcase-on .hero::before{animation-play-state:paused!important}
+/* === END: PRE-ENTRY HOLD === */
+
+/* === START: SHOWCASE ICON BUTTONS — minimal === */
+#siteShowcase .ss-gallery,
+#siteShowcase .ss-continue{
+  display:inline-flex;align-items:center;justify-content:center;
+  height:34px;min-width:34px;padding:0 9px;margin-left:0;
+  border:1px solid rgba(255,255,255,.22);background:rgba(8,9,11,.5);color:#f5f2ec;
+  border-radius:999px;font-family:var(--sans);font-size:12px;cursor:pointer;
+  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
+  transition:border-color .2s,background .2s,color .2s;
+}
+#siteShowcase .ss-gallery{margin-left:12px}
+#siteShowcase .ss-gallery svg,
+#siteShowcase .ss-continue svg{flex:none}
+#siteShowcase .ss-lbl{max-width:0;opacity:0;overflow:hidden;white-space:nowrap;transition:max-width .3s cubic-bezier(.2,.8,.2,1),opacity .2s,margin .3s}
+#siteShowcase .ss-gallery:hover,
+#siteShowcase .ss-continue:hover,
+#siteShowcase .ss-gallery:focus-visible,
+#siteShowcase .ss-continue:focus-visible{border-color:var(--bronze-light);color:var(--bronze-light);outline:none}
+#siteShowcase .ss-gallery:hover .ss-lbl,
+#siteShowcase .ss-continue:hover .ss-lbl,
+#siteShowcase .ss-gallery:focus-visible .ss-lbl,
+#siteShowcase .ss-continue:focus-visible .ss-lbl{max-width:90px;opacity:1;margin-left:7px}
+#siteShowcase .ss-gallery + .ss-continue{margin-left:0}
+@media(max-width:700px){#siteShowcase .ss-gallery{margin-left:auto}}
+/* === END: SHOWCASE ICON BUTTONS === */
+
+/* handoff progress line: tells the visitor the site is coming */
+#siteShowcase.open.auto .ss-panel::after{content:"";position:absolute;left:0;bottom:0;height:2px;width:100%;background:var(--bronze-light);transform-origin:left;animation:ssBar 1.6s linear forwards;z-index:4}
+@keyframes ssBar{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+
+/* faster hero entrance after handoff (was ~1.4s, now ~0.8s) */
+.hero .kicker{animation-duration:.5s;animation-delay:0s}
+.hero h1{animation-duration:.6s;animation-delay:.06s}
+.hero .actions{animation-duration:.6s;animation-delay:.14s}
+.hero-product{animation-duration:.6s;animation-delay:.2s}
 </style>
+<script>
+/* set before first paint so nothing starts behind the overlay; failsafe releases if the showcase never opens */
+document.documentElement.classList.add('showcase-on');
+setTimeout(function(){
+  var s=document.getElementById('siteShowcase');
+  if(!s||!s.classList.contains('open')) document.documentElement.classList.remove('showcase-on');
+},1500);
+</script>
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute">
@@ -4342,6 +4423,160 @@ function vexQuietReveal(){ orbWrap.classList.add('orb-visible'); }
 })();
 orbWrap.addEventListener('pointerdown', vexMarkSeen); // drag counts as interaction too
 /* === END: VEX DELAYED DISCOVERY EDIT === */
+</script>
+
+<!-- === START: FLOATING OPENING SHOWCASE — MARKUP === -->
+<div id="siteShowcase" aria-hidden="true">
+  <div class="ss-panel" role="dialog" aria-modal="true" aria-label="ArtiBytte showcase">
+    <button class="ss-close" id="ssClose" type="button" aria-label="Close showcase">×</button>
+    <div class="ss-track" id="ssTrack"></div>
+    <div class="ss-actions" id="ssActions"></div>
+  </div>
+</div>
+<!-- === END: FLOATING OPENING SHOWCASE — MARKUP === -->
+
+<script>
+/* === START: FLOATING OPENING SHOWCASE v2 — product ⇄ people === */
+(function(){
+  const overlay=document.getElementById('siteShowcase');
+  const track=document.getElementById('ssTrack');
+  const actions=document.getElementById('ssActions');
+  const closeBtn=document.getElementById('ssClose');
+  if(!overlay||!track||!actions||!closeBtn) return;
+
+  /* ---------- EDIT ME ---------- */
+  const PRODUCTS=['artiplay','artistock','artidrive']; // order of product frames (ids from PRODUCT_MOMENTS)
+  const INTRO_MS=1600;                                  // one identity moment, then auto handoff to the site
+const AUTO_MS=2600;                                   // time per frame before auto-advancing forward
+  const MAX_SLIDES=3;                                   // ilan lang ang frames sa opening showcase
+  const SHOW_ONCE=false;                                // true = only first visit; false = every refresh
+  const TAGLINE='Software built around real businesses.';
+  const RAW='https://raw.githubusercontent.com/zekekgray/artibytte.com/main/gallery/';
+  const PEOPLE=[
+    {src:'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1800&q=85',title:'Real people. Real work.'},
+    {src:'https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=1800&q=85',title:'Built with the businesses that use it.'},
+    {src:'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=1800&q=85',title:'Specialized on the outside. Connected underneath.'}
+  ];
+  const SEEN_KEY='artibytte_showcase_seen';
+  /* ----------------------------- */
+
+  /* build slide list: PRODUCT → PEOPLE → PRODUCT → PEOPLE … */
+  const slides=[];
+  PRODUCTS.forEach((id,i)=>{
+    const m=(typeof PRODUCT_MOMENTS!=='undefined')?PRODUCT_MOMENTS[id]:null;
+    if(!m||!m.dash) return;
+    slides.push({kind:'product',id:id,eyebrow:m.eyebrow,dash:m.dash});
+    slides.push({kind:'people',p:PEOPLE[i%PEOPLE.length]});
+  });
+  slides.splice(MAX_SLIDES);                            // 3 frames lang
+  if(!slides.length) return;
+
+  function slideHTML(s){
+    if(s.kind==='product'){
+      return `<section class="ss-slide is-product"><div class="ss-stage">${s.dash}</div><div class="ss-copy"><div class="ss-eyebrow">${s.eyebrow}</div><h2>${TAGLINE}</h2></div></section>`;
+    }
+    return `<section class="ss-slide"><img class="ss-media" src="${s.p.src}" alt="" loading="eager"><div class="ss-copy"><div class="ss-eyebrow">Built with businesses</div><h2>${s.p.title}</h2></div></section>`;
+  }
+  function mediaHTML(item,cls){
+    return item.type==='video'
+      ? `<video class="${cls}" src="${item.src}" muted loop playsinline autoplay></video>`
+      : `<img class="${cls}" src="${item.src}" alt="" loading="eager">`;
+  }
+
+  /* ---------- navigation + autoplay ---------- */
+  let cur=0,timer=null;
+  let auto=true;
+  function go(i){
+    i=Math.max(0,Math.min(slides.length-1,i));
+    track.scrollTo({left:i*track.clientWidth,behavior:'smooth'});
+  }
+  function schedule(){
+    clearTimeout(timer);
+    if(!auto||cur>=slides.length-1) return;   // stops on the last frame; user closes from there
+    timer=setTimeout(()=>go(cur+1),AUTO_MS);
+  }
+  function stopAuto(){auto=false;clearTimeout(timer);} // any manual action = user is in control
+  function syncDots(){
+    actions.querySelectorAll('.ss-dot').forEach((d,n)=>d.classList.toggle('active',n===cur));
+  }
+
+  function render(){
+    track.innerHTML=slides.map(slideHTML).join('');
+    actions.innerHTML=slides.map((_,i)=>`<button class="ss-dot${i===0?' active':''}" type="button" aria-label="Showcase ${i+1}" data-slide="${i}"></button>`).join('')
+      +`<button class="ss-gallery" id="ssGallery" type="button" aria-label="Open gallery" title="Gallery"><svg viewBox="0 0 20 20" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="14" height="12" rx="2"/><circle cx="7.5" cy="8.5" r="1.3"/><path d="M4 14l4-3.5 3 2.5 2.5-2L17 14"/></svg><span class="ss-lbl">Gallery</span></button><button class="ss-continue" id="ssContinue" type="button" aria-label="Continue to website" title="Continue to website"><svg viewBox="0 0 20 20" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10h11M11 5.5l4.5 4.5-4.5 4.5"/></svg><span class="ss-lbl">Continue</span></button>`;
+    actions.querySelectorAll('[data-slide]').forEach(b=>b.addEventListener('click',()=>{stopAuto();go(Number(b.dataset.slide));}));
+    document.getElementById('ssContinue').addEventListener('click',close);
+    document.getElementById('ssGallery').addEventListener('click',function(){
+      close();
+      if(typeof openCompany==='function') openCompany('built-with-businesses');
+    });
+  }
+  track.addEventListener('scroll',()=>{
+    const i=Math.round(track.scrollLeft/track.clientWidth);
+    if(i!==cur){cur=i;syncDots();schedule();}
+  },{passive:true});
+  ['pointerdown','touchstart','wheel'].forEach(ev=>track.addEventListener(ev,stopAuto,{passive:true}));
+  document.addEventListener('keydown',e=>{
+    if(!overlay.classList.contains('open')) return;
+    if(e.key==='Escape') close();
+    else if(e.key==='ArrowRight'){stopAuto();go(cur+1);}
+    else if(e.key==='ArrowLeft'){stopAuto();go(cur-1);}
+  });
+
+  /* ---------- optional real screenshots / videos (swap in place, no re-render) ---------- */
+  function probeImg(url){return new Promise(r=>{const im=new Image();im.onload=()=>r(url);im.onerror=()=>r(null);im.src=url;});}
+  function probeVid(url){return new Promise(r=>{const v=document.createElement('video');v.preload='metadata';v.onloadedmetadata=()=>r(url);v.onerror=()=>r(null);v.src=url;});}
+  async function probe(base){
+    const res=await Promise.all([
+      ...['jpg','jpeg','png','webp'].map(e=>probeImg(`${RAW}${base}.${e}`).then(u=>u&&{type:'image',src:u})),
+      ...['mp4','webm'].map(e=>probeVid(`${RAW}${base}.${e}`).then(u=>u&&{type:'video',src:u}))
+    ]);
+    return res.find(Boolean)||null;
+  }
+  async function upgrade(){
+    const els=[...track.children];
+    /* product frames: gallery/showcase.<id>.jpg|png|webp|mp4|webm replaces the built-in preview art */
+    slides.forEach((s,i)=>{
+      if(s.kind!=='product') return;
+      probe('showcase.'+s.id).then(item=>{
+        if(!item) return;
+        const stage=els[i]&&els[i].querySelector('.ss-stage');
+        if(stage) stage.innerHTML=mediaHTML(item,'ss-shot');
+      });
+    });
+    /* people frames: gallery/feature.1 … feature.12 (same files as "Built with businesses") */
+    const found=(await Promise.all(Array.from({length:12},(_,n)=>probe('feature.'+(n+1))))).filter(Boolean);
+    let k=0;
+    slides.forEach((s,i)=>{
+      if(s.kind!=='people'||!found[k]) return;
+      const old=els[i]&&els[i].querySelector('.ss-media');
+      if(old){
+        const t=document.createElement('div');
+        t.innerHTML=mediaHTML(found[k],'ss-media');
+        old.replaceWith(t.firstElementChild);
+      }
+      k++;
+    });
+  }
+
+  function close(){
+    clearTimeout(timer);auto=false;
+    document.documentElement.classList.remove('showcase-on');
+    overlay.classList.remove('open');overlay.setAttribute('aria-hidden','true');document.body.style.overflow='';
+    if(SHOW_ONCE){try{localStorage.setItem(SEEN_KEY,'1');}catch(e){}}
+  }
+  closeBtn.addEventListener('click',close);
+  overlay.addEventListener('click',e=>{if(e.target===overlay)close();});
+
+  function init(){
+    if(SHOW_ONCE){try{if(localStorage.getItem(SEEN_KEY)==='1'){document.documentElement.classList.remove('showcase-on');return;}}catch(e){}}
+    render();
+    overlay.classList.add('open');overlay.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';
+    schedule();
+    upgrade().catch(()=>{});
+  }
+  setTimeout(init,180);
+})();
 </script>
 </body>
 </html>
