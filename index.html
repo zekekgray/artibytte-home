@@ -11,8 +11,6 @@
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <!-- === END: FAVICON EDIT === -->
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='192 200 640 640'%3E%3Crect x='192' y='200' width='640' height='640' fill='%23142850'/%3E%3Ccircle cx='505' cy='432' r='185' fill='white'/%3E%3Ccircle cx='697' cy='433' r='75' fill='%23142850'/%3E%3Crect x='240' y='660' width='463' height='50' fill='white'/%3E%3Crect x='240' y='745' width='545' height='50' fill='white'/%3E%3C/svg%3E">
-<link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<!-- === END: FAVICON EDIT === -->
 <link rel="preload" as="image" href="gallery/showcase.artiplay.jpg" fetchpriority="high">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -84,14 +82,14 @@ nav.links{position:relative;display:flex;justify-content:center;gap:36px;font-si
 header::after{
   content:"";position:absolute;inset:0;z-index:-1;
   pointer-events:none;
-  background-color:var(--line-dark);        /* rest: this color IS the 1px line */
+  background-color:transparent;             /* rest: no visible line; the sheet still takes the curtain color when open */
   -webkit-backdrop-filter:blur(22px);
   backdrop-filter:blur(22px);               /* always on, so nothing pops when it toggles */
   clip-path:inset(calc(100% - 1px) 0 0 0);  /* only the bottom 1px is visible */
   /* CLOSE: the sheet sinks while keeping the curtain color, then turns into the line color at the very end */
   transition:clip-path .5s cubic-bezier(.22,1,.36,1), background-color .15s linear .35s;
 }
-header.on-light::after{background-color:var(--line-light)}
+header.on-light::after{background-color:transparent}
 
 /* ONE state class (header.menu-open) drives: sheet UP + curtain DOWN */
 header.menu-open::after{
@@ -215,7 +213,7 @@ header.swap .navitem .navcurtain{transition:none!important}
   gap:38px;
 }
 .navcurtain h5{font-family:var(--serif);font-style:italic;font-size:14px;color:var(--bronze-light);margin-bottom:14px;font-weight:440}
-.navcurtain a.navcurtain-link{display:block;font-size:14.5px;color:#f0ede6;padding:8px 0;border-bottom:1px solid var(--line-dark);transition:.2s}
+.navcurtain a.navcurtain-link{display:block;font-size:14.5px;color:#f0ede6;padding:8px 0;border-bottom:none;transition:.2s}
 .navcurtain a.navcurtain-link:hover{color:var(--bronze-light);padding-left:6px}
 .navcurtain p{font-size:13.5px;color:var(--mist2);line-height:1.6}
 @media(max-width:860px){.navcurtain{display:none}}
@@ -990,7 +988,7 @@ form .btn{margin-top:8px}
 /* === END: OUR STORY EDIT === */
 
 /* === START: COMPANY PAGES AS OVERLAY EDIT === */
-#story,#founder,#vision,#principles,#work-with-us,#contact,#partnerships,#our-work,#built-with-businesses,#demos,#ecosystems,#capabilities,#systems,#ecosystem-map,#our-approach,#one-foundation{display:none}
+#story,#founder,#vision,#principles,#work-with-us,#contact,#partnerships,#our-work,#built-with-businesses,#demos,#ecosystems,#capabilities,#systems,#ecosystem-map,#our-approach,#our-approach-improve,#one-foundation{display:none}
 .cview{padding-top:28px}
 .cview .story-grid,.cview .founder-grid,.cview .vm-grid,.cview .pr-grid,.cview .wwu-grid,.cview .ct-grid,.cview .pt-grid,.cview .pt-more{grid-template-columns:1fr;gap:36px}
 .cview [class*="-lead"]{position:static}
@@ -1190,6 +1188,9 @@ body:has(.talkpanel.open) .vex-assistive-button{
 .tp-msg.user{background:rgba(199,138,77,.16);border:1px solid rgba(199,138,77,.35);margin-left:auto;color:#f5f2ec}
 
 .tp-options{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
+.tp-choices{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+.tp-choices .tp-opt{padding:9px 13px}
+.tp-opt.sel{border-color:var(--bronze);background:rgba(199,138,77,.12);color:var(--bronze-light)}
 .tp-opt{text-align:left;background:transparent;border:1px solid var(--line-dark2);color:#f0ede6;padding:12px 14px;border-radius:11px;font-size:13.5px;cursor:pointer;transition:.15s;font-family:var(--sans)}.tp-opt:hover{border-color:var(--bronze);background:rgba(199,138,77,.08);color:var(--bronze-light)}
 .tp-opt .tp-opt-sub{display:block;font-size:11.5px;color:var(--mist);margin-top:2px}
 .tp-opt:hover .tp-opt-sub{color:var(--bronze-light);opacity:.8}
@@ -1212,6 +1213,130 @@ body:has(.talkpanel.open) .vex-assistive-button{
 
 .tp-qty{display:flex;align-items:center;gap:10px;border:1px solid var(--line-dark2);border-radius:11px;padding:12px 14px;margin-bottom:16px}
 .tp-qty label{font-size:13px;color:#f0ede6;flex:1}
+.tp-drv{margin:-2px 0 10px 14px;padding:9px 12px;border-style:dashed}
+.tp-drv.proj{margin:0 0 8px}
+.tp-drv[hidden]{display:none}
+.tp-scope{margin:0 0 10px 14px;font-size:12px}
+.tp-item + .tp-scope{margin-left:0}
+.tp-scope summary{cursor:pointer;color:var(--bronze-light);font-size:11.5px;list-style:none;padding:4px 0;display:inline-block}
+.tp-scope summary::-webkit-details-marker{display:none}
+.tp-scope summary::before{content:"+ "}
+.tp-scope[open] summary::before{content:"− "}
+.tp-scope h6{font-size:10.5px;color:var(--mist);letter-spacing:.14em;text-transform:uppercase;font-weight:500;margin:10px 0 4px}
+.tp-scope ul{padding-left:16px;color:var(--mist2);line-height:1.5}
+.tp-scope li{margin-bottom:3px}
+.tp-scope{margin:0 0 10px 14px;font-size:12px}
+.tp-item + .tp-scope{margin-left:0}
+.tp-scope summary{cursor:pointer;color:var(--bronze-light);font-size:11.5px;list-style:none;padding:4px 0;display:inline-block}
+.tp-scope summary::-webkit-details-marker{display:none}
+.tp-scope summary::before{content:"+ "}
+.tp-scope[open] summary::before{content:"− "}
+.tp-scope h6{font-size:10.5px;color:var(--mist);letter-spacing:.14em;text-transform:uppercase;font-weight:500;margin:10px 0 4px}
+.tp-scope ul{padding-left:16px;color:var(--mist2);line-height:1.5}
+.tp-scope li{margin-bottom:3px}
+.tp-scope{margin:0 0 10px 14px;font-size:12px}
+.tp-item + .tp-scope{margin-left:0}
+.tp-scope summary{cursor:pointer;color:var(--bronze-light);font-size:11.5px;list-style:none;padding:4px 0;display:inline-block}
+.tp-scope summary::-webkit-details-marker{display:none}
+.tp-scope summary::before{content:"+ "}
+.tp-scope[open] summary::before{content:"− "}
+.tp-scope h6{font-size:10.5px;color:var(--mist);letter-spacing:.14em;text-transform:uppercase;font-weight:500;margin:10px 0 4px}
+.tp-scope ul{padding-left:16px;color:var(--mist2);line-height:1.5}
+.tp-scope li{margin-bottom:3px}
+.tp-scope{margin:0 0 10px 14px;font-size:12px}
+.tp-item + .tp-scope{margin-left:0}
+.tp-scope summary{cursor:pointer;color:var(--bronze-light);font-size:11.5px;list-style:none;padding:4px 0;display:inline-block}
+.tp-scope summary::-webkit-details-marker{display:none}
+.tp-scope summary::before{content:"+ "}
+.tp-scope[open] summary::before{content:"− "}
+.tp-scope h6{font-size:10.5px;color:var(--mist);letter-spacing:.14em;text-transform:uppercase;font-weight:500;margin:10px 0 4px}
+.tp-scope ul{padding-left:16px;color:var(--mist2);line-height:1.5}
+.tp-scope li{margin-bottom:3px}
+.tp-scope{margin:0 0 10px 14px;font-size:12px}
+.tp-item + .tp-scope{margin-left:0}
+.tp-scope summary{cursor:pointer;color:var(--bronze-light);font-size:11.5px;list-style:none;padding:4px 0;display:inline-block}
+.tp-scope summary::-webkit-details-marker{display:none}
+.tp-scope summary::before{content:"+ "}
+.tp-scope[open] summary::before{content:"− "}
+.tp-scope h6{font-size:10.5px;color:var(--mist);letter-spacing:.14em;text-transform:uppercase;font-weight:500;margin:10px 0 4px}
+.tp-scope ul{padding-left:16px;color:var(--mist2);line-height:1.5}
+.tp-scope li{margin-bottom:3px}
+.tp-scope{margin:0 0 10px 14px;font-size:12px}
+.tp-item + .tp-scope{margin-left:0}
+.tp-scope summary{cursor:pointer;color:var(--bronze-light);font-size:11.5px;list-style:none;padding:4px 0;display:inline-block}
+.tp-scope summary::-webkit-details-marker{display:none}
+.tp-scope summary::before{content:"+ "}
+.tp-scope[open] summary::before{content:"− "}
+.tp-scope h6{font-size:10.5px;color:var(--mist);letter-spacing:.14em;text-transform:uppercase;font-weight:500;margin:10px 0 4px}
+.tp-scope ul{padding-left:16px;color:var(--mist2);line-height:1.5}
+.tp-scope li{margin-bottom:3px}
+.tp-scope{margin:0 0 10px 14px;font-size:12px}
+.tp-item + .tp-scope{margin-left:0}
+.tp-scope summary{cursor:pointer;color:var(--bronze-light);font-size:11.5px;list-style:none;padding:4px 0;display:inline-block}
+.tp-scope summary::-webkit-details-marker{display:none}
+.tp-scope summary::before{content:"+ "}
+.tp-scope[open] summary::before{content:"− "}
+.tp-scope h6{font-size:10.5px;color:var(--mist);letter-spacing:.14em;text-transform:uppercase;font-weight:500;margin:10px 0 4px}
+.tp-scope ul{padding-left:16px;color:var(--mist2);line-height:1.5}
+.tp-scope li{margin-bottom:3px}
+.tp-scope{margin:0 0 10px 14px;font-size:12px}
+.tp-item + .tp-scope{margin-left:0}
+.tp-scope summary{cursor:pointer;color:var(--bronze-light);font-size:11.5px;list-style:none;padding:4px 0;display:inline-block}
+.tp-scope summary::-webkit-details-marker{display:none}
+.tp-scope summary::before{content:"+ "}
+.tp-scope[open] summary::before{content:"− "}
+.tp-scope h6{font-size:10.5px;color:var(--mist);letter-spacing:.14em;text-transform:uppercase;font-weight:500;margin:10px 0 4px}
+.tp-scope ul{padding-left:16px;color:var(--mist2);line-height:1.5}
+.tp-scope li{margin-bottom:3px}
+.tp-scope{margin:0 0 10px 14px;font-size:12px}
+.tp-item + .tp-scope{margin-left:0}
+.tp-scope summary{cursor:pointer;color:var(--bronze-light);font-size:11.5px;list-style:none;padding:4px 0;display:inline-block}
+.tp-scope summary::-webkit-details-marker{display:none}
+.tp-scope summary::before{content:"+ "}
+.tp-scope[open] summary::before{content:"− "}
+.tp-scope h6{font-size:10.5px;color:var(--mist);letter-spacing:.14em;text-transform:uppercase;font-weight:500;margin:10px 0 4px}
+.tp-scope ul{padding-left:16px;color:var(--mist2);line-height:1.5}
+.tp-scope li{margin-bottom:3px}
+.tp-scope{margin:0 0 10px 14px;font-size:12px}
+.tp-item + .tp-scope{margin-left:0}
+.tp-scope summary{cursor:pointer;color:var(--bronze-light);font-size:11.5px;list-style:none;padding:4px 0;display:inline-block}
+.tp-scope summary::-webkit-details-marker{display:none}
+.tp-scope summary::before{content:"+ "}
+.tp-scope[open] summary::before{content:"− "}
+.tp-scope h6{font-size:10.5px;color:var(--mist);letter-spacing:.14em;text-transform:uppercase;font-weight:500;margin:10px 0 4px}
+.tp-scope ul{padding-left:16px;color:var(--mist2);line-height:1.5}
+.tp-scope li{margin-bottom:3px}
+.tp-scope{margin:0 0 10px 14px;font-size:12px}
+.tp-item + .tp-scope{margin-left:0}
+.tp-scope summary{cursor:pointer;color:var(--bronze-light);font-size:11.5px;list-style:none;padding:4px 0;display:inline-block}
+.tp-scope summary::-webkit-details-marker{display:none}
+.tp-scope summary::before{content:"+ "}
+.tp-scope[open] summary::before{content:"− "}
+.tp-scope h6{font-size:10.5px;color:var(--mist);letter-spacing:.14em;text-transform:uppercase;font-weight:500;margin:10px 0 4px}
+.tp-scope ul{padding-left:16px;color:var(--mist2);line-height:1.5}
+.tp-scope li{margin-bottom:3px}
+.tp-scope{margin:0 0 10px 14px;font-size:12px}
+.tp-item + .tp-scope{margin-left:0}
+.tp-scope summary{cursor:pointer;color:var(--bronze-light);font-size:11.5px;list-style:none;padding:4px 0;display:inline-block}
+.tp-scope summary::-webkit-details-marker{display:none}
+.tp-scope summary::before{content:"+ "}
+.tp-scope[open] summary::before{content:"− "}
+.tp-scope h6{font-size:10.5px;color:var(--mist);letter-spacing:.14em;text-transform:uppercase;font-weight:500;margin:10px 0 4px}
+.tp-scope ul{padding-left:16px;color:var(--mist2);line-height:1.5}
+.tp-scope li{margin-bottom:3px}
+.tp-scope{margin:0 0 10px 14px;font-size:12px}
+.tp-item + .tp-scope{margin-left:0}
+.tp-scope summary{cursor:pointer;color:var(--bronze-light);font-size:11.5px;list-style:none;padding:4px 0;display:inline-block}
+.tp-scope summary::-webkit-details-marker{display:none}
+.tp-scope summary::before{content:"+ "}
+.tp-scope[open] summary::before{content:"− "}
+.tp-scope h6{font-size:10.5px;color:var(--mist);letter-spacing:.14em;text-transform:uppercase;font-weight:500;margin:10px 0 4px}
+.tp-scope ul{padding-left:16px;color:var(--mist2);line-height:1.5}
+.tp-scope li{margin-bottom:3px}
+.tp-drv .tp-drv-note{display:block;font-size:11px;color:var(--mist);margin-top:2px}
+.tp-proj{margin:0 0 14px 0}
+.tp-proj .tp-field{margin-top:12px;margin-bottom:0}
+.tp-field input[type="date"]{color-scheme:dark}
 .tp-qty .tp-stepper{display:flex;align-items:center;gap:8px}
 .tp-qty .tp-stepper button{width:26px;height:26px;border-radius:50%;border:1px solid var(--line-dark2);background:transparent;color:#f0ede6;cursor:pointer;font-size:14px;line-height:1;display:flex;align-items:center;justify-content:center;transition:.2s}
 .tp-qty .tp-stepper button:hover{border-color:var(--bronze);color:var(--bronze-light)}
@@ -1221,6 +1346,25 @@ body:has(.talkpanel.open) .vex-assistive-button{
 .tp-line span:first-child{max-width:70%}
 .tp-line span:last-child{color:#f0ede6;font-weight:600;white-space:nowrap}
 .tp-total{display:flex;justify-content:space-between;align-items:baseline;padding-top:14px;margin-top:4px}
+.tp-sum-row{display:flex;align-items:baseline;gap:8px;font-size:13px;color:#f0ede6;padding:5px 0}
+.tp-sum-row i{flex:1;min-width:12px;border-bottom:1px dotted var(--line-dark2);transform:translateY(-3px)}
+.tp-sum-row b{font-weight:600;white-space:nowrap}
+.tp-sum-list{padding-left:16px;margin:0 0 4px;color:var(--mist2);font-size:13px;line-height:1.6}
+.tp-sum-meta{font-size:12px;color:var(--mist2);line-height:1.7;margin-top:14px}
+.tp-cmp{display:grid;gap:0;margin:6px 0 14px;font-size:12.5px}
+.tp-cmp>div{padding:9px 6px;border-bottom:1px solid var(--line-dark);display:flex;align-items:center;justify-content:center;text-align:center;color:var(--mist2)}
+.tp-cmp>div.l{justify-content:flex-start;text-align:left;color:#f0ede6}
+.tp-cmp>div.h{flex-direction:column;gap:3px;color:#f5f2ec;font-weight:600;border-bottom:1px solid var(--line-dark2)}
+.tp-cmp>div.h span{font-family:var(--serif);font-weight:400;font-size:15px;color:var(--bronze-light)}
+.tp-cmp>div.y{color:var(--bronze-light)}
+.tp-cmp .tp-btn{padding:9px 6px;font-size:12px}
+.tp-group-title{font-size:11px;color:var(--mist);letter-spacing:.14em;text-transform:uppercase;font-weight:500;margin:18px 0 6px}
+.tp-item{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--line-dark)}
+.tp-item .ti-main{display:flex;flex-direction:column;gap:2px;min-width:0}
+.tp-item .ti-name{font-size:13px;color:#f0ede6}
+.tp-item .ti-desc{font-size:11.5px;color:var(--mist);line-height:1.45}
+.tp-item .ti-calc{font-size:11px;color:var(--mist2);opacity:.8}
+.tp-item .ti-sub{font-size:12.5px;color:#f0ede6;font-weight:600;white-space:nowrap;flex:none}
 .tp-total .tt-label{font-size:12.5px;color:var(--mist);letter-spacing:.2px}
 /* === START: VEX INSTANT TOTALS EDIT === */
 /* business numbers update immediately: no transition, no count-up */
@@ -1228,6 +1372,10 @@ body:has(.talkpanel.open) .vex-assistive-button{
 /* === END: VEX INSTANT TOTALS EDIT === */
 .tp-total .tt-value{font-family:var(--serif);font-size:21px;color:var(--bronze-light)}
 .tp-disclaimer{font-size:11.5px;color:var(--mist);font-style:italic;margin-top:14px;line-height:1.55;font-family:var(--serif)}
+.tp-terms{margin-top:16px;font-size:12px;color:var(--mist2);line-height:1.55}
+.tp-terms h6{font-size:11px;color:var(--mist);letter-spacing:.14em;text-transform:uppercase;font-weight:500;margin:14px 0 6px}
+.tp-terms ul{padding-left:16px}
+.tp-terms li{margin-bottom:4px}
 .tp-discount-note{font-size:12px;color:var(--mist2);background:rgba(199,138,77,.08);border:1px solid var(--line-dark2);border-radius:10px;padding:11px 13px;margin-top:14px;line-height:1.55}
 .tp-discount-note strong{color:var(--bronze-light)}
 
@@ -1468,7 +1616,7 @@ setTimeout(function(){
             <h5>How it works</h5>
             <a class="navcurtain-link" href="#" data-company="our-approach">Tell us how your business works</a>
             <a class="navcurtain-link" href="#" data-company="our-approach">We build the system around it</a>
-            <a class="navcurtain-link" href="#" data-company="our-approach">You use it. We keep improving it.</a>
+            <a class="navcurtain-link" href="#" data-company="our-approach-improve">You use it. We keep improving it.</a>
           </div>
         </div>
       </div>
@@ -2209,7 +2357,7 @@ setTimeout(function(){
 </div></section>
 <!-- === END: OUR APPROACH EDIT === -->
 <!-- === START: OUR APPROACH EDIT === -->
-<section id="our-approach"><div class="wrap">
+<section id="our-approach-improve"><div class="wrap">
   <span class="cv-eyebrow">Our approach</span>
   <h2>Tell us how your business works.</h2>
   <p class="cv-strong">Every business has its own way of working.</p>
@@ -4607,25 +4755,465 @@ if(window.visualViewport){
 
 function tpIndustry(){ return TALK_CATALOG.industries.find(i=>i.id===tpState.industryId); }
 
-function tpComputeQuote(){
-  const ind=tpIndustry();
-  if(!ind) return {lines:[],total:0};
-  let total=ind.base.price;
-  const lines=[{label:ind.base.label,price:ind.base.price}];
-  ind.modules.forEach(m=>{
-    if(tpState.selectedModules.has(m.id)){
-      total+=m.price;
-      lines.push({label:m.label,price:m.price});
-    }
-  });
-  if(ind.hasLocations && tpState.locations>1){
-    const extra=(tpState.locations-1)*ind.locationPrice;
-    total+=extra;
-    lines.push({label:`Additional locations (${tpState.locations-1} × ${tpPeso(ind.locationPrice)})`,price:extra});
-  }
-  return {lines,total};
+/* ===== QUOTE ENGINE — itemized + grouped ===== */
+/* EDIT ME: placeholder pricing rules. Palitan kapag napagdesisyunan mo na. */
+const TP_PRICING={
+  /* EDIT ME: naka-off pa (walang laman). Bawat adjustment ay may sariling label na makikita ng client bilang reason.
+     label       = reason na ipapakita (kailangan)
+     pct O amount = percent ng subtotal, O fixed na peso. Kung pareho, amount ang gagamitin.
+     minModules  = optional, ilang selected modules/integrations ang kailangan
+     industries  = optional, listahan ng product ids na sakop, hal. ['artiplay','artistock']
+     Halimbawa:
+       {label:'Launch package adjustment', amount:10000, industries:['artiplay']}
+       {label:'Bundle adjustment (4+ modules)', pct:5, minModules:4} */
+  discounts:[
+  ],
+  taxRate:0,        /* 0 = hindi kasama ang tax. 0.12 kung VAT-registered ka at gusto mong isama */
+  taxLabel:'VAT',
+  /* EDIT ME: priced project services (design, testing, deployment, complexity). Naka-off pa (walang laman).
+     label      = ipapakita sa client (kailangan)
+     desc       = maikling paliwanag (optional)
+     amount     = fixed na peso, O pct = percent ng total ng core + modules + integrations + locations (hindi kasama ang optional services). Kung pareho, amount ang gagamitin.
+     industries = optional; kung wala, sakop ang lahat ng product
+     Halimbawa:
+       {label:'Testing & quality assurance', desc:'Functional and user acceptance testing', pct:10}
+       {label:'Deployment & go-live', desc:'Production setup and launch support', amount:12000, industries:['artiplay']} */
+  services:[
+  ],
+  optional:[
+    {id:'opt-training',  label:'Training & Onboarding', desc:'Staff walkthrough sessions',                       unit:'Session', qty:1, price:8000},
+    {id:'opt-migration', label:'Data Migration',        desc:'Import of existing records into the new system',   unit:'Project', qty:1, price:15000},
+    {id:'opt-support',   label:'Priority Support',      desc:'Faster response for 3 months after launch',        unit:'Package', qty:1, price:12000}
+  ]
+};
+const TP_GROUPS=[
+  {key:'core',        title:'Core System'},
+  {key:'module',      title:'Features / Modules'},
+  {key:'integration', title:'Integrations'},
+  {key:'location',    title:'Additional Locations'},
+  {key:'service',     title:'Project Services'},
+  {key:'optional',    title:'Optional Services'}
+];
+/* module ids na ituturing na Integration; lahat ng iba = Feature/Module */
+const TP_INTEGRATION_IDS=['gpay','bhtlink','vexpipe','vexdocs','scan','deedscan','aiint'];
+
+function tpSigned(n){ return (n<0?'−':'')+tpPeso(Math.abs(n)); }
+
+/* ===== QUANTITY DRIVERS ===== */
+/* EDIT ME: placeholder ang lahat ng presyo. Ang `per` ay presyo bawat EXTRA unit lampas sa `inc` (included). */
+const TP_DRIVERS={
+  users:        {label:'User accounts',              unit:'User',        plural:'users',            step:5,   max:1000,  cat:'core'},
+  languages:    {label:'Interface languages',        unit:'Language',    plural:'languages',        step:1,   max:10,    cat:'core'},
+  environments: {label:'Environments (staging/UAT)', unit:'Environment', plural:'environments',     step:1,   max:5,     cat:'core'},
+  revisions:    {label:'Design revision rounds',     unit:'Revision',    plural:'revisions',        step:1,   max:10,    cat:'core'},
+  devDays:      {label:'Custom development days',    unit:'Day',         plural:'development days', step:1,   max:120,   cat:'optional'},
+  devices:      {label:'Devices / stations',         unit:'Device',      plural:'devices',          step:1,   max:50},
+  products:     {label:'Products / SKUs',            unit:'Product',     plural:'products',         step:100, max:20000},
+  documents:    {label:'Documents to process',       unit:'Document',    plural:'documents',        step:100, max:50000},
+  integrations: {label:'Connected data sources',     unit:'Data source', plural:'data sources',     step:1,   max:20},
+  models:       {label:'AI models connected',        unit:'Model',       plural:'models',           step:1,   max:10},
+  slides:       {label:'Slides / screens',           unit:'Slide',       plural:'slides',           step:5,   max:100},
+  cards:        {label:'Cards to issue',             unit:'Card',        plural:'cards',            step:25,  max:5000}
+};
+/* module id -> anong quantity ang nagpapabago ng presyo nito. Walang entry = flat price, walang stepper. */
+const TP_MODULE_DRIVERS={
+  attendance:{d:'devices',inc:1,per:3500},        /* ArtiPlay */
+  cogs:      {d:'products',inc:500,per:12},       /* ArtiStock */
+  vexpipe:   {d:'documents',inc:200,per:25},
+  pos:       {d:'devices',inc:1,per:4000},        /* ArtiSnack */
+  recon:     {d:'integrations',inc:3,per:5000},   /* Business Health Toolkit */
+  vexdocs:   {d:'documents',inc:100,per:40},     /* ArtiField */
+  reveal:    {d:'slides',inc:10,per:1200},        /* ArtiSlide */
+  docs:      {d:'documents',inc:100,per:30},      /* ArtiHome */
+  deedscan:  {d:'documents',inc:20,per:150},
+  bulk:      {d:'cards',inc:25,per:400},          /* ATH•NA */
+  extract:   {d:'documents',inc:500,per:20},      /* VEX AI */
+  aiint:     {d:'models',inc:1,per:6000}
+};
+/* project-level scope: default na included + presyo, tapos kung alin ang relevant bawat industry */
+const TP_PROJECT_DEFAULTS={
+  users:{inc:10,per:900}, languages:{inc:1,per:6000}, environments:{inc:1,per:5000},
+  revisions:{inc:2,per:4000}, devDays:{inc:0,per:6500}
+};
+const TP_TEAM_SCOPE=['users','languages','environments','revisions','devDays'];
+const TP_PROJECT_DRIVERS={
+  artiplay:TP_TEAM_SCOPE, artistock:TP_TEAM_SCOPE, artisnack:TP_TEAM_SCOPE, bht:TP_TEAM_SCOPE, artifield:TP_TEAM_SCOPE,
+  vexai:['users','environments','revisions','devDays'],
+  artidrive:['languages','revisions','devDays'], artihome:['languages','revisions','devDays'],
+  owlbound:['languages','revisions','devDays'], artislide:['languages','revisions','devDays'],
+  athna:['revisions','devDays']
+};
+
+function tpQty(key,rule){
+  const v=(tpState.qty||{})[key];
+  return (typeof v==='number')?v:rule.inc;
+}
+function tpRuleFor(key){
+  const id=key.slice(2);
+  if(key[0]==='m') return TP_MODULE_DRIVERS[id]||null;
+  return TP_PROJECT_DEFAULTS[id]?Object.assign({d:id},TP_PROJECT_DEFAULTS[id]):null;
+}
+function tpStepQty(key,dir){
+  const rule=tpRuleFor(key); if(!rule) return;
+  const d=TP_DRIVERS[rule.d];
+  const next=Math.max(rule.inc,Math.min(d.max,tpQty(key,rule)+dir*d.step));   /* hindi bababa sa included */
+  tpState.qty=tpState.qty||{}; tpState.qty[key]=next;
+  const v=tpBody.querySelector('[data-qval="'+key+'"]'); if(v) v.textContent=next;
+  tpRefreshModulesFooter();
+}
+function tpDriverHtml(key,rule,visible){
+  if(!rule) return '';
+  const d=TP_DRIVERS[rule.d], q=tpQty(key,rule);
+  const note=rule.inc>0?`${rule.inc} included · +${tpPeso(rule.per)} per extra ${d.unit.toLowerCase()}`:`${tpPeso(rule.per)} per ${d.unit.toLowerCase()}`;
+  return `<div class="tp-qty tp-drv${key[0]==='p'?' proj':''}" data-drv-for="${key.slice(2)}"${visible?'':' hidden'}>
+    <label>${d.label}<span class="tp-drv-note">${note}</span></label>
+    <div class="tp-stepper">
+      <button data-action="qty-dec" data-qkey="${key}" aria-label="Decrease ${d.label}">−</button>
+      <span data-qval="${key}">${q}</span>
+      <button data-action="qty-inc" data-qkey="${key}" aria-label="Increase ${d.label}">+</button>
+    </div>
+  </div>`;
+}
+function tpProjectScopeHtml(){
+  const ids=TP_PROJECT_DRIVERS[tpState.industryId]||[];
+  if(!ids.length) return '';
+  return `<div class="tp-group-title">Project scope</div>`+ids.map(id=>tpDriverHtml('p:'+id,tpRuleFor('p:'+id),true)).join('');
+}
+/* extra units lampas sa included = hiwalay na line item, para kita ng client kung bakit tumaas */
+function tpAddDriverExtra(add,key,rule,owner,cat){
+  if(!rule) return;
+  const d=TP_DRIVERS[rule.d], q=tpQty(key,rule), extra=q-rule.inc;
+  if(extra<=0) return;
+  const item=owner?`${owner} — additional ${d.plural}`:(rule.inc>0?`Additional ${d.plural}`:d.label);
+  const desc=rule.inc>0?`${q} ${d.plural} requested; first ${rule.inc} included in the base price`:`${q} ${d.plural} requested`;
+  add(cat,item,desc,extra,d.unit,rule.per);
 }
 
+/* ===== SCOPE DEFINITIONS ===== */
+/* EDIT ME: DRAFT ito. Ang bawat linya ay commitment sa client, kaya i-verify mo laban sa totoong ginagawa ng product.
+   Key: 'industryId:moduleId' o 'industryId:base'. Ang walang industry prefix ('location', 'opt-...') ay shared sa lahat.
+   Walang entry = walang "What's included" toggle sa item na iyon. */
+const TP_SCOPE={
+  'artiplay:base':{
+    inc:['System setup and configuration for your academy','Your logo and colors on the system','Admin, coach and parent role setup','Deployment to your chosen hosting (hosting fees are billed by the provider)'],
+    exc:['Custom features not listed as modules','Import of existing records (see Data Migration)','Staff training (available as an optional service)','Hardware such as scanners or tablets']
+  },
+  'artiplay:roster':{
+    inc:['Unlimited player profiles','Basic player information (name, age, position, guardian contact)','Search and filter','Profile management (add, edit, archive)','Grouping players by team'],
+    exc:['External biometric integration','Advanced analytics','Third-party API integration','Bulk import of existing records']
+  },
+  'artiplay:attendance':{
+    inc:['Manual check-in','QR check-in','Attendance history per player and per session','Basic attendance reports'],
+    exc:['Scanner hardware','Biometric or facial check-in','Automatic no-show alerts (part of ByteSense)']
+  },
+  'artiplay:payments':{
+    inc:['Dues and payment plans per player','Payment recording and status tracking','Reminders for overdue dues','GCash / Maya setup using your own merchant account'],
+    exc:['Payment gateway transaction fees','Merchant account registration','Accounting software integration','Automated refunds or collections']
+  },
+  'artiplay:coaches':{
+    inc:['Coach profiles and team assignments','Session schedules','Session notes per team','Coach access on mobile'],
+    exc:['Payroll or coach payments','Video analysis tools','Sync with external calendar apps']
+  },
+  'artiplay:bytesense':{
+    inc:['Flags for no-shows','Flags for overdue dues','Skill-gap flags based on data already in the system','An attention list for admins'],
+    exc:['Custom-trained AI models','Insights from data outside the system']
+  },
+  'location':{
+    inc:['Setup of each extra branch in the system','Staff assignment per branch'],
+    exc:['On-site setup at the branch','Hardware for the branch']
+  },
+  'artiplay:location':{
+    inc:['Setup of each extra branch in the system','Separate rosters and schedules per branch','Staff assignment per branch'],
+    exc:['On-site setup at the branch','Hardware for the branch']
+  },
+  'opt-training':{
+    inc:['Walkthrough session for admins and staff','Q&A on your own workflows'],
+    exc:['On-site training unless agreed','Training materials in other languages','Additional sessions beyond the quantity booked']
+  },
+  'opt-migration':{
+    inc:['Import of existing records from spreadsheets or exports you provide','Field mapping','A check of the imported data'],
+    exc:['Cleaning duplicate or incomplete source records','Import from paper records','Systems that cannot export their data']
+  },
+  'opt-support':{
+    inc:['Priority response for 3 months after launch','Bug fixes for delivered features','Support by email or chat'],
+    exc:['New features','Issues caused by third-party services','Support outside the agreed period']
+  }
+};
+function tpScopeFor(ind,id){ return (ind&&TP_SCOPE[ind.id+':'+id])||TP_SCOPE[id]||null; }
+function tpScopeHtml(s,label){
+  if(!s) return '';
+  const li=a=>a.map(x=>`<li>${x}</li>`).join('');
+  return `<details class="tp-scope"><summary>${label||"What's included"}</summary>
+    <h6>Included</h6><ul>${li(s.inc)}</ul>
+    ${s.exc&&s.exc.length?`<h6>Not included</h6><ul>${li(s.exc)}</ul>`:''}
+  </details>`;
+}
+function tpScopeText(s){
+  if(!s) return '';
+  let t='  Included:\n'+s.inc.map(x=>`    + ${x}\n`).join('');
+  if(s.exc&&s.exc.length) t+='  Not included:\n'+s.exc.map(x=>`    - ${x}\n`).join('');
+  return t;
+}
+
+function tpBuildQuote(){
+  const ind=tpIndustry();
+  if(!ind) return {items:[],groups:[],subtotal:0,discounts:[],tax:0,total:0,lines:[]};
+  const items=[];
+  const add=(cat,item,desc,qty,unit,unitPrice,adj,sk)=>{
+    adj=adj||0;
+    items.push({cat,item,desc,qty,unit,unitPrice,adj,subtotal:qty*unitPrice+adj,scope:sk?tpScopeFor(ind,sk):null});
+  };
+  add('core',ind.base.label,ind.base.desc||'Configuration, branding and initial setup',1,'Project',ind.base.price,0,'base');
+  ind.modules.forEach(m=>{
+    if(!tpState.selectedModules.has(m.id)) return;
+    const integ=TP_INTEGRATION_IDS.indexOf(m.id)>-1;
+    const mcat=integ?'integration':'module';
+    add(mcat,m.label,m.desc||m.note,1,integ?'Integration':'Module',m.price,0,m.id);
+    tpAddDriverExtra(add,'m:'+m.id,TP_MODULE_DRIVERS[m.id],m.label,mcat);
+  });
+  (TP_PROJECT_DRIVERS[ind.id]||[]).forEach(id=>{
+    tpAddDriverExtra(add,'p:'+id,tpRuleFor('p:'+id),null,TP_DRIVERS[id].cat);
+  });
+  if(ind.hasLocations && tpState.locations>1){
+    add('location','Additional branch / location setup','Configuration and rollout for each extra location',tpState.locations-1,'Location',ind.locationPrice,0,'location');
+  }
+  TP_PRICING.optional.forEach(o=>{
+    if(tpState.selectedModules.has(o.id)) add('optional',o.label,o.desc,o.qty,o.unit,o.price,0,o.id);
+  });
+  const svcBase=items.filter(i=>i.cat!=='optional').reduce((s,i)=>s+i.subtotal,0);
+  (TP_PRICING.services||[]).forEach(sv=>{
+    if(!sv||!sv.label) return;
+    if(sv.industries&&sv.industries.indexOf(ind.id)<0) return;
+    const amt=(typeof sv.amount==='number')?sv.amount:Math.round(svcBase*(sv.pct||0)/100);
+    if(amt>0) add('service',sv.label,sv.desc||'',1,'Service',amt);
+  });
+  const groups=TP_GROUPS.map(g=>({key:g.key,title:g.title,items:items.filter(i=>i.cat===g.key)})).filter(g=>g.items.length);
+  const subtotal=items.reduce((s,i)=>s+i.subtotal,0);
+  const featureCount=items.filter(i=>i.unit==='Module'||i.unit==='Integration').length;
+  let room=subtotal; /* hindi lalampas sa subtotal ang kabuuang adjustments */
+  const discounts=TP_PRICING.discounts
+    .filter(d=>featureCount>=(d.minModules||0) && (!d.industries||d.industries.indexOf(ind.id)>-1))
+    .map(d=>{
+      const raw=(typeof d.amount==='number')?d.amount:Math.round(subtotal*(d.pct||0)/100);
+      const amt=Math.min(Math.max(raw,0),room); room-=amt;
+      return {label:d.label,amount:-amt};
+    })
+    .filter(d=>d.amount!==0);
+  const taxable=subtotal+discounts.reduce((s,d)=>s+d.amount,0);
+  const tax=TP_PRICING.taxRate>0?Math.round(taxable*TP_PRICING.taxRate):0;
+  return {items,groups,subtotal,discounts,tax,total:taxable+tax,lines:items.map(i=>({label:i.item,price:i.subtotal}))};
+}
+function tpComputeQuote(){ return tpBuildQuote(); }
+
+/* "What is driving this estimate": subtotal bawat category + share. Kinukuwenta mula sa parehong items ng quote, kaya laging tugma. */
+function tpDriverRows(q){
+  const sum=a=>a.reduce((s,i)=>s+i.subtotal,0), it=q.items;
+  return [
+    {label:'Core system setup',                                            amt:sum(it.filter(i=>i.cat==='core'&&i.unit==='Project'))},
+    {label:'Project scope (users, languages, environments, revisions)',    amt:sum(it.filter(i=>i.cat==='core'&&i.unit!=='Project'))},
+    {label:'Selected features / modules',                                  amt:sum(it.filter(i=>i.cat==='module'))},
+    {label:'Integrations',                                                 amt:sum(it.filter(i=>i.cat==='integration'))},
+    {label:'Additional locations',                                         amt:sum(it.filter(i=>i.cat==='location'))},
+    {label:'Design, testing & deployment', amt:sum(it.filter(i=>i.cat==='service'))},
+    {label:'Optional services',                                            amt:sum(it.filter(i=>i.cat==='optional'))}
+  ].filter(r=>r.amt>0);
+}
+function tpDriversHtml(q){
+  const rows=tpDriverRows(q); if(!rows.length||!q.subtotal) return '';
+  const pct=r=>Math.round(r.amt/q.subtotal*100);
+  const top=rows.reduce((a,b)=>b.amt>a.amt?b:a);
+  return `<div class="tp-group-title">What is driving this estimate</div>`
+    +rows.map(r=>`<div class="tp-line"><span>${r.label}</span><span>${tpPeso(r.amt)} · ${pct(r)}%</span></div>`).join('')
+    +`<p class="tp-disclaimer">${rows.length>1?`Largest share: ${top.label} (${pct(top)}%). `:''}Shares are of the subtotal. Line-by-line detail is below.</p>`;
+}
+function tpDriversText(q){
+  const rows=tpDriverRows(q); if(!rows.length||!q.subtotal) return '';
+  return `\nWHAT IS DRIVING THIS ESTIMATE\n`
+    +rows.map(r=>`- ${r.label}: ${tpPeso(r.amt)} (${Math.round(r.amt/q.subtotal*100)}%)\n`).join('');
+}
+/* on-screen: grouped rows + subtotal / discounts / tax (ang grand total ay nasa .tp-total) */
+function tpQuoteHtml(q){
+  const rows=q.groups.map(g=>
+    `<div class="tp-group-title">${g.title}</div>`+
+    g.items.map(i=>`<div class="tp-item">
+      <div class="ti-main"><span class="ti-name">${i.item}</span><span class="ti-desc">${i.desc}</span><span class="ti-calc">${i.qty} ${i.unit}${i.qty>1?'s':''} × ${tpPeso(i.unitPrice)}${i.adj?' · adjustment '+tpSigned(i.adj):''}</span></div>
+      <span class="ti-sub">${tpPeso(i.subtotal)}</span>
+    </div>${tpScopeHtml(i.scope)}`).join('')
+  ).join('');
+  const disc=q.discounts.length
+    ? q.discounts.map(d=>`<div class="tp-line"><span>${d.label}</span><span>${tpSigned(d.amount)}</span></div>`).join('')
+    : `<div class="tp-line"><span>Discounts &amp; adjustments</span><span>None</span></div>`;
+  const taxLine=TP_PRICING.taxRate>0
+    ? `<div class="tp-line"><span>${TP_PRICING.taxLabel} (${Math.round(TP_PRICING.taxRate*100)}%)</span><span>${tpPeso(q.tax)}</span></div>`
+    : `<div class="tp-line"><span>VAT / taxes</span><span>Not included in this estimate</span></div>`;
+  return rows+`<div class="tp-group-title">Summary</div><div class="tp-line"><span>Subtotal</span><span>${tpPeso(q.subtotal)}</span></div>`+disc+taxLine;
+}
+
+/* email: buong detalye bawat line (category, item, description, qty, unit, unit price, adjustment, subtotal) */
+function tpQuoteText(q){
+  let t='';
+  q.groups.forEach(g=>{
+    t+=`\n${g.title.toUpperCase()}\n`;
+    g.items.forEach(i=>{
+      t+=`- ${i.item}: ${i.desc}\n  ${i.qty} ${i.unit} × ${tpPeso(i.unitPrice)}`+(i.adj?`, adjustment ${tpSigned(i.adj)}`:'')+` = ${tpPeso(i.subtotal)}\n`;
+    });
+  });
+  t+=`\nSubtotal: ${tpPeso(q.subtotal)}\n`;
+  t+=q.discounts.length?q.discounts.map(d=>`Discount — ${d.label}: ${tpSigned(d.amount)}\n`).join(''):`Discounts & adjustments: none\n`;
+  t+=TP_PRICING.taxRate>0?`${TP_PRICING.taxLabel} (${Math.round(TP_PRICING.taxRate*100)}%): ${tpPeso(q.tax)}\n`:`VAT / taxes: not included in this estimate\n`;
+  return t;
+}
+
+/* Optional Services rows sa modules step; ginagamit ang parehong .tp-module markup at toggle handler */
+function tpOptionalHtml(){
+  return `<div class="tp-group-title">Optional services</div>`+TP_PRICING.optional.map(o=>{
+    const checked=tpState.selectedModules.has(o.id);
+    return `<div class="tp-module${checked?' checked':''}" data-module="${o.id}" role="checkbox" tabindex="0" aria-checked="${checked}">
+      <div class="tm-left">
+        <div class="tm-box"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-6" stroke="#100b06" stroke-width="1.6" fill="none"/></svg></div>
+        <div class="tm-text"><span class="tm-label">${o.label}</span><span class="tm-note">${o.desc}</span></div>
+      </div>
+      <span class="tm-price">${tpPeso(o.price)}</span>
+    </div>`;
+  }).join('');
+}
+
+/* EDIT ME: third-party / recurring costs. HINDI kasama sa ARTIBYTTE service fee at HINDI idinadagdag sa total.
+   Walang amount dito dahil hindi ko alam ang rates; ang provider ang nagbi-bill.
+   industries = optional; kung wala, lalabas sa lahat ng product. Hal. {label:'Hardware', note:'...', industries:['artisnack','artiplay']} */
+const TP_THIRDPARTY={
+  items:[
+    {label:'Payment gateway fees',    note:'Charged by the payment provider, where applicable'},
+    {label:'Hosting',                 note:'Billed by the hosting provider, where applicable'},
+    {label:'Domain',                  note:'Registered and renewed with the domain provider, where applicable'},
+    {label:'API fees',                note:'Charged by external services the system connects to'},
+    {label:'AI / API usage fees',     note:'Usage-based charges from AI model providers, where applicable'},
+    {label:'Software licenses',       note:'Third-party licenses and subscriptions, where applicable'},
+    {label:'SMS / email fees',        note:'Message delivery charges from the sending provider'},
+    {label:'Hardware',                note:'Devices, scanners or tablets, where applicable'}
+  ],
+  note:'These costs are billed by the third-party provider, not included in the one-time implementation fee above, and may recur. Amounts depend on your provider and usage.'
+};
+function tpThirdPartyList(){
+  const ind=tpIndustry(); if(!ind) return [];
+  return TP_THIRDPARTY.items.filter(x=>!x.industries||x.industries.indexOf(ind.id)>-1);
+}
+function tpThirdPartyHtml(){
+  const list=tpThirdPartyList(); if(!list.length) return '';
+  return `<div class="tp-group-title">Third-party &amp; recurring costs — not included above</div>`
+    +list.map(x=>`<div class="tp-item"><div class="ti-main"><span class="ti-name">${x.label}</span><span class="ti-desc">${x.note}</span></div><span class="ti-sub">Billed separately</span></div>`).join('')
+    +`<p class="tp-disclaimer">${TP_THIRDPARTY.note}</p>`;
+}
+function tpThirdPartyText(){
+  const list=tpThirdPartyList(); if(!list.length) return '';
+  return `\nTHIRD-PARTY & RECURRING COSTS (not included in the one-time implementation fee)\n`
+    +list.map(x=>`- ${x.label}: ${x.note}\n`).join('')
+    +`${TP_THIRDPARTY.note}\n`;
+}
+/* EDIT ME: recurring / ongoing fees. HINDI kasama sa one-time implementation fee at HINDI idinadagdag sa total nito.
+   Naka-off pa (walang laman). Bawat item:
+     label      = ipapakita sa client (kailangan)
+     note       = maikling paliwanag
+     amount     = peso (kailangan, higit sa 0)
+     period     = 'month' o 'year'
+     industries = optional; kung wala, lalabas sa lahat ng product
+   Halimbawa:
+     {label:'Maintenance & support', note:'Bug fixes, updates and support', amount:8000, period:'month', industries:['artiplay']}
+   Kapag walang laman, ang `note` lang ang lalabas (o wala kung blangko ito). */
+const TP_RECURRING={
+  items:[
+  ],
+  note:'Ongoing maintenance, hosting or support, if any, is quoted separately.',
+  footnote:'Recurring fees are billed separately from the one-time implementation fee. Final amounts are confirmed in the formal quotation.'
+};
+function tpRecurringList(){
+  const ind=tpIndustry(); if(!ind) return [];
+  return TP_RECURRING.items.filter(x=>x && x.label && typeof x.amount==='number' && x.amount>0
+    && (x.period==='month'||x.period==='year')
+    && (!x.industries||x.industries.indexOf(ind.id)>-1));
+}
+function tpRecurringSums(list){
+  const s={month:0,year:0};
+  list.forEach(x=>{ s[x.period]+=x.amount; });
+  return s;
+}
+function tpRecurringHtml(){
+  if(!tpIndustry()) return '';
+  const list=tpRecurringList();
+  if(!list.length) return TP_RECURRING.note?`<p class="tp-disclaimer">${TP_RECURRING.note}</p>`:'';
+  const s=tpRecurringSums(list);
+  return `<div class="tp-group-title">Ongoing / recurring — billed separately</div>`
+    +list.map(x=>`<div class="tp-item"><div class="ti-main"><span class="ti-name">${x.label}</span>${x.note?`<span class="ti-desc">${x.note}</span>`:''}</div><span class="ti-sub">${tpPeso(x.amount)} / ${x.period}</span></div>`).join('')
+    +(s.month>0?`<div class="tp-line"><span>Estimated ongoing, monthly</span><span>${tpPeso(s.month)} / month</span></div>`:'')
+    +(s.year>0?`<div class="tp-line"><span>Estimated ongoing, yearly</span><span>${tpPeso(s.year)} / year</span></div>`:'')
+    +`<p class="tp-disclaimer">${TP_RECURRING.footnote}</p>`;
+}
+function tpRecurringText(){
+  if(!tpIndustry()) return '';
+  const list=tpRecurringList();
+  if(!list.length) return TP_RECURRING.note?`\n${TP_RECURRING.note}\n`:'';
+  const s=tpRecurringSums(list);
+  return `\nONGOING / RECURRING (billed separately from the one-time fee)\n`
+    +list.map(x=>`- ${x.label}: ${tpPeso(x.amount)} / ${x.period}${x.note?' — '+x.note:''}\n`).join('')
+    +(s.month>0?`Estimated ongoing, monthly: ${tpPeso(s.month)} / month\n`:'')
+    +(s.year>0?`Estimated ongoing, yearly: ${tpPeso(s.year)} / year\n`:'')
+    +`${TP_RECURRING.footnote}\n`;
+}
+/* EDIT ME: packages bawat product. Naka-off pa (walang laman), kaya walang lalabas na link.
+   Bawat package:
+     name      = pangalan na makikita ng client (kailangan)
+     modules   = listahan ng module ids ng product na iyon (galing sa TALK_CATALOG)
+     locations = bilang ng branches (kung may hasLocations ang product; default 1)
+   Walang "best" o "recommended" flag: ikaw ang nagpapasya kung anong pangalan ang ilalagay.
+   Halimbawa:
+     artiplay:[
+       {name:'Essential',   modules:['roster','attendance']},
+       {name:'Expanded',    modules:['roster','attendance','payments','bytesense'], locations:2}
+     ] */
+const TP_PACKAGES={
+  byIndustry:{},
+  note:'Packages differ in scope. Prices come from the same catalog as the detailed estimate, and you can adjust any selection afterwards.'
+};
+function tpPackageList(){
+  const ind=tpIndustry(); if(!ind) return [];
+  return (TP_PACKAGES.byIndustry[ind.id]||[]).filter(p=>p&&p.name&&Array.isArray(p.modules));
+}
+function tpPackageMods(p,ind){
+  return (p.modules||[]).filter(id=>ind.modules.some(m=>m.id===id)); /* ids na wala sa catalog ay hindi isasama */
+}
+function tpPackageLocs(p,ind){ return ind.hasLocations?Math.max(1,p.locations||1):1; }
+function tpPackagePrice(p){
+  const ind=tpIndustry(), keep={m:tpState.selectedModules,l:tpState.locations,q:tpState.qty};
+  try{
+    tpState.selectedModules=new Set(tpPackageMods(p,ind));
+    tpState.locations=tpPackageLocs(p,ind);
+    tpState.qty={};
+    return tpBuildQuote().total;
+  } finally { tpState.selectedModules=keep.m; tpState.locations=keep.l; tpState.qty=keep.q; }
+}
+function tpPackagesLinkHtml(){
+  if(!tpPackageList().length) return '';
+  return `<div class="tp-options"><button class="tp-opt" data-action="open-packages">Compare packages<span class="tp-opt-sub">See what differs, then adjust anything</span></button></div>`;
+}
+function tpRenderPackages(){
+  const ind=tpIndustry(), pk=tpPackageList();
+  if(!ind||!pk.length){ tpState.step='modules'; tpRender(); return; }
+  tpSub.textContent=`${ind.name} packages`;
+  const cols=`grid-template-columns:1.5fr repeat(${pk.length},1fr)`;
+  const sets=pk.map(p=>new Set(tpPackageMods(p,ind)));
+  const shown=ind.modules.filter(m=>sets.some(s=>s.has(m.id)));
+  let g=`<div class="l h"></div>`+pk.map(p=>`<div class="h">${escapeHtml(p.name)}<span>${tpPeso(tpPackagePrice(p))}</span></div>`).join('');
+  g+=`<div class="l">Core system</div>`+pk.map(()=>`<div class="y">✓</div>`).join('');
+  shown.forEach((m,i)=>{ g+=`<div class="l">${m.label}</div>`+sets.map(s=>s.has(m.id)?`<div class="y">✓</div>`:`<div>—</div>`).join(''); });
+  if(ind.hasLocations) g+=`<div class="l">Branches</div>`+pk.map(p=>`<div>${tpPackageLocs(p,ind)}</div>`).join('');
+  g+=`<div class="l"></div>`+pk.map((p,i)=>`<div><button class="tp-btn ghost" data-action="pick-package" data-pkg="${i}">Start here</button></div>`).join('');
+  tpBody.innerHTML=`
+    ${tpProgressHtml(2)}
+    <div class="tp-msg">Here is how the packages differ. Pick one as a starting point, then add or remove anything.</div>
+    <div class="tp-cmp" style="${cols}">${g}</div>
+    <p class="tp-disclaimer">${TP_PACKAGES.note}</p>`;
+  tpFoot.innerHTML=`<div class="tp-btnrow"><button class="tp-btn ghost" data-action="back-modules">Back</button></div>`;
+}
 function tpProgressHtml(activeStep){
   const steps=['Business','Scope','Estimate','Contact'];
   const bars=steps.map((label,i)=>{
@@ -4651,7 +5239,10 @@ function tpRender(){
   if(tpState.step==='welcome') tpRenderWelcome();
   else if(tpState.step==='industry') tpRenderIndustry();
   else if(tpState.step==='modules') tpRenderModules();
+  else if(tpState.step==='custom') tpRenderCustom();
   else if(tpState.step==='quote') tpRenderQuote();
+  else if(tpState.step==='summary') tpRenderSummary();
+  else if(tpState.step==='packages') tpRenderPackages();
   else if(tpState.step==='contact') tpRenderContact();
   else if(tpState.step==='success') tpRenderSuccess();
   if(!skipAnim){
@@ -4695,6 +5286,29 @@ heroInquiryText=''; // shown once, consumed
   tpFoot.innerHTML=`<div class="tp-btnrow"><button class="tp-btn ghost" data-action="restart">Back</button></div>`;
 }
 
+/* EDIT ME: mga choices sa custom path. Palitan ang text dito kung gusto mo ng ibang ranges. */
+const TP_CUSTOM={
+  budgets:['Not sure','Under ₱50k','₱50k–₱100k','₱100k–₱250k','₱250k+'],
+  timelines:['ASAP','1–3 months','3–6 months','Flexible']
+};
+function tpChoiceHtml(group,list,cur){
+  return `<div class="tp-choices" role="radiogroup">`+list.map(v=>
+    `<button type="button" class="tp-opt${cur===v?' sel':''}" role="radio" aria-checked="${cur===v}" data-action="set-custom" data-group="${group}" data-val="${escapeHtml(v)}">${v}</button>`
+  ).join('')+`</div>`;
+}
+function tpRenderCustom(){
+  tpSub.textContent='Tell us what you need';
+  tpBody.innerHTML=`
+    ${tpProgressHtml(2)}
+    <div class="tp-msg">Tell us briefly what you're trying to build.</div>
+    <div class="tp-field"><label for="tpCustomNeed">What do you need?</label><textarea id="tpCustomNeed" aria-required="true" aria-describedby="tpCustomNeedErr">${escapeHtml(tpState.customNeed||'')}</textarea><p class="tp-error" id="tpCustomNeedErr" role="alert"></p></div>
+    <div class="tp-group-title">Approximate budget (optional)</div>
+    ${tpChoiceHtml('customBudget',TP_CUSTOM.budgets,tpState.customBudget)}
+    <div class="tp-group-title">Target timeline (optional)</div>
+    ${tpChoiceHtml('customTimeline',TP_CUSTOM.timelines,tpState.customTimeline)}
+    <p class="tp-disclaimer">Custom requirements are quoted manually. There is no automatic estimate for this path.</p>`;
+  tpFoot.innerHTML=`<div class="tp-btnrow"><button class="tp-btn ghost" data-action="back-industry">Back</button><button class="tp-btn primary" data-action="custom-continue">Continue</button></div>`;
+}
 function tpRenderModules(){
   const ind=tpIndustry();
  tpSub.textContent=`${ind.name} modules`;
@@ -4706,7 +5320,7 @@ function tpRenderModules(){
         <div class="tm-text"><span class="tm-label">${m.label}</span><span class="tm-note">${m.note}</span></div>
       </div>
       <span class="tm-price">${tpPeso(m.price)}</span>
-    </div>`;
+    </div>${tpDriverHtml('m:'+m.id,TP_MODULE_DRIVERS[m.id],checked)}${tpScopeHtml(tpScopeFor(ind,m.id))}`;
   }).join('');
   const locHtml=ind.hasLocations?`
     <div class="tp-qty">
@@ -4720,7 +5334,7 @@ function tpRenderModules(){
 /* === START: VEX COPY EDIT — modules intro === */
  tpBody.innerHTML=`
     ${tpProgressHtml(2)}
-    <div class="tp-msg">Base setup (<strong>${tpPeso(ind.base.price)}</strong>) is always included. Pick the modules that sound closest to what you need — we'll refine the exact scope together on a call:</div>    ${modHtml}
+    <div class="tp-msg">Base setup (<strong>${tpPeso(ind.base.price)}</strong>) is always included. Pick the modules that sound closest to what you need — we'll refine the exact scope together on a call:</div>    ${tpPackagesLinkHtml()}${modHtml}${tpProjectScopeHtml()}${tpOptionalHtml()}
     ${locHtml}`;
 /* === END: VEX COPY EDIT — modules intro === */
 /* === START: VEX COPY EDIT — modules footer CTA === */
@@ -4735,20 +5349,158 @@ function tpRenderModules(){
 /* === END: VEX COPY EDIT — modules footer CTA === */
 }
 
+/* EDIT ME: placeholder terms — palitan ng totoong terms mo */
+const TP_TERMS={
+  validDays:30,
+  assumptions:[
+    'Scope is based on the modules selected; final scope is confirmed after a discovery call.',
+    'Amounts are in PHP and exclude applicable taxes.',
+    'Data migration is included only when selected under Optional services. Custom integrations not listed are quoted separately.',
+    'Only items listed under "Included" are in scope. Anything else is handled as a change request and quoted separately.',
+    'Client will provide required branding assets.',
+    'Client will provide existing data where migration is requested.',
+    'Final implementation depends on confirmed requirements.'
+  ],
+  exclusions:[
+    'Third-party subscription fees',
+    'Hardware',
+    'Domain and hosting, where applicable',
+    'External API charges',
+    'Major scope changes',
+    'Additional integrations not listed',
+    'Additional revisions beyond the agreed scope',
+    'On-site training or deployment, unless agreed in writing',
+    'Anything not itemized above'
+  ]
+};
+/* EDIT ME: timeline. Fixed ito para sa lahat ng industry, hindi pa kinukuwenta mula sa napiling modules. */
+const TP_TIMELINE={
+  phases:[
+    {label:'Discovery & planning', duration:'2–3 days'},
+    {label:'Build',                duration:'2–3 weeks'},
+    {label:'Testing',              duration:'3–5 days'},
+    {label:'Deployment',           duration:'1–2 days'}
+  ],
+  total:'3–4 weeks',
+  note:'Estimated only. The timeline is confirmed once the scope is formally validated.'
+};
+function tpTimelineHtml(){
+  if(!tpIndustry()) return '';
+  return `<div class="tp-group-title">Estimated timeline</div>`
+    +TP_TIMELINE.phases.map(p=>`<div class="tp-line"><span>${p.label}</span><span>${p.duration}</span></div>`).join('')
+    +`<div class="tp-line"><span>Estimated total delivery</span><span>${TP_TIMELINE.total}</span></div>`
+    +`<p class="tp-disclaimer">${TP_TIMELINE.note}</p>`;
+}
+function tpTimelineText(){
+  if(!tpIndustry()) return '';
+  return `\nESTIMATED TIMELINE\n`
+    +TP_TIMELINE.phases.map(p=>`- ${p.label}: ${p.duration}\n`).join('')
+    +`Estimated total delivery: ${TP_TIMELINE.total}\n${TP_TIMELINE.note}\n`;
+}
+/* client-side reference lang ito, hindi pa unique-checked; totoong ID = kapag may backend na */
+/* EDIT ME: prefix ng quotation number. Random na 5-digit ito, HINDI sequential (kailangan ng backend para doon). */
+const TP_QUOTE_PREFIX='AB';
+function tpEstimateRef(){
+  if(!tpState.ref){
+    tpState.ref=TP_QUOTE_PREFIX+'-'+new Date().getFullYear()+'-'+String(Math.floor(Math.random()*100000)).padStart(5,'0');
+  }
+  return tpState.ref;
+}
+/* version: v1.0 sa unang labas ng quote; tumataas ang minor (v1.1, v1.2…) kapag nagbago ang laman ng quote */
+function tpScopeSig(){
+  return JSON.stringify(tpBuildQuote().items.map(i=>[i.item,i.qty,i.subtotal]));
+}
+function tpTouchVersion(){
+  const sig=tpScopeSig();
+  if(!tpState.version){ tpState.version={major:1,minor:0}; tpState.sig=sig; }
+  else if(tpState.sig!==sig){
+    tpState.version.minor++; tpState.sig=sig;
+    tpState.issueDate=null; tpState.validUntil=null; /* bagong version = bagong date at bagong validity */
+  }
+}
+function tpVersionLabel(){
+  const v=tpState.version||{major:1,minor:0};
+  return 'v'+v.major+'.'+v.minor;
+}
+function tpIssueDate(){
+  if(!tpState.issueDate) tpState.issueDate=new Date().toLocaleDateString('en-PH',{year:'numeric',month:'long',day:'numeric'});
+  return tpState.issueDate;
+}
+/* EDIT ME: payment schedule. Ang 50/30/20 ay ang halimbawa mo, hindi ko alam ang totoong terms ng ARTIBYTTE.
+   default = gagamitin kung walang sariling schedule ang industry.
+   byIndustry = override bawat service, hal. artiplay:[{stage:'Project commencement',pct:40},{stage:'Final delivery',pct:60}]
+   byIndustry na may [] = walang payment schedule para sa service na iyon.
+   Dapat 100 ang total ng pct; kung hindi, hindi ito ipapakita. */
+const TP_PAYMENT={
+  default:[
+    {stage:'Project commencement', pct:50},
+    {stage:'Development milestone', pct:30},
+    {stage:'Final delivery', pct:20}
+  ],
+  byIndustry:{},
+  note:'Payment terms are confirmed in the formal quotation.'
+};
+function tpPaymentRows(total){
+  const ind=tpIndustry(); if(!ind) return null;
+  const s=TP_PAYMENT.byIndustry[ind.id]||TP_PAYMENT.default;
+  if(!s||!s.length||s.reduce((a,x)=>a+x.pct,0)!==100) return null;
+  let paid=0;
+  return s.map((x,i)=>{
+    const amt=(i===s.length-1)?total-paid:Math.round(total*x.pct/100); /* huling stage ang sumasalo ng rounding */
+    paid+=amt;
+    return {stage:x.stage,pct:x.pct,amount:amt};
+  });
+}
+function tpPaymentHtml(total){
+  const rows=tpPaymentRows(total); if(!rows) return '';
+  return `<h6>Payment schedule</h6>`
+    +rows.map(r=>`<div class="tp-line"><span>${r.stage} — ${r.pct}%</span><span>${tpPeso(r.amount)}</span></div>`).join('')
+    +`<p class="tp-disclaimer">${TP_PAYMENT.note}</p>`;
+}
+function tpPaymentText(total){
+  const rows=tpPaymentRows(total); if(!rows) return '';
+  return `\nPayment schedule:\n`
+    +rows.map(r=>`- ${r.stage} (${r.pct}%): ${tpPeso(r.amount)}\n`).join('')
+    +`${TP_PAYMENT.note}\n`;
+}
+function tpValidUntil(){
+  if(!tpState.validUntil){ /* isang beses lang kinukuwenta; pareho na ang screen at email */
+    const d=new Date(); d.setDate(d.getDate()+TP_TERMS.validDays);
+    tpState.validUntil=d.toLocaleDateString('en-PH',{year:'numeric',month:'long',day:'numeric'});
+  }
+  return tpState.validUntil;
+}
 function tpRenderQuote(){
   const ind=tpIndustry();
   tpSub.textContent='Indicative range';  const {lines,total}=tpComputeQuote();
-  const lineHtml=lines.map(l=>`<div class="tp-line"><span>${l.label}</span><span>${tpPeso(l.price)}</span></div>`).join('');
+  tpTouchVersion();
+  const lineHtml=tpQuoteHtml(tpComputeQuote());
 /* === START: VEX COPY EDIT — quote screen reframed as discovery starting point === */
    tpBody.innerHTML=`
     ${tpProgressHtml(3)}
-    <div class="tp-msg"><span class="tp-eyebrow">${ind.name}</span>Here's a rough starting range based on what you picked — think of it as a conversation starter, not a final number:</div>    ${lineHtml}
-    <div class="tp-total"><span class="tt-label">Indicative range</span><span class="tt-value">${tpPeso(total)}</span></div>
-    <p class="tp-disclaimer">Want to discuss it? The real scope, pricing and timeline get set together, based on how your business actually runs.</p>`;
+    <div class="tp-msg"><span class="tp-eyebrow">${ind.name}</span>Here's a rough starting range based on what you picked — think of it as a conversation starter, not a final number:</div>    ${tpDriversHtml(tpComputeQuote())}
+    ${lineHtml}
+    <div class="tp-total"><span class="tt-label">Estimated one-time implementation fee</span><span class="tt-value">${tpPeso(total)}</span></div>
+    ${tpRecurringHtml()}
+    ${tpThirdPartyHtml()}
+    ${tpTimelineHtml()}
+    <div class="tp-terms">
+      <div class="tp-line"><span>Quotation #</span><span>${tpEstimateRef()}</span></div>
+      <div class="tp-line"><span>Version</span><span>${tpVersionLabel()}</span></div>
+      <div class="tp-line"><span>Date</span><span>${tpIssueDate()}</span></div>
+      <div class="tp-line"><span>Quotation valid until</span><span>${tpValidUntil()}</span></div>
+      <p class="tp-disclaimer">Pricing applies only until this date. After it, the scope and price are subject to re-quotation.</p>
+      ${tpPaymentHtml(total)}
+      <h6>Assumptions</h6>
+      <ul>${TP_TERMS.assumptions.map(a=>`<li>${a}</li>`).join('')}</ul>
+      <h6>Not included</h6>
+      <ul>${TP_TERMS.exclusions.map(x=>`<li>${x}</li>`).join('')}</ul>
+    </div>
+    <p class="tp-disclaimer">This is a preliminary estimate, not a formal quotation. The real scope, pricing and timeline get set together after we talk.</p>`;
   tpFoot.innerHTML=`
     <div class="tp-btnrow">
-      <button class="tp-btn ghost" data-action="back-modules">Back</button>
-      <button class="tp-btn primary" data-action="request-quote">Let's discuss it</button>
+      <button class="tp-btn ghost" data-action="back-modules">Edit selections</button>
+      <button class="tp-btn primary" data-action="to-summary">Review my summary</button>
     </div>
     <div class="tp-btnrow" style="margin-top:8px">
       <button class="tp-btn ghost" data-action="restart" style="flex:1">Start over</button>
@@ -4756,17 +5508,65 @@ function tpRenderQuote(){
 /* === END: VEX COPY EDIT — quote screen reframed as discovery starting point === */
 }
 
+function tpRenderSummary(){
+  const ind=tpIndustry();
+  if(!ind){ tpState.step='contact'; tpRender(); return; }
+  tpSub.textContent='Your project';
+  const q=tpComputeQuote();
+  const isSel=i=>(i.cat==='core'&&i.unit==='Project')||i.unit==='Module'||i.unit==='Integration';
+  const sel=q.items.filter(isSel), add=q.items.filter(i=>!isSel(i));
+  const nm=i=>i.item+(i.qty>1?' × '+i.qty:'');
+  const row=(l,r)=>`<div class="tp-sum-row"><span>${l}</span><i></i><b>${r}</b></div>`;
+  const ul=a=>`<ul class="tp-sum-list">${a.map(i=>`<li>${nm(i)}</li>`).join('')}</ul>`;
+  let inv=q.items.map(i=>row(nm(i),tpPeso(i.subtotal))).join('');
+  if(q.discounts.length||q.tax>0){
+    inv+=row('Subtotal',tpPeso(q.subtotal))
+      +q.discounts.map(d=>row(d.label,tpSigned(d.amount))).join('')
+      +(q.tax>0?row(TP_PRICING.taxLabel+' ('+Math.round(TP_PRICING.taxRate*100)+'%)',tpPeso(q.tax)):'');
+  }
+  const rec=tpRecurringList(), rs=tpRecurringSums(rec);
+  const recLine=rec.length
+    ?`<div class="tp-sum-meta">Ongoing, billed separately: `+[rs.month>0?tpPeso(rs.month)+' / month':'',rs.year>0?tpPeso(rs.year)+' / year':''].filter(Boolean).join(' + ')+`</div>`
+    :'';
+  tpBody.innerHTML=`
+    ${tpProgressHtml(3)}
+    <div class="tp-msg"><span class="tp-eyebrow">Your project</span><strong>${ind.name} — ${ind.tagline}</strong></div>
+    <div class="tp-group-title">Selected</div>${ul(sel)}
+    ${add.length?`<div class="tp-group-title">Additional</div>${ul(add)}`:''}
+    <div class="tp-group-title">Investment</div>
+    ${inv}
+    <div class="tp-total"><span class="tt-label">Estimated one-time fee</span><span class="tt-value">${tpPeso(q.total)}</span></div>
+    ${recLine}
+    <div class="tp-sum-meta">
+      Estimated timeline: ${TP_TIMELINE.total}<br>
+      Status: Preliminary estimate<br>
+      Quotation # ${tpEstimateRef()} · ${tpVersionLabel()}<br>
+      Valid until ${tpValidUntil()}
+    </div>
+    <p class="tp-disclaimer">Third-party costs are billed separately and are not included above. Final scope, pricing and timeline are confirmed after we talk.</p>`;
+  tpFoot.innerHTML=`<div class="tp-btnrow"><button class="tp-btn ghost" data-action="back-quote">Back</button><button class="tp-btn primary" data-action="request-quote">Continue</button></div>
+    <div class="tp-btnrow" style="margin-top:8px"><button class="tp-btn ghost" data-action="back-modules" style="flex:1">Edit selections</button></div>`;
+}
 function tpRenderContact(){
   const ind=tpIndustry();
    tpSub.textContent='Contact details';  tpBody.innerHTML=`
     ${tpProgressHtml(4)}
-    <div class="tp-msg">${ind?`We've got your estimate for <strong>${ind.name}</strong>. `:'Thanks for reaching out. '}Leave your details so we can follow up.</div>   <div class="tp-field"><label for="tpName">Name</label><input id="tpName" type="text" autocomplete="name" aria-required="true" aria-describedby="tpNameErr" placeholder="Juan Dela Cruz" value="${escapeHtml(tpState.contactName||'')}"><p class="tp-error" id="tpNameErr" role="alert"></p></div>
+    <div class="tp-msg">${ind?`We've got your estimate for <strong>${ind.name}</strong>. `:'Thanks for reaching out. '}${tpState.customPath?"Leave your details and we'll prepare a manual quotation.":'Leave your details so we can follow up.'}</div>   <div class="tp-field"><label for="tpName">Name</label><input id="tpName" type="text" autocomplete="name" aria-required="true" aria-describedby="tpNameErr" placeholder="Juan Dela Cruz" value="${escapeHtml(tpState.contactName||'')}"><p class="tp-error" id="tpNameErr" role="alert"></p></div>
     <div class="tp-field"><label>Company / Business</label><input id="tpCompany" type="text" placeholder="Company name" value="${escapeHtml(tpState.contactCompany||'')}"></div>
     <div class="tp-field"><label for="tpEmail">Email</label><input id="tpEmail" type="email" autocomplete="email" aria-required="true" aria-describedby="tpEmailErr" placeholder="you@company.com" value="${escapeHtml(tpState.contactEmail||'')}"><p class="tp-error" id="tpEmailErr" role="alert"></p></div>
+    <div class="tp-field"><label for="tpPhone">Phone (optional)</label><input id="tpPhone" type="tel" autocomplete="tel" placeholder="Phone number" value="${escapeHtml(tpState.contactPhone||'')}"></div>
+    <div class="tp-field"><label for="tpLocation">Location (optional)</label><input id="tpLocation" type="text" autocomplete="address-level2" placeholder="City" value="${escapeHtml(tpState.contactLocation||'')}"></div>
+    <details class="tp-scope tp-proj"${(tpState.projName||tpState.projType||tpState.projGoal||tpState.projCurrent||tpState.projLaunch)?' open':''}><summary>Add project details (optional)</summary>
+      <div class="tp-field"><label for="tpProjName">Project name</label><input id="tpProjName" type="text" value="${escapeHtml(tpState.projName||'')}"></div>
+      <div class="tp-field"><label for="tpProjType">Business type</label><input id="tpProjType" type="text" value="${escapeHtml(tpState.projType||'')}"></div>
+      <div class="tp-field"><label for="tpProjGoal">What are you trying to accomplish?</label><textarea id="tpProjGoal">${escapeHtml(tpState.projGoal||'')}</textarea></div>
+      <div class="tp-field"><label for="tpProjCurrent">Current system or process</label><textarea id="tpProjCurrent">${escapeHtml(tpState.projCurrent||'')}</textarea></div>
+      <div class="tp-field"><label for="tpProjLaunch">Target launch date</label><input id="tpProjLaunch" type="date" value="${escapeHtml(tpState.projLaunch||'')}"></div>
+    </details>
     <div class="tp-field"><label>Additional details (optional)</label><textarea id="tpNotes" placeholder="Any specifics, timeline, or questions">${escapeHtml(tpState.contactNotes||tpState.inquiry||'')}</textarea></div>`;  tpFoot.innerHTML=`
     <div class="tp-btnrow">
-      <button class="tp-btn ghost" data-action="${ind?'back-quote':'restart'}">Back</button>
-      <button class="tp-btn primary" data-action="submit-quote">Send</button>
+      <button class="tp-btn ghost" data-action="${ind?'back-summary':(tpState.customPath?'back-custom':'restart')}">Back</button>
+      <button class="tp-btn primary" data-action="submit-quote">${ind?'Request formal quotation':'Send'}</button>
     </div>`;
 }
 
@@ -4800,6 +5600,10 @@ function tpSubmit(){
   const company=(document.getElementById('tpCompany')||{}).value||'';
   const email=(document.getElementById('tpEmail')||{}).value||'';
   const notes=(document.getElementById('tpNotes')||{}).value||'';
+  const gv=id=>((document.getElementById(id)||{}).value||'').trim();
+  const phone=gv('tpPhone'), location=gv('tpLocation');
+  const projName=gv('tpProjName'), projType=gv('tpProjType'), projGoal=gv('tpProjGoal'), projCurrent=gv('tpProjCurrent'), projLaunchRaw=gv('tpProjLaunch');
+  const projLaunch=projLaunchRaw?new Date(projLaunchRaw+'T00:00:00').toLocaleDateString('en-PH',{year:'numeric',month:'long',day:'numeric'}):'';
   /* === START: VEX FIELD VALIDATION EDIT === */
   const nameOk=vexSetFieldError('tpName', name.trim() ? '' : 'Please enter your name.');
   /* === START: VEX EMAIL VALIDITY EDIT === */
@@ -4815,22 +5619,49 @@ function tpSubmit(){
   }
   /* === END: VEX FIELD VALIDATION EDIT === */
   const ind=tpIndustry();
-  let body=`Name: ${name}\nCompany: ${company}\nEmail: ${email}\n`;
+  let body=`CLIENT\nName: ${name}\nCompany: ${company}\nEmail: ${email}\n`;
+  if(phone) body+=`Phone: ${phone}\n`;
+  if(location) body+=`Location: ${location}\n`;
+  if(projName||projType||projGoal||projCurrent||projLaunch){
+    body+=`\nPROJECT\n`;
+    if(projName) body+=`Project name: ${projName}\n`;
+    if(projType) body+=`Business type: ${projType}\n`;
+    if(projGoal) body+=`Goal: ${projGoal}\n`;
+    if(projCurrent) body+=`Current system/process: ${projCurrent}\n`;
+    if(projLaunch) body+=`Target launch date: ${projLaunch}\n`;
+  }
   if(ind){
     const {lines,total}=tpComputeQuote();
-    body+=`\nInterested in: ${ind.name}\n\nItemized preliminary estimate:\n`;
-    lines.forEach(l=>{ body+=`- ${l.label}: ${tpPeso(l.price)}\n`; });
-    body+=`\nEstimated total: ${tpPeso(total)}\n(Preliminary — subject to validation. Discount/adjustment possible upon formal request.)\n`;
+    body+=`\nInterested in: ${ind.name}\n`;
+    body+=tpDriversText(tpComputeQuote());
+    body+=`\nItemized preliminary estimate:\n`;
+    body+=tpQuoteText(tpComputeQuote());
+    body+=`\nEstimated one-time implementation fee: ${tpPeso(total)}\n`;
+    body+=tpRecurringText();
+    body+=tpThirdPartyText();
+    body+=tpTimelineText();
+    body+=`\nQuotation #: ${tpEstimateRef()}\nVersion: ${tpVersionLabel()}\nDate: ${tpIssueDate()}\nQuotation valid until: ${tpValidUntil()}\nPricing applies only until this date. After it, the scope and price are subject to re-quotation.\n`;
+    body+=tpPaymentText(total);
+    body+=`\nAssumptions:\n`+TP_TERMS.assumptions.map(a=>`- ${a}\n`).join('');
+    body+=`\nNot included:\n`+TP_TERMS.exclusions.map(x=>`- ${x}\n`).join('');
+    body+=`\nThis is a preliminary estimate, not a formal quotation. A formal quotation follows after a discovery call.\n`;
   } else {
-    body+=`\nInterested in: Something new — no product selected yet\n`;
+    if(tpState.customPath){
+      body+=`\nCUSTOM REQUIREMENT (manual quotation requested)\n`;
+      body+=`What they need: ${tpState.customNeed||''}\n`;
+      if(tpState.customBudget) body+=`Approximate budget: ${tpState.customBudget}\n`;
+      if(tpState.customTimeline) body+=`Target timeline: ${tpState.customTimeline}\n`;
+    } else {
+      body+=`\nInterested in: Something new — no product selected yet\n`;
+    }
   }
   if(notes) body+=`\nNotes:\n${notes}\n`;
-  const subject=`Quote Request — ${ind?ind.name:'General'} — ${company||name}`;
+  const subject=`Formal Quotation Request${ind?' '+tpEstimateRef()+' '+tpVersionLabel():''} — ${ind?ind.name:(tpState.customPath?'Custom requirement':'General')} — ${company||name}`;
   /* === START: VEX SEND STATE EDIT === */
   const mailto=`mailto:hello@artibytte.co?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
   tpState.mailto=mailto; // kept for "Open email again"
   const sendBtn=tpFoot.querySelector('[data-action="submit-quote"]');
-  const backBtn=tpFoot.querySelector('[data-action="back-quote"],[data-action="restart"]');
+  const backBtn=tpFoot.querySelector('[data-action="back-summary"],[data-action="back-quote"],[data-action="back-custom"],[data-action="restart"]');
   if(sendBtn){ sendBtn.disabled=true; sendBtn.textContent='Opening your email client…'; sendBtn.setAttribute('aria-busy','true'); }
   if(backBtn) backBtn.disabled=true;
   window.location.href=mailto;
@@ -4851,6 +5682,8 @@ function tpToggleModule(el, id){
   const on=tpState.selectedModules.has(id);
   el.classList.toggle('checked',on);
   el.setAttribute('aria-checked',on?'true':'false');
+  const drv=el.nextElementSibling;
+  if(drv && drv.dataset && drv.dataset.drvFor===id) drv.hidden=!on;
   tpRefreshModulesFooter(); // total updates in the same tick, no animation
 }
 /* === END: VEX MODULE IN-PLACE TOGGLE EDIT === */
@@ -4860,24 +5693,54 @@ function tpHandleClick(e){
   if(!opt) return;
 
   if(opt.dataset.action==='start'){ tpState.step='industry'; tpRender(); return; }
-  if(opt.dataset.action==='goto-contact-direct'){ tpState.industryId=null; tpState.step='contact'; tpRender(); return; }
+  if(opt.dataset.action==='goto-contact-direct'){ tpState.industryId=null; tpState.customPath=false; tpState.step='contact'; tpRender(); return; }
  if(opt.dataset.action==='restart'){ tpState={step:'welcome',industryId:null,selectedModules:new Set(),locations:1,contactName:'',contactCompany:'',contactEmail:'',contactNotes:''}; tpRender(); return; }  if(opt.dataset.action==='back-industry'){ tpState.step='industry'; tpRender(); return; }
   if(opt.dataset.action==='back-modules'){ tpState.step='modules'; tpRender(); return; }
+  if(opt.dataset.action==='back-custom'){ tpState.step='custom'; tpRender(); return; }
+  if(opt.dataset.action==='set-custom'){
+    const g=opt.dataset.group, v=opt.dataset.val;
+    if(g!=='customBudget' && g!=='customTimeline') return;
+    tpState[g]=(tpState[g]===v)?'':v; /* pindutin ulit para i-clear */
+    opt.parentNode.querySelectorAll('.tp-opt').forEach(b=>{
+      const on=tpState[g]===b.dataset.val;
+      b.classList.toggle('sel',on); b.setAttribute('aria-checked',on?'true':'false');
+    });
+    return;
+  }
+  if(opt.dataset.action==='custom-continue'){
+    const need=((document.getElementById('tpCustomNeed')||{}).value||'').trim();
+    if(!vexSetFieldError('tpCustomNeed', need?'':'Please tell us briefly what you need.')){ document.getElementById('tpCustomNeed').focus(); return; }
+    tpState.customNeed=need; tpState.step='contact'; tpRender(); return;
+  }
   if(opt.dataset.action==='back-quote'){ tpState.step='quote'; tpRender(); return; }
   if(opt.dataset.action==='to-quote'){ tpState.step='quote'; tpRender(); return; }
   if(opt.dataset.action==='request-quote'){ tpState.step='contact'; tpRender(); return; }
+  if(opt.dataset.action==='to-summary'){ tpState.step='summary'; tpRender(); return; }
+  if(opt.dataset.action==='back-summary'){ tpState.step='summary'; tpRender(); return; }
+  if(opt.dataset.action==='open-packages'){ tpState.step='packages'; tpRender(); return; }
+  if(opt.dataset.action==='pick-package'){
+    const ind=tpIndustry(), p=tpPackageList()[+opt.dataset.pkg];
+    if(!ind||!p) return;
+    tpState.selectedModules=new Set(tpPackageMods(p,ind));
+    tpState.locations=tpPackageLocs(p,ind);
+    tpState.qty={};
+    tpState.step='modules'; tpRender(); return;
+  }
   if(opt.dataset.action==='submit-quote'){ tpSubmit(); return; }
   if(opt.dataset.action==='reopen-mail'){ if(tpState.mailto) window.location.href=tpState.mailto; return; }
+  if(opt.dataset.action==='qty-inc'||opt.dataset.action==='qty-dec'){ tpStepQty(opt.dataset.qkey,opt.dataset.action==='qty-inc'?1:-1); return; }
   if(opt.dataset.action==='loc-inc'){ tpState.locations=Math.min(50,tpState.locations+1); tpRefreshModulesFooter(); return; }
   if(opt.dataset.action==='loc-dec'){ tpState.locations=Math.max(1,tpState.locations-1); tpRefreshModulesFooter(); return; }
 
   if(opt.dataset.industry){
     if(opt.dataset.industry==='other'){
       tpState.industryId=null;
-      tpState.step='contact';
+      tpState.customPath=true;
+      tpState.step='custom';
     } else {
+      tpState.customPath=false;
       tpState.industryId=opt.dataset.industry;
-      tpState.selectedModules=new Set();
+      tpState.selectedModules=new Set();tpState.qty={};
       tpState.locations=1;
       tpState.step='modules';
     }
@@ -4904,6 +5767,14 @@ tpBody.addEventListener('input',function(e){
   else if(e.target.id==='tpCompany') tpState.contactCompany=e.target.value;
   else if(e.target.id==='tpEmail') tpState.contactEmail=e.target.value;
   else if(e.target.id==='tpNotes') tpState.contactNotes=e.target.value;
+  else if(e.target.id==='tpCustomNeed') tpState.customNeed=e.target.value;
+  else if(e.target.id==='tpPhone') tpState.contactPhone=e.target.value;
+  else if(e.target.id==='tpLocation') tpState.contactLocation=e.target.value;
+  else if(e.target.id==='tpProjName') tpState.projName=e.target.value;
+  else if(e.target.id==='tpProjType') tpState.projType=e.target.value;
+  else if(e.target.id==='tpProjGoal') tpState.projGoal=e.target.value;
+  else if(e.target.id==='tpProjCurrent') tpState.projCurrent=e.target.value;
+  else if(e.target.id==='tpProjLaunch') tpState.projLaunch=e.target.value;
 });/* === END: VEX FIELD VALIDATION EDIT === */
 /* === START: VEX MODULE KEYBOARD EDIT === */
 tpBody.addEventListener('keydown',function(e){
