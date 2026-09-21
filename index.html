@@ -2692,6 +2692,7 @@ const MediaFit=(function(){
   const MODES=['cover','contain','smart-cover','smart-contain'];
   const CFG={
     defaultMode:'smart-cover',
+    zoom:{byUsage:{fullscreen:.8},byFile:{}},   /* .8 = 20% mas maliit ang zoom kaysa cover; 1 = normal cover */
     byUsage:{bleed:'cover','bleed-screen':'cover'},        /* hal. {card:'cover', hero:'smart-contain'} */
     /* === FOCAL POINT: filename (lowercase) -> {x,y} sa % ng larawan. "Protektahan ang bahaging ito kapag na-crop." === */
     video:{
@@ -2822,6 +2823,20 @@ const MediaFit=(function(){
       }
       st.safe={scale:+(s/sc).toFixed(3)};
     }
+    const zf=zoomFor(el,usage);
+    if(zf<1&&mode!=='contain'){
+      const bw=wrap.clientWidth,bh=wrap.clientHeight;
+      const sc=Math.max(bw/n.w,bh/n.h), sn=Math.min(bw/n.w,bh/n.h);
+      const s=sc*zf, W=n.w*s, H=n.h*s;
+      const fpz=focalFor(el)||{x:50,y:50};
+      const pl=(frame,size,c)=>size>=frame?Math.min(0,Math.max(frame-size,frame/2-c*size)):(frame-size)/2;
+      const L=pl(bw,W,fpz.x/100), T=pl(bh,H,fpz.y/100);
+      const k=s/sn, dw=n.w*sn, dh=n.h*sn;
+      fit='contain';
+      el.style.objectPosition='50% 50%';
+      el.style.transformOrigin='0 0';
+      el.style.transform='translate('+(L-k*((bw-dw)/2)).toFixed(2)+'px,'+(T-k*((bh-dh)/2)).toFixed(2)+'px) scale('+k.toFixed(4)+')';
+    }
     wrap.dataset.fit=fit;
     wrap.style.setProperty('--src-ratio',sr.toFixed(3));
     wrap.style.setProperty('--box-ratio',br.toFixed(3));
@@ -2831,6 +2846,12 @@ const MediaFit=(function(){
   }
 
   /* === FOCAL POINT helper: data-focal="38,42" (sa mismong media o sa parent) > CFG.focalPoint[file] === */
+  function zoomFor(el,usage){
+    const file=((el.currentSrc||el.src||'').split('?')[0].split('/').pop()||'').toLowerCase();
+    const raw=el.dataset.zoom!=null?el.dataset.zoom:(CFG.zoom.byFile[file]!=null?CFG.zoom.byFile[file]:CFG.zoom.byUsage[usage]);
+    const z=parseFloat(raw);
+    return (isFinite(z)&&z>0&&z<1)?z:1;
+  }
   function focalFor(el){
     const file=((el.currentSrc||el.src||'').split('?')[0].split('/').pop()||'').toLowerCase();
     const host=el.closest?el.closest('[data-focal]'):null;
@@ -6040,4 +6061,5 @@ const AUTO_MS=2600;                                   // time per frame before a
 </script>
 </body>
 </html>
+
 
