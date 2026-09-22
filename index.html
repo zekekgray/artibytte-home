@@ -1039,13 +1039,22 @@ footer > .wrap{margin:0;max-width:100%}
 /* === END: FOOTER LEFT-AXIS EDIT === */
 /* === START: FOOTER EDITORIAL === */
 /* === START: FOOTER SPACING EDIT === */
-footer{padding:96px 0 32px;border-top:1px solid var(--line-dark)}
-.footgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));max-width:1180px;gap:48px;padding-bottom:80px}
-.footgrid .col h5{font-size:11.5px;color:var(--mist);letter-spacing:.16em;text-transform:uppercase;margin-bottom:20px;font-weight:500}
-.footgrid .col a,.footlink{display:block;font-size:14px;color:var(--mist2);margin-bottom:12px;transition:.2s}
-.footlink{background:transparent;border:none;font-family:var(--sans);cursor:pointer;padding:0;text-align:left}
+/* === START: FOOTER APPLE-STYLE CENTERING EDIT === */
+footer{padding:80px 0 32px;border-top:1px solid var(--line-dark);text-align:center}
+.footgrid{display:flex;flex-wrap:wrap;justify-content:center;max-width:900px;margin:0 auto;gap:56px;padding-bottom:56px}
+.footgrid .col{min-width:140px;text-align:center}
+.footgrid .col h5{font-size:11.5px;color:var(--mist);letter-spacing:.16em;text-transform:uppercase;margin-bottom:18px;font-weight:500}
+.footgrid .col a,.footlink{display:block;font-size:14px;color:var(--mist2);margin-bottom:11px;transition:.2s}
+.footlink{background:transparent;border:none;font-family:var(--sans);cursor:pointer;padding:0;text-align:center;width:100%}
 .footgrid .col a:hover,.footlink:hover{color:var(--bronze-light)}
-.footbottom{display:flex;justify-content:space-between;align-items:center;font-size:12.5px;color:var(--mist);border-top:1px solid var(--line-dark);padding-top:24px;flex-wrap:wrap;gap:12px}
+.footsocial{display:flex;justify-content:center;gap:16px;margin:0 0 40px}
+.footsocial a{width:36px;height:36px;border-radius:50%;border:1px solid var(--line-dark2);display:flex;align-items:center;justify-content:center;color:var(--mist2);transition:.2s}
+.footsocial a:hover{border-color:var(--bronze);color:var(--bronze-light)}
+.footsocial a svg{width:16px;height:16px}
+.footbottom{display:flex;flex-direction:column;align-items:center;gap:14px;font-size:12.5px;color:var(--mist);border-top:1px solid var(--line-dark);padding-top:24px;max-width:900px;margin:0 auto}
+.footlegal{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 18px}
+@media(max-width:700px){.footgrid{gap:36px 28px}.footgrid .col{min-width:120px}}
+/* === END: FOOTER APPLE-STYLE CENTERING EDIT === */
 /* === END: FOOTER SPACING EDIT === */
 .footlegal a{transition:.2s}
 .footlegal a:hover{color:var(--bronze-light)}
@@ -1602,124 +1611,17 @@ setTimeout(function(){
     </form>
     <!-- === END: HEADER SEARCH-PILL CTA === -->
   </div>
+  <!-- === START: NAV SUBDOMAIN LINKS EDIT === -->
   <nav class="links">
-    <div class="navitem">
-      <a href="#foundation">Platform</a>
-      <div class="navcurtain" aria-hidden="true">
-        <div class="navcurtain-inner">
-          <div>
-            <h5>One platform</h5>
-            <p>One proven foundation, adapted to the way each business actually works.</p>
-            <a class="navcurtain-link" href="#" data-company="one-foundation">One proven foundation</a>
-          </div>
-          <div>
-            <h5>How it works</h5>
-            <a class="navcurtain-link" href="#" data-company="our-approach">Tell us how your business works</a>
-            <a class="navcurtain-link" href="#" data-company="our-approach">We build the system around it</a>
-            <a class="navcurtain-link" href="#" data-company="our-approach-improve">You use it. We keep improving it.</a>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="navitem">
-      <a href="#products">Products</a>
-      <div class="navcurtain" aria-hidden="true">
-        <div class="navcurtain-inner">
-          <div>
-            <h5>ArtiByte Ecosystem</h5>
-            <a class="navcurtain-link" href="#products">ArtiPlay — Sports academies</a>
-            <a class="navcurtain-link" href="#products">ArtiStock — Inventory &amp; operations</a>
-            <a class="navcurtain-link" href="#products">ArtiSnack — Food &amp; retail POS</a>
-            <a class="navcurtain-link" href="#products">ArtiDrive — Vehicle care &amp; maintenance</a>
-            <a class="navcurtain-link" href="#products">ArtiHome — Home care &amp; maintenance</a>
-          </div>
-          <div>
-            <h5>&nbsp;</h5>
-            <a class="navcurtain-link" href="#products">Business Health Toolkit</a>
-            <a class="navcurtain-link" href="#products">VEX AI — Automation</a>
-            <a class="navcurtain-link" href="#products">ArtiField — Construction control</a>
-
-            <a class="navcurtain-link" href="#products">OWLBOUND — Games &amp; engagement</a>
-            <a class="navcurtain-link" href="#products">ArtiSlide — Interactive presentations</a>
-            <a class="navcurtain-link" href="#products">ATH•NA — Digital identity cards</a>
-          </div>
-          <div>
-            <h5>Built on one foundation</h5>
-            <p>Specialized systems, each shaped around a real-world workflow.</p>
-            <a class="navcurtain-link" href="#" data-company="ecosystem-map">View the full ecosystem</a>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="navitem">
-      <a href="#products">Work</a>
-      <div class="navcurtain" aria-hidden="true">
-        <div class="navcurtain-inner">
-          <div>
-            <h5>What we build</h5>
-            <a class="navcurtain-link" href="#" data-company="our-work">Our work</a>
-            <a class="navcurtain-link" href="#" data-company="built-with-businesses">Built with businesses</a>
-            <a class="navcurtain-link" href="#" data-company="demos">Product demonstrations</a>
-          </div>
-          <div>
-            <h5>Built for real workflows</h5>
-            <a class="navcurtain-link" href="#" data-company="ecosystems">Explore the ecosystem</a>
-            <a class="navcurtain-link" href="#" data-company="capabilities">See product capabilities</a>
-          </div>
-          <div>
-            <h5>Proof through the product</h5>
-            <p>Explore the systems themselves and the problems they are designed to solve.</p>
-            <a class="navcurtain-link" href="#" data-company="systems">Explore the systems</a>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="navitem">
-      <a href="#foundation">Company</a>
-      <div class="navcurtain" aria-hidden="true">
-        <div class="navcurtain-inner">
-          <div>
-            <h5>About ArtiByte</h5>
-            <a class="navcurtain-link" href="#" data-company="story">Our story</a>
-            <a class="navcurtain-link" href="#" data-company="vision">Vision &amp; mission</a>
-          </div>
-          <div>
-            <h5>Leadership</h5>
-            <a class="navcurtain-link" href="#" data-company="founder">Founder &amp; perspective</a>
-            <a class="navcurtain-link" href="#" data-company="principles">Our principles</a>
-          </div>
-          <div>
-            <h5>Connect</h5>
-            <a class="navcurtain-link" href="#" data-company="work-with-us">Work with us</a>
-            <a class="navcurtain-link" href="#" data-company="contact">Contact ArtiByte</a>
-            <a class="navcurtain-link" href="#" data-company="partnerships">Partnerships</a>
-          </div>
-        </div>
-      </div>
-    </div>
-      <div class="navitem">
-      <a href="#" data-company="careers">Careers</a>
-      <div class="navcurtain" aria-hidden="true">
-        <div class="navcurtain-inner">
-          <div>
-            <h5>Join ArtiBytte</h5>
-            <a class="navcurtain-link" href="#" data-company="careers">Careers at ArtiBytte</a>
-            <a class="navcurtain-link" href="#" data-company="work-with-us">Work with us</a>
-          </div>
-          <div>
-            <h5>Opportunities</h5>
-            <a class="navcurtain-link" href="#" data-company="careers-roles">Open roles</a>
-            <a class="navcurtain-link" href="#" data-company="careers-talent">Join the talent pool</a>
-          </div>
-          <div>
-            <h5>How we hire</h5>
-            <p>Real conversations, real work, and a clear picture of where things stand.</p>
-            <a class="navcurtain-link" href="#" data-company="careers-process">Our hiring process</a>
-          </div>
-        </div>
-      </div>
-    </div>
+    <div class="navitem"><a href="https://artibytte.com">Home</a></div>
+    <div class="navitem"><a href="https://products.artibytte.com">Products</a></div>
+    <div class="navitem"><a href="https://vex.artibytte.com">Vex</a></div>
+    <div class="navitem"><a href="https://work.artibytte.com">Work</a></div>
+    <div class="navitem"><a href="https://company.artibytte.com">Company</a></div>
+    <div class="navitem"><a href="https://connect.artibytte.com">Connect</a></div>
+    <div class="navitem"><a href="https://careers.artibytte.com">Careers</a></div>
   </nav>
+  <!-- === END: NAV SUBDOMAIN LINKS EDIT === -->
 </header>
 
 <main id="top">
@@ -2498,31 +2400,56 @@ setTimeout(function(){
 
 </main>
 
+<!-- === START: FOOTER APPLE-STYLE COMPLETE EDIT === -->
 <footer>
   <div class="wrap">
     <div class="footgrid">
-      <div class="col"><h5>Platform</h5>
-        <a href="#foundation">The ArtiByte Way</a><a href="#" data-company="our-approach">How It Works</a><a href="#foundation">Technology</a><a href="#approach">ArtiOne</a>
-      </div>
-      <div class="col"><h5>Ecosystem</h5>
-        <a href="#products">ArtiPlay</a><a href="#products">ArtiStock</a><a href="#products">ArtiSnack</a><a href="#products">Business Health Toolkit</a><a href="#products">VEX AI</a><a href="#products">ArtiField</a><a href="#products">OWLBOUND</a><a href="#products">ArtiSlide</a><a href="#products">ArtiDrive</a><a href="#products">ArtiHome</a><a href="#products">ATH•NA</a>
+      <div class="col"><h5>Site</h5>
+        <a href="https://artibytte.com">Home</a>
+        <a href="https://products.artibytte.com">Products</a>
+        <a href="https://vex.artibytte.com">Vex</a>
+        <a href="https://work.artibytte.com">Work</a>
       </div>
       <div class="col"><h5>Company</h5>
-        <a href="#" data-company="story">About ArtiByte</a>
-        <a href="#" data-company="founder">Founder &amp; Vision</a>
-       <a href="#" data-company="built-with-businesses">Gallery</a>
-        <a href="#" data-company="partnerships">Partnerships</a>
-        <a href="#" data-company="contact">Contact</a>
-        <a href="#" data-company="work-with-us">Work With Us</a>
-        <a href="#" data-company="careers">Careers</a>
+        <a href="https://company.artibytte.com">About</a>
+        <a href="https://connect.artibytte.com">Connect</a>
+        <a href="https://careers.artibytte.com">Careers</a>
+        <a href="https://company.artibytte.com/partnerships">Partnerships</a>
+      </div>
+      <div class="col"><h5>Ecosystem</h5>
+        <a href="https://products.artibytte.com/artiplay">ArtiPlay</a>
+        <a href="https://products.artibytte.com/artistock">ArtiStock</a>
+        <a href="https://products.artibytte.com/artisnack">ArtiSnack</a>
+        <a href="https://products.artibytte.com/vexai">VEX AI</a>
+        <a href="https://products.artibytte.com/artifield">ArtiField</a>
+        <a href="https://products.artibytte.com/athna">ATH•NA</a>
+      </div>
+      <div class="col"><h5>Support</h5>
+        <a href="https://connect.artibytte.com">Contact us</a>
+        <a href="https://connect.artibytte.com/partnerships">Partner with us</a>
+        <a href="https://work.artibytte.com/demos">Request a demo</a>
       </div>
     </div>
+
+    <div class="footsocial" aria-label="Social links">
+      <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24" fill="none"><path d="M15 8.5h2V5.5h-2c-2 0-3.5 1.5-3.5 3.5v2H9.5v3H11.5v7h3v-7h2.2l.8-3H14.5V9c0-.3.2-.5.5-.5z" fill="currentColor"/></svg></a>
+      <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="3.6"/><circle cx="17" cy="7" r="1"/></svg></a>
+      <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none"><rect x="3.5" y="8.5" width="3" height="12" fill="currentColor"/><circle cx="5" cy="5" r="1.8" fill="currentColor"/><path d="M10.5 8.5h3v1.8c.7-1.2 2-2 3.6-2 3 0 3.9 1.8 3.9 4.8V20.5h-3v-6.8c0-1.5-.6-2.5-1.9-2.5-1.2 0-1.9.9-2.2 1.7-.1.3-.1.7-.1 1.1v6.5h-3z" fill="currentColor"/></svg></a>
+      <a href="#" aria-label="X / Twitter"><svg viewBox="0 0 24 24" fill="none"><path d="M4 4l16 16M20 4L4 20" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></a>
+    </div>
+
     <div class="footbottom">
       <span>© 2026 artibytte. All rights reserved.</span>
-      <span class="footlegal"><a href="#">Privacy</a> · <a href="#">Terms</a></span>
+      <span class="footlegal">
+        <a href="https://artibytte.com/privacy">Privacy Policy</a> ·
+        <a href="https://artibytte.com/terms">Terms of Service</a> ·
+        <a href="https://artibytte.com/cookies">Cookie Policy</a> ·
+        <a href="https://artibytte.com/sitemap">Sitemap</a>
+      </span>
     </div>
   </div>
 </footer>
+<!-- === END: FOOTER APPLE-STYLE COMPLETE EDIT === -->
 
 <div class="pmoment" id="pmoment" aria-hidden="true">
   <div class="pmoment-inner">
@@ -6061,5 +5988,5 @@ const AUTO_MS=2600;                                   // time per frame before a
 </script>
 </body>
 </html>
-
+</html>
 
