@@ -1494,7 +1494,7 @@ setTimeout(function(){
   </div>
   <!-- === START: NAV SUBDOMAIN LINKS EDIT === -->
   <nav class="links">
-    <div class="navitem"><a href="https://artibytte.com">Home</a></div>
+    <div class="navitem"><a href="https://artibytte.com" aria-current="page">Home</a></div>
     <div class="navitem"><a href="https://products.artibytte.com">Products</a></div>
     <div class="navitem"><a href="https://vex.artibytte.com">Vex</a></div>
     <div class="navitem"><a href="https://work.artibytte.com">Work</a></div>
@@ -1503,6 +1503,12 @@ setTimeout(function(){
     <div class="navitem"><a href="https://career.artibytte.com">Careers</a></div>
   </nav>
   <!-- === END: NAV SUBDOMAIN LINKS EDIT === -->
+  <!-- ARTI-SURG-HOME-ACTIVE-NAV-7K4P2 -->
+  <style>
+  nav.links > .navitem > a[aria-current="page"]{color:var(--bronze-light)}
+  nav.links > .navitem > a[aria-current="page"]::after{transform:scaleX(1);transform-origin:left;background:var(--bronze-light)}
+  header.on-light nav.links > .navitem > a[aria-current="page"]{color:var(--bronze-deep)}
+  </style>
 </header>
 
 <main id="top">
