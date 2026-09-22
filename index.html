@@ -3100,51 +3100,7 @@ window.addEventListener('resize',setHeaderH);
 if(document.fonts&&document.fonts.ready) document.fonts.ready.then(setHeaderH);
 if(window.ResizeObserver) new ResizeObserver(setHeaderH).observe(header);
 
-/* mega menu controller — one state drives BOTH the curtain (down) and the grid line (up) */
-(function(){
-  const items=[...header.querySelectorAll('.navitem')];
-  const bar=header.querySelector('.bar');
-  let active=null, closeT=null;
-
-  function setOpen(item){
-    clearTimeout(closeT);
-    if(item===active) return;
-    const swapping=!!active && !!item;
-    if(swapping) header.classList.add('swap');
-    items.forEach(i=>i.classList.toggle('open',i===item));
-    header.classList.toggle('menu-open',!!item);
-    active=item;
-    if(swapping){
-      void header.offsetHeight; // commit the instant swap before re-enabling transitions
-      requestAnimationFrame(()=>header.classList.remove('swap'));
-    }
-  }
-
-  items.forEach(it=>{
-    it.addEventListener('mouseenter',()=>setOpen(it));
-    it.addEventListener('focusin',e=>{ if(e.target.matches(':focus-visible')) setOpen(it); }); // keyboard only
-
-    // Top-level trigger link (Platform / Products / Approach / How we work):
-    // clicking it should only OPEN/TOGGLE the dropdown — never navigate —
-    // until the user actually picks something inside the curtain.
-    const trigger = it.querySelector(':scope > a');
-    if(trigger){
-      trigger.addEventListener('click',(e)=>{
-        e.preventDefault();
-        if(it===active) setOpen(null); // clicking again while open = close it
-        else setOpen(it);
-      });
-    }
-
-    // Links INSIDE the curtain are the real navigation — these still
-    // jump to the section and close the menu as before.
-    it.querySelectorAll('.navcurtain a').forEach(a=>a.addEventListener('click',()=>{ setOpen(null); a.blur(); }));
-  });
-  header.addEventListener('mouseleave',()=>{ closeT=setTimeout(()=>setOpen(null),90); });
-  bar.addEventListener('mouseenter',()=>setOpen(null));
-  header.addEventListener('focusout',e=>{ if(!header.contains(e.relatedTarget)) setOpen(null); });
-  document.addEventListener('keydown',e=>{ if(e.key==='Escape') setOpen(null); });
-})();
+<!-- mega menu controller removed — nav links now navigate directly to subdomains -->
 
 /* reveal on scroll */
 const io=new IntersectionObserver(es=>{
@@ -5989,4 +5945,3 @@ const AUTO_MS=2600;                                   // time per frame before a
 </body>
 </html>
 </html>
-
