@@ -230,126 +230,7 @@ header.swap .navitem .navcurtain{transition:none!important}
 @media(max-width:860px){.hero .wrap{padding-right:26px}}
 /* === END: HERO LEFT-ALIGN — asymmetric right negative space === */
 
-/* === START: HERO FLOWER OF LIFE — animated sacred geometry in the right negative space === */
-.hero-flower{
-  position:absolute;
-  right:clamp(20px,6vw,90px);
-  top:50%;
-  transform:translateY(-50%);
-  width:min(44.2vw,624px);
-  aspect-ratio:1/1;
-  pointer-events:none;
-  z-index:0;
-  opacity:.9;
-}
-.hero-flower svg{width:100%;height:100%;display:block}
-.hero-flower circle{
-  fill:none;
-  stroke:rgba(227,178,127,.4);
-  stroke-width:2.55;
-  stroke-dasharray:214;
-  animation-duration:3.25s;
-  animation-delay:1s;
-  animation-iteration-count:1;
-  animation-fill-mode:both;
-  animation-timing-function:cubic-bezier(.65,0,.35,1);
-}
-.hero-flower .fl-c0{
-  animation-name:flowerC0,flowerC0Fill;
-  animation-duration:3.25s,1.5s;
-  animation-delay:1s,2.625s;
-  animation-timing-function:cubic-bezier(.65,0,.35,1),cubic-bezier(.65,0,.35,1);
-  animation-iteration-count:1,1;
-  animation-fill-mode:both,both;
-}
-.hero-flower .fl-c1{animation-name:flowerC1}
-.hero-flower .fl-c2{animation-name:flowerC2}
-.hero-flower .fl-c3{animation-name:flowerC3}
-.hero-flower .fl-c4{animation-name:flowerC4}
-.hero-flower .fl-c5{animation-name:flowerC5}
-.hero-flower .fl-c6{animation-name:flowerC6}
-.hero-flower .fl-c7{animation-name:flowerC7}
-.hero-flower .fl-c8{animation-name:flowerC8}
-.hero-flower .fl-c9{animation-name:flowerC9}
-.hero-flower .fl-c10{animation-name:flowerC10}
-.hero-flower .fl-c11{animation-name:flowerC11}
-.hero-flower .fl-c12{animation-name:flowerC12}
-.hero-flower .fl-c13{animation-name:flowerC13}
-.hero-flower .fl-c14{animation-name:flowerC14}
-.hero-flower .fl-c15{animation-name:flowerC15}
-.hero-flower .fl-c16{animation-name:flowerC16}
-.hero-flower .fl-c17{animation-name:flowerC17}
-.hero-flower .fl-c18{animation-name:flowerC18}
-
-.hero-flower .fl-pentagon{
-  fill:none;
-  stroke:rgba(227,178,127,.55);
-  stroke-width:2.55;
-  stroke-dasharray:530;
-  animation-name:pentagonDraw;
-  animation-duration:1.5s;
-  animation-delay:2.625s;
-  animation-iteration-count:1;
-  animation-fill-mode:both;
-  animation-timing-function:cubic-bezier(.65,0,.35,1);
-}
-@keyframes pentagonDraw{0%{stroke-dashoffset:530}100%{stroke-dashoffset:0}}
-.hero-flower .fl-pentagon-circle{
-  fill:none;
-  stroke:rgba(227,178,127,.55);
-  stroke-width:2.55;
-  stroke-dasharray:566;
-  animation-name:pentagonCircleDraw;
-  animation-duration:1.5s;
-  animation-delay:4.125s;
-  animation-iteration-count:1;
-  animation-fill-mode:both;
-  animation-timing-function:cubic-bezier(.65,0,.35,1);
-}
-@keyframes pentagonCircleDraw{0%{stroke-dashoffset:566}100%{stroke-dashoffset:0}}
-.hero-flower .fl-a-left,
-.hero-flower .fl-a-right{
-  fill:none;
-  stroke:rgba(227,178,127,1);
-  stroke-width:8;
-  stroke-linecap:round;
-  stroke-dasharray:178;
-  animation-duration:1.5s;
-  animation-delay:5.625s;
-  animation-iteration-count:1;
-  animation-fill-mode:both;
-  animation-timing-function:cubic-bezier(.65,0,.35,1);
-}
-.hero-flower .fl-a-left{animation-name:flowerALeft}
-.hero-flower .fl-a-right{animation-name:flowerARight}
-@keyframes flowerALeft{0%{stroke-dashoffset:178}100%{stroke-dashoffset:0}}
-@keyframes flowerARight{0%{stroke-dashoffset:178}100%{stroke-dashoffset:0}}
-@keyframes flowerC0Fill{0%{fill:transparent}100%{fill:rgba(227,178,127,1)}}
-  
-
-@keyframes flowerC0{0%{stroke-dashoffset:214}2.63%{stroke-dashoffset:0}100%{stroke-dashoffset:0}}
-  
-@keyframes flowerC1{0%,2.63%{stroke-dashoffset:214}5.26%{stroke-dashoffset:0}100%{stroke-dashoffset:0}}
-@keyframes flowerC2{0%,5.26%{stroke-dashoffset:214}7.89%{stroke-dashoffset:0}100%{stroke-dashoffset:0}}
-@keyframes flowerC3{0%,7.89%{stroke-dashoffset:214}10.53%{stroke-dashoffset:0}100%{stroke-dashoffset:0}}
-@keyframes flowerC4{0%,10.53%{stroke-dashoffset:214}13.16%{stroke-dashoffset:0}100%{stroke-dashoffset:0}}
-@keyframes flowerC5{0%,13.16%{stroke-dashoffset:214}15.79%{stroke-dashoffset:0}100%{stroke-dashoffset:0}}
-@keyframes flowerC6{0%,15.79%{stroke-dashoffset:214}18.42%{stroke-dashoffset:0}100%{stroke-dashoffset:0}}
-@keyframes flowerC7{0%,18.42%{stroke-dashoffset:214}21.05%{stroke-dashoffset:0}100%{stroke-dashoffset:0}}
-@keyframes flowerC8{0%,21.05%{stroke-dashoffset:214}23.68%{stroke-dashoffset:0}100%{stroke-dashoffset:0}}
-@keyframes flowerC9{0%,23.68%{stroke-dashoffset:214}26.32%{stroke-dashoffset:0}100%{stroke-dashoffset:0}}
-@keyframes flowerC10{0%,26.32%{stroke-dashoffset:214}28.95%{stroke-dashoffset:0}100%{stroke-dashoffset:0}}
-@keyframes flowerC11{0%,28.95%{stroke-dashoffset:214}31.58%{stroke-dashoffset:0}100%{stroke-dashoffset:0}}
-@keyframes flowerC12{0%,31.58%{stroke-dashoffset:214}34.21%{stroke-dashoffset:0}100%{stroke-dashoffset:0}}
-@keyframes flowerC13{0%,34.21%{stroke-dashoffset:214}36.84%{stroke-dashoffset:0}100%{stroke-dashoffset:0}}
-@keyframes flowerC14{0%,36.84%{stroke-dashoffset:214}39.47%{stroke-dashoffset:0}100%{stroke-dashoffset:0}}
-@keyframes flowerC15{0%,39.47%{stroke-dashoffset:214}42.11%{stroke-dashoffset:0}100%{stroke-dashoffset:0}}
-@keyframes flowerC16{0%,42.11%{stroke-dashoffset:214}44.74%{stroke-dashoffset:0}100%{stroke-dashoffset:0}}
-@keyframes flowerC17{0%,44.74%{stroke-dashoffset:214}47.37%{stroke-dashoffset:0}100%{stroke-dashoffset:0}}
-@keyframes flowerC18{0%,47.37%{stroke-dashoffset:214}50.00%{stroke-dashoffset:0}100%{stroke-dashoffset:0}}
-  
-@media(max-width:960px){.hero-flower{display:none}}
-/* === END: HERO FLOWER OF LIFE — animated sacred geometry in the right negative space === */
+<!-- Flower of Life removed: unused across the site -->
 
 /* INTRO SPLASH REMOVED — site loads directly */
 
@@ -1619,7 +1500,7 @@ setTimeout(function(){
     <div class="navitem"><a href="https://work.artibytte.com">Work</a></div>
     <div class="navitem"><a href="https://company.artibytte.com">Company</a></div>
     <div class="navitem"><a href="https://connect.artibytte.com">Connect</a></div>
-    <div class="navitem"><a href="https://careers.artibytte.com">Careers</a></div>
+    <div class="navitem"><a href="https://career.artibytte.com">Careers</a></div>
   </nav>
   <!-- === END: NAV SUBDOMAIN LINKS EDIT === -->
 </header>
@@ -1689,7 +1570,6 @@ setTimeout(function(){
         <div class="vert">Sports academies</div>
         <h3>ArtiPlay</h3>
         <p class="promise">A connected system built for sports academies — bringing players, coaches, staff, operations, and academy workflows into one organized environment.</p>
-        <a class="penter" href="#" data-moment="artiplay">Explore ArtiPlay <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.4"/></svg></a>
       </div>
     </div>
 
@@ -1705,7 +1585,6 @@ setTimeout(function(){
         <div class="vert">Inventory &amp; operations</div>
         <h3>ArtiStock</h3>
         <p class="promise">Know your stock. Know your real cost.</p>
-        <a class="penter" href="#" data-moment="artistock">Enter ArtiStock <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.4"/></svg></a>
       </div>
     </div>
 
@@ -1723,7 +1602,6 @@ setTimeout(function(){
         <div class="vert">Food &amp; retail POS</div>
         <h3>ArtiSnack</h3>
         <p class="promise">Every sale, synced the second it happens.</p>
-        <a class="penter" href="#" data-moment="artisnack">Enter ArtiSnack <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.4"/></svg></a>
       </div>
     </div>
 
@@ -1741,7 +1619,6 @@ setTimeout(function(){
         <div class="vert">Business intelligence</div>
         <h3>Business Health Toolkit</h3>
         <p class="promise">One honest number, from every source you have.</p>
-        <a class="penter" href="#" data-moment="bht">Enter BHT <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.4"/></svg></a>
       </div>
     </div>
 
@@ -1759,7 +1636,6 @@ setTimeout(function(){
         <div class="vert">AI automation</div>
         <h3>VEX AI</h3>
         <p class="promise">The work that shouldn't need a person — automated.</p>
-        <a class="penter" href="#" data-moment="vexai">Enter VEX AI <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.4"/></svg></a>
       </div>
     </div>
 
@@ -1780,7 +1656,6 @@ setTimeout(function(){
         <div class="vert">Construction control</div>
         <h3>ArtiField</h3>
         <p class="promise">Schedule, cost and supply — one decision engine.</p>
-        <a class="penter" href="#" data-moment="artifield">Enter ArtiField <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.4"/></svg></a>
       </div>
     </div>
 
@@ -1801,7 +1676,6 @@ setTimeout(function(){
         <div class="vert">Games &amp; engagement</div>
         <h3>OWLBOUND</h3>
         <p class="promise">How far can you fly?</p>
-        <a class="penter" href="#" data-moment="owlbound">Enter OWLBOUND <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.4"/></svg></a>
       </div>
     </div>
 
@@ -1823,7 +1697,6 @@ setTimeout(function(){
         <div class="vert">Interactive presentations</div>
         <h3>ArtiSlide</h3>
         <p class="promise">Present differently.</p>
-        <a class="penter" href="#" data-moment="artislide">Enter ArtiSlide <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.4"/></svg></a>
       </div>
     </div>
 
@@ -1847,7 +1720,6 @@ setTimeout(function(){
         <div class="vert">Vehicle care</div>
         <h3>ArtiDrive</h3>
         <p class="promise">Know your car. Predict problems.</p>
-        <a class="penter" href="#" data-moment="artidrive">Enter ArtiDrive <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.4"/></svg></a>
       </div>
     </div>
 
@@ -1872,7 +1744,6 @@ setTimeout(function(){
         <div class="vert">Home care</div>
         <h3>ArtiHome</h3>
         <p class="promise">Know your home. Predict problems.</p>
-        <a class="penter" href="#" data-moment="artihome">Enter ArtiHome <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.4"/></svg></a>
       </div>
     </div>
 
@@ -1898,7 +1769,6 @@ setTimeout(function(){
         <div class="vert">Digital identity</div>
         <h3>ATH•NA</h3>
         <p class="promise">Your identity, encoded.</p>
-        <a class="penter" href="#" data-moment="athna">Enter ATH•NA <svg viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.4"/></svg></a>
       </div>
     </div>
 
@@ -2413,7 +2283,7 @@ setTimeout(function(){
       <div class="col"><h5>Company</h5>
         <a href="https://company.artibytte.com">About</a>
         <a href="https://connect.artibytte.com">Connect</a>
-        <a href="https://careers.artibytte.com">Careers</a>
+        <a href="https://career.artibytte.com">Careers</a>
         <a href="https://company.artibytte.com/partnerships">Partnerships</a>
       </div>
       <div class="col"><h5>Ecosystem</h5>
@@ -3438,36 +3308,18 @@ const GALLERY_MAX=50;
 const GALLERY_IMAGE_EXTS=['jpg','jpeg','png','webp','gif'];
 const GALLERY_VIDEO_EXTS=['mp4','webm','mov'];
 
-function galleryTryImage(url){
-  return new Promise(resolve=>{
-    const img=new Image();
-    img.onload=()=>resolve(img);
-    img.onerror=()=>resolve(null);
-    img.src=url;
-  });
-}
-function galleryTryVideo(url){
-  return new Promise(resolve=>{
-    const v=document.createElement('video');
-    v.preload='metadata';
-    v.onloadedmetadata=()=>resolve(v);
-    v.onerror=()=>resolve(null);
-    v.src=url;
-  });
-}
-
-/* resolves to {type:'image'|'video', url} or null if slot i has nothing */
-async function galleryProbeSlot(i){
-  const imgChecks=GALLERY_IMAGE_EXTS.map(ext=>{
-    const url=`${GALLERY_BASE}feature.${i}.${ext}`;
-    return galleryTryImage(url).then(res=>res?{type:'image',url}:null);
-  });
-  const vidChecks=GALLERY_VIDEO_EXTS.map(ext=>{
-    const url=`${GALLERY_BASE}feature.${i}.${ext}`;
-    return galleryTryVideo(url).then(res=>res?{type:'video',url}:null);
-  });
-  const results=await Promise.all([...imgChecks,...vidChecks]);
-  return results.find(r=>r) || null;
+/* === START: MANIFEST-BASED GALLERY — one request instead of up to 400 === */
+let GALLERY_MANIFEST=null;
+async function galleryFetchManifest(){
+  if(GALLERY_MANIFEST) return GALLERY_MANIFEST;
+  try{
+    const res=await fetch(`${GALLERY_BASE}manifest.json`,{cache:'force-cache'});
+    if(!res.ok) throw new Error('no manifest');
+    GALLERY_MANIFEST=await res.json();
+  }catch(e){
+    GALLERY_MANIFEST={features:[],showcase:{}}; // walang manifest = walang gallery, wala nang guessing
+  }
+  return GALLERY_MANIFEST;
 }
 
 async function populateGallery(container){
@@ -3475,13 +3327,11 @@ async function populateGallery(container){
   container.innerHTML='';
   container.classList.remove('empty'); container.classList.add('loading');
 
-  const slots=Array.from({length:GALLERY_MAX},(_,idx)=>idx+1);
-  const found=await Promise.all(slots.map(galleryProbeSlot));
+  const manifest=await galleryFetchManifest();
+  const items=(manifest.features||[]).map(f=>({type:f.type,url:`${GALLERY_BASE}${f.file}`}));
 
-  container.classList.remove('loading'); let any=false;
-  found.forEach((item,idx)=>{
-    if(!item) return;
-    any=true;
+  container.classList.remove('loading');
+  items.forEach(item=>{
     const fig=document.createElement('figure'); fig.tabIndex=0; fig.setAttribute('role','button'); fig.setAttribute('aria-label','View fullscreen');
     if(item.type==='image'){
       fig.innerHTML=`<img src="${item.url}" alt="" loading="lazy">`;
@@ -3491,11 +3341,9 @@ async function populateGallery(container){
     container.appendChild(fig);
   });
 
+  const any=items.length>0;
   if(!any){
     container.classList.add('empty');
-    /* wala pang na-upload — itago ang buong overlay content, hindi lang ang grid.
-       .cview ang totoong wrapper sa loob ng overlay (hindi .wrap — 'yun ay
-       nauubos na sa openCompany() dahil w.innerHTML lang ang kinokopya). */
     const cview=container.closest('.cview');
     if(cview) cview.style.display='none';
   } else {
@@ -3503,6 +3351,7 @@ async function populateGallery(container){
     if(cview) cview.style.display='';
   }
 }
+/* === END: MANIFEST-BASED GALLERY === */
 /* === END: BUILT WITH BUSINESSES — auto-detecting GitHub gallery === */
 
 function openCompany(id){
@@ -5805,29 +5654,27 @@ const AUTO_MS=2600;                                   // time per frame before a
     else if(e.key==='ArrowLeft'){stopAuto();go(cur-1);}
   });
 
-  /* ---------- optional real screenshots / videos (swap in place, no re-render) ---------- */
-  function probeImg(url){return new Promise(r=>{const im=new Image();im.onload=()=>r(url);im.onerror=()=>r(null);im.src=url;});}
-  function probeVid(url){return new Promise(r=>{const v=document.createElement('video');v.preload='metadata';v.onloadedmetadata=()=>r(url);v.onerror=()=>r(null);v.src=url;});}
-  async function probe(base){
-    const res=await Promise.all([
-      ...['jpg','jpeg','png','webp'].map(e=>probeImg(`${RAW}${base}.${e}`).then(u=>u&&{type:'image',src:u})),
-      ...['mp4','webm'].map(e=>probeVid(`${RAW}${base}.${e}`).then(u=>u&&{type:'video',src:u}))
-    ]);
-    return res.find(Boolean)||null;
-  }
+  /* === START: MANIFEST-BASED SHOWCASE UPGRADE — no more extension guessing === */
   async function upgrade(){
     const els=[...track.children];
-    /* product frames: gallery/showcase.<id>.jpg|png|webp|mp4|webm replaces the built-in preview art */
+    let manifest;
+    try{
+      const res=await fetch(`${RAW}manifest.json`,{cache:'force-cache'});
+      manifest=res.ok?await res.json():{features:[],showcase:{}};
+    }catch(e){ manifest={features:[],showcase:{}}; }
+
+    /* product frames: gallery/manifest.json -> showcase[id] */
     slides.forEach((s,i)=>{
       if(s.kind!=='product') return;
-      probe('showcase.'+s.id).then(item=>{
-        if(!item) return;
-        const stage=els[i]&&els[i].querySelector('.ss-stage');
-        if(stage) stage.innerHTML=mediaHTML(item,'ss-shot');
-      });
+      const entry=manifest.showcase&&manifest.showcase[s.id];
+      if(!entry) return;
+      const item={type:entry.type,src:`${RAW}${entry.file}`};
+      const stage=els[i]&&els[i].querySelector('.ss-stage');
+      if(stage) stage.innerHTML=mediaHTML(item,'ss-shot');
     });
-    /* people frames: gallery/feature.1 … feature.12 (same files as "Built with businesses") */
-    const found=(await Promise.all(Array.from({length:12},(_,n)=>probe('feature.'+(n+1))))).filter(Boolean);
+
+    /* people frames: gallery/manifest.json -> features[] (first 12) */
+    const found=(manifest.features||[]).slice(0,12).map(f=>({type:f.type,src:`${RAW}${f.file}`}));
     let k=0;
     slides.forEach((s,i)=>{
       if(s.kind!=='people'||!found[k]) return;
@@ -5840,6 +5687,7 @@ const AUTO_MS=2600;                                   // time per frame before a
       k++;
     });
   }
+  /* === END: MANIFEST-BASED SHOWCASE UPGRADE === */
 
   function close(){
     clearTimeout(timer);auto=false;
