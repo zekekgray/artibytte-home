@@ -1493,14 +1493,15 @@ setTimeout(function(){
     <!-- === END: HEADER SEARCH-PILL CTA === -->
   </div>
   <!-- === START: NAV SUBDOMAIN LINKS EDIT === -->
+  <!-- ARTI-SURG-HOME-NAVSLASH-7QW3M -->
   <nav class="links">
-    <div class="navitem"><a href="https://artibytte.com" aria-current="page">Home</a></div>
-    <div class="navitem"><a href="https://products.artibytte.com">Products</a></div>
-    <div class="navitem"><a href="https://vex.artibytte.com">Vex</a></div>
-    <div class="navitem"><a href="https://work.artibytte.com">Work</a></div>
-    <div class="navitem"><a href="https://company.artibytte.com">Company</a></div>
-    <div class="navitem"><a href="https://connect.artibytte.com">Connect</a></div>
-    <div class="navitem"><a href="https://career.artibytte.com">Careers</a></div>
+    <div class="navitem"><a href="https://artibytte.com/" aria-current="page">Home</a></div>
+    <div class="navitem"><a href="https://products.artibytte.com/">Products</a></div>
+    <div class="navitem"><a href="https://vex.artibytte.com/">Vex</a></div>
+    <div class="navitem"><a href="https://work.artibytte.com/">Work</a></div>
+    <div class="navitem"><a href="https://company.artibytte.com/">Company</a></div>
+    <div class="navitem"><a href="https://connect.artibytte.com/">Connect</a></div>
+    <div class="navitem"><a href="https://career.artibytte.com/">Careers</a></div>
   </nav>
   <!-- === END: NAV SUBDOMAIN LINKS EDIT === -->
   <!-- ARTI-SURG-HOME-ACTIVE-NAV-7K4P2 -->
@@ -2373,6 +2374,28 @@ setTimeout(function(){
 </div>
 
 <script>
+
+/* ARTI-SURG-HOME-OPENROUTER-3JF56 */
+(function(){
+  const params = new URLSearchParams(window.location.search);
+  const open = params.get('open');
+  if(!open) return;
+  function run(){
+    switch(open){
+      case 'contact':
+        if(typeof openCompany==='function') openCompany('contact');
+        break;
+      case 'partnerships':
+        if(typeof openCompany==='function') openCompany('partnerships');
+        break;
+      /* demo, privacy, terms, cookies, sitemap: routes reserved.
+         No Home content/handler exists yet for these — add a case
+         here once the corresponding section/modal is built. */
+    }
+  }
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',run);
+  else run();
+})();
 
 /* === START: HERO SKY v2 — one clock drives everything === */
 (function(){
